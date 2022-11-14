@@ -19,15 +19,32 @@ struct TripletRule
 typedef std::vector<TripletRule> TRS;
 typedef std::list<std::list<int>> CD;
 
-TRS initialize(int, bool);
-void sort_triplet_rules(TRS&);
-void print_tr(TRS&);
-void print_cd(CD& cd);
-unsigned long condorcet_domain(TRS& trs, int n);
-void expand_cd(CD& cd, int value);
-void filter_cd(const TripletRule& tr, CD& cd);
-void change_rule(TRS& triplet_rules, int index, int label);
-TRS fetch_triplet_rules(TRS& trs, int i);
-int get_index(std::list<int>& elem, int& value);
+class CondorcetDomain
+{
+private:
+    int n = 5;
+    void sort_triplet_rules(TRS& triplet_rules);
+    void filter_cd(const TripletRule& tr, CD& cd);
+    void expand_cd(CD& cd, int& value);
+    TRS fetch_triplet_rules(TRS& trs, int i);
+    int get_index(const std::list<int>& elem, const int& value);
+
+
+public:
+    CondorcetDomain(int n);
+
+    TRS initialize(bool sort);
+
+    TRS initialize_by_scheme();
+
+    unsigned long condorcet_domain(TRS& trs);
+
+    void change_rule(TRS& triplet_rules, int index, int label);
+
+    void print_tr(TRS& trs);
+
+    void print_cd(CD& cd);
+
+};
 
 
