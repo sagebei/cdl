@@ -47,7 +47,7 @@ public:
 
     TRS initialize(bool sort);
 
-    TRS initialize_by_scheme(RuleScheme&);
+    TRS initialize_by_scheme( RuleScheme& scheme) const;
 
     unsigned long condorcet_domain(TRS& trs);
 

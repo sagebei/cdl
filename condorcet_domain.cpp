@@ -128,7 +128,7 @@ TRS CondorcetDomain::initialize(bool sort=true)
     return triplet_rules;
 }
 
-TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme)
+TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
 {
     unsigned long size = scheme.numbers.size();
     TRS triplet_rules;
