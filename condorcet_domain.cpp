@@ -128,6 +128,35 @@ TRS CondorcetDomain::initialize(bool sort=true)
     return triplet_rules;
 }
 
+TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme)
+{
+    unsigned long size = scheme.numbers.size();
+    TRS triplet_rules;
+
+    for (int i = 1; i <= n-2; i++)
+    {
+        for (int j = i+1; j <= n-1; j++)
+        {
+            for (int k = j+1; k <= n; k++)
+            {
+                TripletRule tr;
+                tr.triplet = {i, j, k};
+                for (int s = 0; s < size; s ++)
+                {
+                    std::vector<int>& number = scheme.numbers[s];
+                    if (std::find(number.begin(), number.end(), j) != number.end())
+                    {
+                        tr.rule = scheme.rules[s];
+                        break;
+                    }
+
+                }
+                triplet_rules.push_back(tr);
+            }
+        }
+    }
+    return triplet_rules;
+}
 
 unsigned long CondorcetDomain::condorcet_domain(TRS& trs)
 {

@@ -16,6 +16,18 @@ struct TripletRule
     std::string rule;
 };
 
+struct RuleScheme
+{
+    std::vector<std::vector<int>> numbers;
+    std::vector<std::string> rules;
+
+    void add(std::vector<int> number, std::string rule)
+    {
+        numbers.push_back(number);
+        rules.push_back(rule);
+    }
+};
+
 typedef std::vector<TripletRule> TRS;
 typedef std::list<std::list<int>> CD;
 
@@ -35,7 +47,7 @@ public:
 
     TRS initialize(bool sort);
 
-    TRS initialize_by_scheme();
+    TRS initialize_by_scheme(RuleScheme&);
 
     unsigned long condorcet_domain(TRS& trs);
 
