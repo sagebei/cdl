@@ -46,9 +46,9 @@ private:
     int get_index(const std::list<int>& elem, const int& value);
 
 public:
-    CondorcetDomain(int num);
+    CondorcetDomain(int num=5);
 
-    TRS initialize(bool sort);
+    TRS initialize(bool sort=true);
     TRS initialize_by_scheme(RuleScheme& scheme) const;
     CD condorcet_domain(TRS& trs);
     int hash_cd(const CD& cd);

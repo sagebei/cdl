@@ -1,6 +1,6 @@
 #include "condorcet_domain.h"
 
-CondorcetDomain::CondorcetDomain(int num=5)
+CondorcetDomain::CondorcetDomain(int num)
 {
     n = num;
     rules = {"1N3", "3N1", "2N3", "2N1"};
@@ -105,7 +105,7 @@ int CondorcetDomain::get_index(const std::list<int>& elem, const int& value)
 
 
 
-TRS CondorcetDomain::initialize(bool sort=true)
+TRS CondorcetDomain::initialize(bool sort)
 {
     TRS triplet_rules;
 
