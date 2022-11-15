@@ -46,7 +46,7 @@ private:
     int get_index(const std::list<int>& elem, const int& value);
 
 public:
-    CondorcetDomain(unsigned int n);
+    CondorcetDomain(int num);
 
     TRS initialize(bool sort);
     TRS initialize_by_scheme(RuleScheme& scheme) const;

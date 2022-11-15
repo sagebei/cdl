@@ -1,6 +1,6 @@
 #include "condorcet_domain.h"
 
-CondorcetDomain::CondorcetDomain(unsigned int num=5)
+CondorcetDomain::CondorcetDomain(int num=5)
 {
     n = num;
     rules = {"1N3", "3N1", "2N3", "2N1"};
