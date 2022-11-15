@@ -1,6 +1,8 @@
 # cd
 
-|Latest Documentation Status|
+|Latest Documentation Status| |Stable Documentation Status| |Gitter chat| |GitHub Discussions| |CI| |Build status|
+
+|Repology| |PyPI package| |Conda-forge| |Python Versions|
 
 
 Deal with system issues
