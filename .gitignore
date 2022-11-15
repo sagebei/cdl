@@ -2,6 +2,7 @@
 *.d
 ./build
 ./cmake-build-debug
+./pybind11
 
 # Compiled Object files
 *.slo
