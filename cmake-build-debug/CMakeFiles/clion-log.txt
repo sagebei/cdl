@@ -1,4 +1,5 @@
 /snap/clion/209/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/209/bin/ninja/linux/ninja -G Ninja -S /home/bei/CLionProjects/cd -B /home/bei/CLionProjects/cd/cmake-build-debug
+-- pybind11 v2.11.0 dev1
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/bei/CLionProjects/cd/cmake-build-debug

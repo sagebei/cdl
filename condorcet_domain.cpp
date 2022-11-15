@@ -1,8 +1,8 @@
 #include "condorcet_domain.h"
 
-CondorcetDomain::CondorcetDomain(unsigned int n)
+CondorcetDomain::CondorcetDomain(unsigned int num=5)
 {
-    n = n;
+    n = num;
     rules = {"1N3", "3N1", "2N3", "2N1"};
 }
 
@@ -103,18 +103,7 @@ int CondorcetDomain::get_index(const std::list<int>& elem, const int& value)
     return index;
 }
 
-std::size_t CondorcetDomain::hash_cd(const CD& cd)
-{
-    int seed = 0;
-    for (const auto& elem: cd)
-    {
-        for (int i = 0; i < elem.size(); i++)
-        {
-            seed += (*std::next(elem.begin(), i) * (i + n));
-        }
-    }
-    return seed;
-}
+
 
 TRS CondorcetDomain::initialize(bool sort=true)
 {
@@ -183,6 +172,19 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     return cd;
 }
 
+int CondorcetDomain::hash_cd(const CD& cd)
+{
+    int seed = 0;
+    for (const auto& elem: cd)
+    {
+        for (int i = 0; i < elem.size(); i++)
+        {
+            seed += (*std::next(elem.begin(), i) * (i + n + 1));
+        }
+    }
+    return seed;
+}
+
 CDS CondorcetDomain::cd_brothers(const CD& cd)
 {
     CDS cds;
@@ -205,12 +207,13 @@ CDS CondorcetDomain::cd_brothers(const CD& cd)
             new_cd.push_back(entry);
         }
 
-        std::size_t seed = hash_cd(cd);
+        int seed = hash_cd(new_cd);
         if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
         {
             seeds.push_back(seed);
             cds.push_back(new_cd);
         }
+
     }
 
     return cds;

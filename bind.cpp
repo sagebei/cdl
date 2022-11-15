@@ -27,6 +27,7 @@ PYBIND11_MODULE(cd, m) {
             .def("initialize", &CondorcetDomain::initialize, py::arg("sort")=false)
             .def("initialize_by_scheme", &CondorcetDomain::initialize_by_scheme, py::arg("scheme"))
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))
+            .def("cd_brothers", &CondorcetDomain::cd_brothers, py::arg("cd"))
             .def("print_cd", &CondorcetDomain::print_cd, py::arg("cd"))
             .def("print_trs", &CondorcetDomain::print_trs, py::arg("trs"));
 }

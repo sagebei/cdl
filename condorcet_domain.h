@@ -36,8 +36,8 @@ typedef std::vector<CD> CDS;
 class CondorcetDomain
 {
 private:
-    int n = 5;
-    std::array<std::string, 4> rules = {};
+    int n;
+    std::array<std::string, 4> rules;
 
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);
@@ -49,9 +49,9 @@ public:
     CondorcetDomain(unsigned int n);
 
     TRS initialize(bool sort);
-    TRS initialize_by_scheme( RuleScheme& scheme) const;
+    TRS initialize_by_scheme(RuleScheme& scheme) const;
     CD condorcet_domain(TRS& trs);
-    std::size_t hash_cd(const CD& cd);
+    int hash_cd(const CD& cd);
     CDS cd_brothers(const CD& cd);
     TRS cd_to_trs(const CD& cd);
     void change_rule(TRS& triplet_rules, int index, int label);
