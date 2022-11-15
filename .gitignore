@@ -1,11 +1,11 @@
 # Prerequisites
 
-./build/
-./build/*
-./cmake-build-debug/
-./cmake-build-debug/*
-./pybind11/
-./pybind11/*
+build/
+build/*
+cmake-build-debug/
+cmake-build-debug/*
+pybind11/
+pybind11/*
 
 # Compiled Object files
 *.slo

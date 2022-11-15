@@ -1,9 +1,12 @@
 /snap/clion/209/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/209/bin/ninja/linux/ninja -G Ninja -S /home/bei/CLionProjects/cd -B /home/bei/CLionProjects/cd/cmake-build-debug
--- pybind11 v2.11.0 dev1
--- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.7", minimum required is "3.6") 
--- Found PythonLibs: python3.10
--- Performing Test HAS_FLTO
--- Performing Test HAS_FLTO - Success
--- Configuring done
--- Generating done
--- Build files have been written to: /home/bei/CLionProjects/cd/cmake-build-debug
+CMake Error at CMakeLists.txt:6 (add_subdirectory):
+  add_subdirectory given source "pybind11" which is not an existing
+  directory.
+
+
+CMake Error at CMakeLists.txt:7 (pybind11_add_module):
+  Unknown CMake command "pybind11_add_module".
+
+
+-- Configuring incomplete, errors occurred!
+See also "/home/bei/CLionProjects/cd/cmake-build-debug/CMakeFiles/CMakeOutput.log".
