@@ -1,5 +1,9 @@
 rm -rf build
 mkdir build
+
+python_dir=$(which python)
+(cd build && cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DPYTHON_EXECUTABLE=$python_dir ../)
+
 (cd build && cmake ..)
 (cd build && make)
 
