@@ -1,6 +1,6 @@
 # cd
 
-|Latest Documenttation Status|
+|Latest Documentation Status|
 
 
 Deal with system issues
