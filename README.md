@@ -6,6 +6,8 @@
 
 
 ## Deal with system issues
------------------------
-Imported target "pybind11::module" includes non-existent path
-- `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=~/opt/anaconda3/bin/python ../`
+
+1. Imported target "pybind11::module" includes non-existent path
+- `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
+2. Enable importing the library from global scale
+- mkdir -p "\`python -m site --user-site\`"
