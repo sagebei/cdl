@@ -8,6 +8,7 @@
 #include <vector>
 #include <forward_list>
 #include <list>
+#include <map>
 #include <algorithm>
 
 struct TripletRule
@@ -44,25 +45,18 @@ private:
     TRS fetch_triplet_rules(TRS& trs, int i);
     int get_index(const std::list<int>& elem, const int& value);
 
-
 public:
     CondorcetDomain(unsigned int n);
 
     TRS initialize(bool sort);
-
     TRS initialize_by_scheme( RuleScheme& scheme) const;
-
     CD condorcet_domain(TRS& trs);
-
+    std::size_t hash_cd(const CD& cd);
     CDS cd_brothers(const CD& cd);
-
     TRS cd_to_trs(const CD& cd);
-
     void change_rule(TRS& triplet_rules, int index, int label);
-
-    void print_trs(TRS& trs);
-
-    void print_cd(CD& cd);
+    void print_trs(const TRS& trs);
+    void print_cd(const CD& cd);
 
 };
 

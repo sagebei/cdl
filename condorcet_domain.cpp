@@ -57,8 +57,6 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 void CondorcetDomain::expand_cd(CD& cd, int& value)
 {
     CD updated_cd;
-    auto iter_cd = updated_cd.begin();
-
     for (auto& elem: cd)
     {
         auto iter_elem = elem.begin();
@@ -66,7 +64,7 @@ void CondorcetDomain::expand_cd(CD& cd, int& value)
         {
             iter_elem = elem.insert(iter_elem, value);
             std::list<int> updated_elem(elem);
-            iter_cd = updated_cd.insert(iter_cd, updated_elem);
+            updated_cd.push_back(updated_elem);
             iter_elem = elem.erase(iter_elem);
             iter_elem ++;
         }
@@ -103,6 +101,19 @@ int CondorcetDomain::get_index(const std::list<int>& elem, const int& value)
         iter = std::next(iter, 1);
     }
     return index;
+}
+
+std::size_t CondorcetDomain::hash_cd(const CD& cd)
+{
+    int seed = 0;
+    for (const auto& elem: cd)
+    {
+        for (int i = 0; i < elem.size(); i++)
+        {
+            seed += (*std::next(elem.begin(), i) * (i + n));
+        }
+    }
+    return seed;
 }
 
 TRS CondorcetDomain::initialize(bool sort=true)
@@ -172,13 +183,35 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     return cd;
 }
 
-CDS CondorcetDomain::cd_brothers(const CD &cd)
+CDS CondorcetDomain::cd_brothers(const CD& cd)
 {
     CDS cds;
-    CD new_cd;
+    std::vector<std::size_t> seeds;
 
+    for (const auto& elem: cd)
+    {
+        std::map<int, int> dict;
+        CD new_cd;
+        for (int i = 0; i < elem.size(); i ++)
+            dict[*std::next(elem.begin(), i)] = (i + 1);
 
-    cds.push_back(new_cd);
+        for (const auto& e: cd)
+        {
+            std::list<int> entry;
+            for (const int& v: e)
+            {
+                entry.push_back(dict[v]);
+            }
+            new_cd.push_back(entry);
+        }
+
+        std::size_t seed = hash_cd(cd);
+        if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
+        {
+            seeds.push_back(seed);
+            cds.push_back(new_cd);
+        }
+    }
 
     return cds;
 }
@@ -198,22 +231,24 @@ void CondorcetDomain::change_rule(TRS& triplet_rules, int index, int label)
     triplet_rules[index].rule = rules[label];
 }
 
-void CondorcetDomain::print_trs(TRS& trs)
+void CondorcetDomain::print_trs(const TRS& trs)
 {
     for (auto const& tr: trs)
     {
         std::cout<<tr.triplet[0]<< tr.triplet[1] << tr.triplet[2] << " : " << tr.rule << std::endl;
     }
+    std::cout << std::endl;
 }
 
-void CondorcetDomain::print_cd(CD& cd)
+void CondorcetDomain::print_cd(const CD& cd)
 {
     for (auto& elem: cd)
     {
-        for (int& e: elem)
+        for (const int& e: elem)
             std::cout << e;
         std::cout << std::endl;
     }
+    std::cout << std::endl;
 }
 
 

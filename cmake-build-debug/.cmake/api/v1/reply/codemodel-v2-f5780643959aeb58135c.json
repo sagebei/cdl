@@ -6,10 +6,6 @@
 			[
 				{
 					"build" : ".",
-					"childIndexes" : 
-					[
-						1
-					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
@@ -21,27 +17,12 @@
 					[
 						0
 					]
-				},
-				{
-					"build" : "pybind11",
-					"jsonFile" : "directory-pybind11-Debug-b6193beaf7d644e9e508.json",
-					"minimumCMakeVersion" : 
-					{
-						"string" : "3.4"
-					},
-					"parentIndex" : 0,
-					"projectIndex" : 1,
-					"source" : "pybind11"
 				}
 			],
 			"name" : "Debug",
 			"projects" : 
 			[
 				{
-					"childIndexes" : 
-					[
-						1
-					],
 					"directoryIndexes" : 
 					[
 						0
@@ -51,14 +32,6 @@
 					[
 						0
 					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						1
-					],
-					"name" : "pybind11",
-					"parentIndex" : 0
 				}
 			],
 			"targets" : 
@@ -66,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "cd::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-cd-Debug-15d22fefeba8a1042d73.json",
+					"jsonFile" : "target-cd-Debug-aa251c7da5b6b13e538b.json",
 					"name" : "cd",
 					"projectIndex" : 0
 				}

@@ -6,13 +6,22 @@ int main()
 {
     CondorcetDomain cd(5);
     RuleScheme rs;
-    rs.add({1, 3, 4}, "1N3");
-    rs.add({2, 5}, "2N1");
+    rs.add({1, 2, 4}, "1N3");
+    rs.add({3, 5}, "2N1");
 
     TRS trs = cd.initialize_by_scheme(rs);
-    cd.print_tr(trs);
+//    cd.print_trs(trs);
     auto domain = cd.condorcet_domain(trs);
-    std::cout << domain.size() << std::endl;
+    cd.print_cd(domain);
+//    std::size_t seed = cd.hash_cd(domain);
+    CDS bros = cd.cd_brothers(domain);
+    for (const CD& bro: bros)
+    {
+        cd.print_cd(bro);
+        std::cout << std::endl;
+
+    }
+//    std::cout << seed << std::endl;
     return 0;
 }
 
