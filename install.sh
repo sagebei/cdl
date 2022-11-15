@@ -13,3 +13,5 @@ if [ ! -d $dir ]; then
 fi
 
 (cd build && mv *.so $dir)
+
+
