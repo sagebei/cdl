@@ -30,11 +30,14 @@ struct RuleScheme
 
 typedef std::vector<TripletRule> TRS;
 typedef std::list<std::list<int>> CD;
+typedef std::vector<CD> CDS;
 
 class CondorcetDomain
 {
 private:
     int n = 5;
+    std::array<std::string, 4> rules = {};
+
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
@@ -43,17 +46,21 @@ private:
 
 
 public:
-    CondorcetDomain(int n);
+    CondorcetDomain(unsigned int n);
 
     TRS initialize(bool sort);
 
     TRS initialize_by_scheme( RuleScheme& scheme) const;
 
-    unsigned long condorcet_domain(TRS& trs);
+    CD condorcet_domain(TRS& trs);
+
+    CDS cd_brothers(const CD& cd);
+
+    TRS cd_to_trs(const CD& cd);
 
     void change_rule(TRS& triplet_rules, int index, int label);
 
-    void print_tr(TRS& trs);
+    void print_trs(TRS& trs);
 
     void print_cd(CD& cd);
 

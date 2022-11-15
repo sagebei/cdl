@@ -1,8 +1,9 @@
 #include "condorcet_domain.h"
 
-CondorcetDomain::CondorcetDomain(int num)
+CondorcetDomain::CondorcetDomain(unsigned int n)
 {
-    n = num;
+    n = n;
+    rules = {"1N3", "3N1", "2N3", "2N1"};
 }
 
 void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
@@ -107,7 +108,6 @@ int CondorcetDomain::get_index(const std::list<int>& elem, const int& value)
 TRS CondorcetDomain::initialize(bool sort=true)
 {
     TRS triplet_rules;
-    std::array<std::string, 4> rules = {"1N3", "3N1", "2N3", "2N1"};
 
     for (int i = 1; i <= n-2; i++)
     {
@@ -158,7 +158,7 @@ TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
     return triplet_rules;
 }
 
-unsigned long CondorcetDomain::condorcet_domain(TRS& trs)
+CD CondorcetDomain::condorcet_domain(TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};
     for (int i = 3; i <= n; i++) {
@@ -169,7 +169,27 @@ unsigned long CondorcetDomain::condorcet_domain(TRS& trs)
         }
     }
 
-    return cd.size();
+    return cd;
+}
+
+CDS CondorcetDomain::cd_brothers(const CD &cd)
+{
+    CDS cds;
+    CD new_cd;
+
+
+    cds.push_back(new_cd);
+
+    return cds;
+}
+
+TRS CondorcetDomain::cd_to_trs(const CD &cd)
+{
+    TRS trs = initialize();
+
+
+    return trs;
+
 }
 
 void CondorcetDomain::change_rule(TRS& triplet_rules, int index, int label)
@@ -178,7 +198,7 @@ void CondorcetDomain::change_rule(TRS& triplet_rules, int index, int label)
     triplet_rules[index].rule = rules[label];
 }
 
-void CondorcetDomain::print_tr(TRS& trs)
+void CondorcetDomain::print_trs(TRS& trs)
 {
     for (auto const& tr: trs)
     {

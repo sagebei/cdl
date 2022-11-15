@@ -23,10 +23,10 @@ PYBIND11_MODULE(cd, m) {
             .def("add", &RuleScheme::add);
 
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
-            .def(py::init<int>())
-            .def("initialize", &CondorcetDomain::initialize)
-            .def("initialize_by_scheme", &CondorcetDomain::initialize_by_scheme)
-            .def("condorcet_domain", &CondorcetDomain::condorcet_domain)
-            .def("print_cd", &CondorcetDomain::print_cd)
-            .def("print_tr", &CondorcetDomain::print_tr);
+            .def(py::init<int>(), py::arg("n")=5)
+            .def("initialize", &CondorcetDomain::initialize, py::arg("sort")=false)
+            .def("initialize_by_scheme", &CondorcetDomain::initialize_by_scheme, py::arg("scheme"))
+            .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))
+            .def("print_cd", &CondorcetDomain::print_cd, py::arg("cd"))
+            .def("print_trs", &CondorcetDomain::print_trs, py::arg("trs"));
 }

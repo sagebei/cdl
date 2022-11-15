@@ -11,8 +11,8 @@ int main()
 
     TRS trs = cd.initialize_by_scheme(rs);
     cd.print_tr(trs);
-    auto size = cd.condorcet_domain(trs);
-    std::cout << size << std::endl;
+    auto domain = cd.condorcet_domain(trs);
+    std::cout << domain.size() << std::endl;
     return 0;
 }
 
