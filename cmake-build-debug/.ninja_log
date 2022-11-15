@@ -1,5 +1,0 @@
-# ninja log v5
-0	589	1668434184322623492	CMakeFiles/condorcet.dir/condorcet_domain.cpp.o	266ddc3c4e58fdf2
-1	766	1668520877149804563	CMakeFiles/cd.dir/main.cpp.o	31354313e5c9e084
-1362	1444	1668520877825808020	cd	6f1a6674f49a533a
-3	1361	1668520877741807590	CMakeFiles/cd.dir/condorcet_domain.cpp.o	675211aaf8bdc8e0
