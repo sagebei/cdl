@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 project(cd)
 set(CMAKE_CXX_STANDARD 17)
+find_package(Python COMPONENTS Interpreter Development)
 
 # Pybind11
 add_subdirectory(pybind11)
