@@ -4,37 +4,38 @@
 
  bool compare_list(const std::list<int>& first, const std::list<int>& second)
 {
-    bool result;
+    auto iter_first = first.begin();
+    auto iter_second = second.begin();
 
     for (int i = 0; i < first.size(); i ++)
     {
-        int f = *std::next(first.begin(), i);
-        int s = *std::next(second.begin(), i);
+        int f = *iter_first;
+        int s = *iter_second;
 
         if (f < s)
         {
-            result = true;
-            break;
+            return true;
         }
         else if (s < f)
         {
-            result = false;
-            break;
+            return false;
         }
+        iter_first = std::next(iter_first, 1);
+        iter_second = std::next(iter_second, 1);
     }
-    return result;
 }
 
 
 int get_index(const std::list<int>& elem, const int& value)
 {
-    auto const& iter = elem.begin();
+    auto iter = elem.begin();
     for (int i = 0; i < elem.size(); i ++)
     {
-        if (value == *std::next(iter, i))
+        if (value == *iter)
         {
             return i;
         }
+        iter = std::next(iter, 1);
     }
     return -1;
 }
