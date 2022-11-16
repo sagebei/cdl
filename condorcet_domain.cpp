@@ -1,4 +1,5 @@
 #include "condorcet_domain.h"
+#include "utils.h"
 
 CondorcetDomain::CondorcetDomain(int num)
 {
@@ -83,27 +84,6 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
     return fetched_trs;
 }
 
-int CondorcetDomain::get_index(const std::list<int>& elem, const int& value)
-{
-    int index = -1;
-    int i = 0;
-
-    auto iter = elem.begin();
-    while (iter != elem.end())
-    {
-        if (*iter == value)
-        {
-            index = i;
-            break;
-        }
-
-        i ++;
-        iter = std::next(iter, 1);
-    }
-    return index;
-}
-
-
 
 TRS CondorcetDomain::initialize(bool sort)
 {
@@ -172,17 +152,24 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     return cd;
 }
 
-int CondorcetDomain::hash_cd(const CD& cd)
+int CondorcetDomain::hash_cd(CD& cd)
 {
     int seed = 0;
-    for (const auto& elem: cd)
+    sort_cd(cd);
+    for (int i =0; i < cd.size(); i ++)
     {
-        for (int i = 0; i < elem.size(); i++)
+        std::list<int>& elem = *std::next(cd.begin(), i);
+        for (int j = 0; j < elem.size(); j++)
         {
-            seed += (*std::next(elem.begin(), i) * (i + n + 1));
+            seed += (*std::next(elem.begin(), j) * (i + 5) * (j + 5));
         }
     }
     return seed;
+}
+
+void CondorcetDomain::sort_cd(CD& cd)
+{
+    cd.sort(compare_list);
 }
 
 CDS CondorcetDomain::cd_brothers(const CD& cd)
@@ -221,17 +208,27 @@ CDS CondorcetDomain::cd_brothers(const CD& cd)
 
 TRS CondorcetDomain::cd_to_trs(const CD &cd)
 {
+    TRS all_trs;
     TRS trs = initialize();
+    for (auto tr: trs)
+    {
+        for (std::string rule: rules)
+        {
+            tr.rule = rule;
+            all_trs.push_back(tr);
+        }
+    }
 
 
-    return trs;
+    return all_trs;
 
 }
 
 void CondorcetDomain::change_rule(TRS& triplet_rules, int index, int label)
 {
     std::array<std::string, 4> rules = {"1N3", "3N1", "2N3", "2N1"};
-    triplet_rules[index].rule = rules[label];
+    TripletRule& tr = *std::next(triplet_rules.begin(), index);
+    tr.rule = rules[label];
 }
 
 void CondorcetDomain::print_trs(const TRS& trs)

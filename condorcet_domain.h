@@ -29,7 +29,7 @@ struct RuleScheme
     }
 };
 
-typedef std::vector<TripletRule> TRS;
+typedef std::list<TripletRule> TRS;
 typedef std::list<std::list<int>> CD;
 typedef std::vector<CD> CDS;
 
@@ -43,7 +43,7 @@ private:
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
     TRS fetch_triplet_rules(TRS& trs, int i);
-    int get_index(const std::list<int>& elem, const int& value);
+
 
 public:
     CondorcetDomain(int num=5);
@@ -51,7 +51,8 @@ public:
     TRS initialize(bool sort=true);
     TRS initialize_by_scheme(RuleScheme& scheme) const;
     CD condorcet_domain(TRS& trs);
-    int hash_cd(const CD& cd);
+    int hash_cd(CD& cd);
+    void sort_cd(CD& cd);
     CDS cd_brothers(const CD& cd);
     TRS cd_to_trs(const CD& cd);
     void change_rule(TRS& triplet_rules, int index, int label);
