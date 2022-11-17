@@ -27,7 +27,7 @@ int main()
 //        std::cout << cd.hash_cd(bro) << std::endl;
         cd.print_cd(bro);
     }
-//    std::cout << bros.size() << std::endl;
+    std::cout << cd.hash_cd_brothers(bros) << std::endl;
     return 0;
 }
 

@@ -179,29 +179,37 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     return cd;
 }
 
-int CondorcetDomain::hash_cd(CD& cd)
+std::size_t CondorcetDomain::hash_cd(CD& cd)
 {
-    int seed = 0;
+    std::size_t seed = 0;
     sort_cd(cd);
+    auto iter = cd.begin();
+
     for (int i =0; i < cd.size(); i ++)
     {
-        std::list<int>& elem = *std::next(cd.begin(), i);
+        std::list<int>& elem = *iter;
         for (int j = 0; j < elem.size(); j++)
         {
-            seed += (*std::next(elem.begin(), j) * (i + 5) * (j + 5));
+            seed += (*std::next(elem.begin(), j) * (i + 123) * (j + 456));
         }
+        iter = std::next(iter, 1);
     }
+
     return seed;
 }
 
-int CondorcetDomain::hash_cd_brothers(CDS &cds)
+std::size_t CondorcetDomain::hash_cd_brothers(CDS &cds)
 {
-    int seed = 0;
-    for (const auto& cd: cds)
+    std::size_t seed = 0;
+    for (auto& cd: cds)
     {
-        for (const auto& elem: cd)
+        for (int i =0; i < cd.size(); i ++)
         {
-
+            std::list<int>& elem = *std::next(cd.begin(), i);
+            for (int j = 0; j < elem.size(); j++)
+            {
+                seed += (*std::next(elem.begin(), j) * (i + 123) * (j + 678));
+            }
         }
     }
 
