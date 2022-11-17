@@ -55,7 +55,7 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 
 }
 
-void CondorcetDomain::filter_trs(TRS& trs, const std::list<int> elem)
+void CondorcetDomain::filter_trs(TRS& trs, const std::list<int>& elem)
 {
     auto iter = trs.begin();
     while(iter != trs.end())

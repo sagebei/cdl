@@ -22,7 +22,7 @@ struct RuleScheme
     std::vector<std::vector<int>> numbers;
     std::vector<std::string> rules;
 
-    void add(std::vector<int> number, std::string rule)
+    void add(const std::vector<int>& number, const std::string& rule)
     {
         numbers.push_back(number);
         rules.push_back(rule);
@@ -42,7 +42,7 @@ private:
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
-    void filter_trs(TRS& trs, const std::list<int> elem);
+    void filter_trs(TRS& trs, const std::list<int>& elem);
     TRS fetch_triplet_rules(TRS& trs, int i);
 
 public:
