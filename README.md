@@ -10,7 +10,7 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 CDL is a header-only library writen in C++ and offers Python Interfaces as a module that can be
 installed and used globally, enabling users to seamlessly integrate with tools writen in Python.
 
-## How to use CDL in C++
+## Get started with C++
 ```c++
 #include "condorcet_domain.h"
 
@@ -35,7 +35,7 @@ int main()
 }
 ```
 
-## How to use CDL in Python
+## Get started with Python
 ```python
 from cdl import CondorcetDomain, RuleScheme
 
@@ -54,20 +54,22 @@ for bro in bros:
 
 ```
 
+## Installation
+
+1. Imported target "pybind11::module" includes non-existent path
+- `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
+2. Enable importing the library from global scale
+- mkdir -p "\`python -m site --user-site\`"
+
+
 ## Cite
 Please cite our paper that introduced CDL library if you use it in a scientific publication. 
 
 
 ## Our Team
 DGL is developed and maintained by Bei Zhou and Dr.Soren Riis 
-in Theory Group and Game AI group at Queen Mary University of London,
+in Theory Group and Game AI group at Queen Mary University of London. 
 
-## System requirement
-
-1. Imported target "pybind11::module" includes non-existent path
-- `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
-2. Enable importing the library from global scale
-- mkdir -p "\`python -m site --user-site\`"
 
 
 
