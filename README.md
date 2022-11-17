@@ -51,7 +51,6 @@ cd.print_cd(domain)
 bros = cd.cd_brothers(domain);
 for bro in bros:
     cd.print_cd(bro)
-
 ```
 
 ## Installation for Python Program

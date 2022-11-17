@@ -194,9 +194,18 @@ int CondorcetDomain::hash_cd(CD& cd)
     return seed;
 }
 
-int CondorcetDomain::hash_cds(CDS &cds)
+int CondorcetDomain::hash_cd_brothers(CDS &cds)
 {
+    int seed = 0;
+    for (const auto& cd: cds)
+    {
+        for (const auto& elem: cd)
+        {
 
+        }
+    }
+
+    return seed;
 }
 
 void CondorcetDomain::sort_cd(CD& cd)
@@ -207,7 +216,7 @@ void CondorcetDomain::sort_cd(CD& cd)
 CDS& CondorcetDomain::cd_brothers(const CD& cd)
 {
     CDS cds;
-    std::vector<std::size_t> seeds;
+    std::vector<int> seeds;
 
     for (const auto& elem: cd)
     {
