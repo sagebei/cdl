@@ -1,7 +1,7 @@
 # Condorcet Domain Library 
 
-[![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![C++](https://img.shields.io/badge/C++-Solutions-blue.svg?style=flat&logo=c%2B%2B)](./license)
+[![Python 3.8](https://img.shields.io/badge/python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![C++](https://img.shields.io/badge/C++17-Solutions-blue.svg?style=flat&logo=c%2B%2B)](./license)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
 Condorcet Domain Library (CDL) provides all the functionalities pertaining to 
