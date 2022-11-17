@@ -7,7 +7,7 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 - Closing operations: given a CD, find its corresponding triplet-rules
 - etc. 
 
-CDL is writen in C++ and offers Python Interfaces as a module that can be installed and 
+CDL is a header-only library writen in C++ and offers Python Interfaces as a module that can be installed and 
 used globally, enabling users to seamlessly integrate with tools writen in Python. 
 
 
