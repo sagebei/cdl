@@ -1,12 +1,14 @@
 # Condorcet Domain Library 
 
-Condorcet Domain Library (CDL) provides all the functionalities pertaining to creating and manipulating triplet-rules and condorcet domains (CD), including
+Condorcet Domain Library (CDL) provides all the functionalities pertaining to 
+creating and manipulating triplet-rules and condorcet domains (CD), including
 - assign rule to the triplets by rule scheme
 - fast and efficient construction of a CD given a set of triplet-rules
 - Closing operations: given a CD, find its corresponding triplet-rules
 - etc. 
 
-CDL is writen in C++ and offers Python Interfaces as a module, enabling users to seamlessly integrate with tools writen in Python. 
+CDL is writen in C++ and offers Python Interfaces as a module that can be installed and 
+used globally, enabling users to seamlessly integrate with tools writen in Python. 
 
 
 |Latest Documentation Status| |Stable Documentation Status| |Gitter chat| |GitHub Discussions| |CI| |Build status|
