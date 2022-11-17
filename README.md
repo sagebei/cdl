@@ -76,7 +76,7 @@ Please cite our paper that introduced CDL library if you use it in a scientific 
 
 
 ## Our Team
-DGL is developed and maintained by Bei Zhou and Dr.Soren Riis 
+CDL is developed and maintained by Bei Zhou and Dr.Soren Riis 
 in Theory Group and Game AI group at Queen Mary University of London. 
 
 
