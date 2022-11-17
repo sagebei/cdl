@@ -1,8 +1,6 @@
 #ifndef INSPIRATION_CONDORCET_DOMAIN_H
 #define INSPIRATION_CONDORCET_DOMAIN_H
 
-#endif
-
 #include <array>
 #include <iostream>
 #include <vector>
@@ -61,4 +59,5 @@ public:
 
 };
 
+#endif
 
