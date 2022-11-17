@@ -49,13 +49,13 @@ private:
 public:
     CondorcetDomain(int num=5);
 
-    TRS initialize(bool sort=true);
-    TRS initialize_by_scheme(RuleScheme& scheme) const;
+    TRS& initialize(bool sort=true);
+    TRS& initialize_by_scheme(RuleScheme& scheme) const;
     CD condorcet_domain(TRS& trs);
     int hash_cd(CD& cd);
     void sort_cd(CD& cd);
-    CDS cd_brothers(const CD& cd);
-    TRS cd_to_trs(const CD& cd);
+    CDS& cd_brothers(const CD& cd);
+    TRS& cd_to_trs(const CD& cd);
     void change_rule(TRS& triplet_rules, int index, int label);
     void print_trs(const TRS& trs);
     void print_cd(const CD& cd);

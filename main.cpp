@@ -3,14 +3,14 @@
 
 int main()
 {
-    CondorcetDomain cd(4);
-//    RuleScheme rs;
-//    rs.add({2, 3}, "3N1");
-//    rs.add({4}, "1N2");
+    CondorcetDomain cd(5);
+    RuleScheme rs;
+    rs.add({2, 3}, "3N1");
+    rs.add({4}, "1N3");
 
-//    TRS trs = cd.initialize_by_scheme(rs);
+    TRS trs = cd.initialize_by_scheme(rs);
 //    cd.print_trs(trs);
-    TRS trs = cd.initialize();
+//    TRS trs = cd.initialize();
     CD domain = cd.condorcet_domain(trs);
     cd.print_cd(domain);
 //    cd.sort_cd(domain);

@@ -8,23 +8,23 @@ CondorcetDomain::CondorcetDomain(int num)
 }
 
 void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
+{
+    auto start = triplet_rules.begin();
+    auto end = triplet_rules.end();
+
+    TRS sorted_triplet_rules;
+    while(true)
     {
-        auto start = triplet_rules.begin();
-        auto end = triplet_rules.end();
+        sorted_triplet_rules.push_back(*start);
+        start++;
+        if(start == end) break;
 
-        TRS sorted_triplet_rules;
-        while(true)
-        {
-            sorted_triplet_rules.push_back(*start);
-            start++;
-            if(start == end) break;
-
-            end--;
-            sorted_triplet_rules.push_back(*end);
-            if(start == end) break;
-        }
-        triplet_rules = sorted_triplet_rules;
+        end--;
+        sorted_triplet_rules.push_back(*end);
+        if(start == end) break;
     }
+    triplet_rules = sorted_triplet_rules;
+}
 
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 {
@@ -112,7 +112,7 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
 }
 
 
-TRS CondorcetDomain::initialize(bool sort)
+TRS& CondorcetDomain::initialize(bool sort)
 {
     TRS triplet_rules;
 
@@ -135,7 +135,7 @@ TRS CondorcetDomain::initialize(bool sort)
     return triplet_rules;
 }
 
-TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
+TRS& CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
 {
     unsigned long size = scheme.numbers.size();
     TRS triplet_rules;
@@ -199,7 +199,7 @@ void CondorcetDomain::sort_cd(CD& cd)
     cd.sort(compare_list);
 }
 
-CDS CondorcetDomain::cd_brothers(const CD& cd)
+CDS& CondorcetDomain::cd_brothers(const CD& cd)
 {
     CDS cds;
     std::vector<std::size_t> seeds;
@@ -233,7 +233,7 @@ CDS CondorcetDomain::cd_brothers(const CD& cd)
     return cds;
 }
 
-TRS CondorcetDomain::cd_to_trs(const CD &cd)
+TRS& CondorcetDomain::cd_to_trs(const CD &cd)
 {
     TRS all_trs;
     TRS trs = initialize();
@@ -245,9 +245,9 @@ TRS CondorcetDomain::cd_to_trs(const CD &cd)
             all_trs.push_back(tr);
         }
     }
-    for (const std::list<int> elem : cd)
+    for (const std::list<int>& elem : cd)
     {
-        filter_trs(trs, elem);
+        filter_trs(all_trs, elem);
     }
 
     return all_trs;
