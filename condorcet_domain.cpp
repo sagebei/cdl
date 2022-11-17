@@ -27,33 +27,60 @@ void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
     }
 
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
+{
+    const auto& [first, second, third] = tr.triplet;
+    const std::string& rule = tr.rule;
+
+    auto iter = cd.begin();
+    while(iter != cd.end())
     {
+        //{"1N3", "3N1", "2N3", "2N1"}
+        const std::list<int>& elem = *iter;
+
+        int first_index = get_index(elem, first);
+        int second_index = get_index(elem, second);
+        int third_index = get_index(elem, third);
+
+        if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
+            (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
+            (rule == "2N3" && second_index > first_index && second_index > third_index)  ||
+            (rule == "2N1" && second_index < first_index && second_index < third_index))
+
+        {
+            iter = cd.erase(iter);
+        }
+        else
+            iter ++;
+    }
+
+}
+
+void CondorcetDomain::filter_trs(TRS& trs, const std::list<int> elem)
+{
+    auto iter = trs.begin();
+    while(iter != trs.end())
+    {
+        TripletRule& tr = *iter;
         const auto& [first, second, third] = tr.triplet;
         const std::string& rule = tr.rule;
 
-        auto iter = cd.begin();
-        while(iter != cd.end())
+        int first_index = get_index(elem, first);
+        int second_index = get_index(elem, second);
+        int third_index = get_index(elem, third);
+
+        if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
+            (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
+            (rule == "2N3" && second_index > first_index && second_index > third_index)  ||
+            (rule == "2N1" && second_index < first_index && second_index < third_index))
+
         {
-            //{"1N3", "3N1", "2N3", "2N1"}
-            const std::list<int>& elem = *iter;
-
-            int first_index = get_index(elem, first);
-            int second_index = get_index(elem, second);
-            int third_index = get_index(elem, third);
-
-            if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
-                (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
-                (rule == "2N3" && second_index > first_index && second_index > third_index)  ||
-                (rule == "2N1" && second_index < first_index && second_index < third_index))
-
-            {
-                iter = cd.erase(iter);
-            }
-            else
-                iter ++;
+            iter = trs.erase(iter);
         }
-
+        else
+            iter ++;
     }
+}
+
 
 void CondorcetDomain::expand_cd(CD& cd, int& value)
 {
@@ -218,7 +245,10 @@ TRS CondorcetDomain::cd_to_trs(const CD &cd)
             all_trs.push_back(tr);
         }
     }
-
+    for (const std::list<int> elem : cd)
+    {
+        filter_trs(trs, elem);
+    }
 
     return all_trs;
 

@@ -13,10 +13,10 @@ int main()
     TRS trs = cd.initialize();
     CD domain = cd.condorcet_domain(trs);
     cd.print_cd(domain);
-    cd.sort_cd(domain);
-    cd.print_cd(domain);
-//    TRS all_trs = cd.cd_to_trs(domain);
-//    cd.print_trs(all_trs);
+//    cd.sort_cd(domain);
+//    cd.print_cd(domain);
+    TRS all_trs = cd.cd_to_trs(domain);
+    cd.print_trs(all_trs);
 //    std::cout << all_trs.size() << std::endl;
 //    std::cout << domain.size() << std::endl;
 //    cd.print_cd(domain);
