@@ -21,12 +21,12 @@ int main()
 //    std::cout << domain.size() << std::endl;
 //    cd.print_cd(domain);
 //    std::cout << cd.hash_cd(domain) << std::endl;
-//    CDS bros = cd.cd_brothers(domain);
-//    for (const CD& bro: bros)
-//    {
-//        std::cout << cd.hash_cd(bro) << std::endl;
-//        cd.print_cd(bro);
-//    }
+    CDS bros = cd.cd_brothers(domain);
+    for (const CD& bro: bros)
+    {
+        std::cout << cd.hash_cd(bro) << std::endl;
+        cd.print_cd(bro);
+    }
 //    std::cout << bros.size() << std::endl;
     return 0;
 }
