@@ -194,6 +194,11 @@ int CondorcetDomain::hash_cd(CD& cd)
     return seed;
 }
 
+int CondorcetDomain::hash_cds(CDS &cds)
+{
+
+}
+
 void CondorcetDomain::sort_cd(CD& cd)
 {
     cd.sort(compare_list);
