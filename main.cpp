@@ -22,7 +22,7 @@ int main()
 //    cd.print_cd(domain);
 //    std::cout << cd.hash_cd(domain) << std::endl;
     CDS bros = cd.cd_brothers(domain);
-    for (const CD& bro: bros)
+    for (CD& bro: bros)
     {
         std::cout << cd.hash_cd(bro) << std::endl;
         cd.print_cd(bro);

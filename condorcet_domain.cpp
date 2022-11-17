@@ -112,7 +112,7 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
 }
 
 
-TRS& CondorcetDomain::initialize(bool sort)
+TRS CondorcetDomain::initialize(bool sort)
 {
     TRS triplet_rules;
 
@@ -135,7 +135,7 @@ TRS& CondorcetDomain::initialize(bool sort)
     return triplet_rules;
 }
 
-TRS& CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
+TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
 {
     unsigned long size = scheme.numbers.size();
     TRS triplet_rules;
@@ -213,7 +213,7 @@ void CondorcetDomain::sort_cd(CD& cd)
     cd.sort(compare_list);
 }
 
-CDS& CondorcetDomain::cd_brothers(const CD& cd)
+CDS CondorcetDomain::cd_brothers(const CD& cd)
 {
     CDS cds;
     std::vector<int> seeds;
@@ -247,7 +247,7 @@ CDS& CondorcetDomain::cd_brothers(const CD& cd)
     return cds;
 }
 
-TRS& CondorcetDomain::cd_to_trs(const CD &cd)
+TRS CondorcetDomain::cd_to_trs(const CD &cd)
 {
     TRS all_trs;
     TRS trs = initialize();
