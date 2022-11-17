@@ -6,7 +6,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(cd, m) {
+PYBIND11_MODULE(cdl, m) {
     m.doc() = "functions for CDs"; // optional module docstring
 
     py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
