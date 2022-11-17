@@ -54,12 +54,18 @@ for bro in bros:
 
 ```
 
-## Installation
+## Installation for Python Program
 
-1. Imported target "pybind11::module" includes non-existent path
-- `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
-2. Enable importing the library from global scale
-- mkdir -p "\`python -m site --user-site\`"
+1. Open a terminal and change working directory to the `cdl` folder
+2. Install `Python`, `gcc`, `cmake` if you have not
+3. Run `bash install.sh`. This will download `pybind11` libray that is essential to compile the code,
+   and install the `dgl` library to the site-package folder such that you can import it in any Python program.
+
+
+If you enconter any issues during the installation process, please raise an issue in this repository. Common issues are:
+1. Imported target "pybind11::module" includes non-existent path. This is because the cmake cannot find the python installation.
+It can be fixed by running `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
+where `/opt/anaconda3/bin/python` should be the path to your Python installation. 
 
 
 ## Cite
