@@ -72,7 +72,7 @@ in which you will use the library.
 If you enconter any issues during the installation process, please raise an issue in this repository. Common issues are:
 1. Imported target "pybind11::module" includes non-existent path. This is because the cmake cannot find the python installation.
 It can be fixed by running `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
-where `/opt/anaconda3/bin/python` should be the path to your Python installation. 
+where `/opt/anaconda3/bin/python` should be changed tp the path to your Python installation. 
 
 
 ## Cite
