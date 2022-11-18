@@ -75,7 +75,7 @@ in which you will use the library.
    and install the `dgl` library to the site-package folder in the virtual environment such that you can import it in any Python program.
 
 
-If you enconter any issues during the installation process, please raise an issue in this repository. Common issues are:
+If you encounter any issues during the installation process, please raise an issue in this repository. Common issues are:
 1. Imported target "pybind11::module" includes non-existent path. This is because the cmake cannot find the python installation.
 It can be fixed by running `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
 where `/opt/anaconda3/bin/python` should be changed tp the path to your Python installation. 
@@ -86,7 +86,7 @@ Please cite our paper that introduced CDL library if you use it in a scientific 
 
 
 ## Our Team
-CDL is developed and maintained by Bei Zhou and Dr.Soren Riis 
+CDL is developed and maintained by Bei Zhou and Dr Soren Riis 
 in Theory Group and Game AI group at Queen Mary University of London. 
 
 
