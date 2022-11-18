@@ -18,9 +18,9 @@ fi
 
 (cd build && cmake ..)
 (cd build && make)
-(cd build && mv *.so $dir)
-
-rm -rf "./build"
+#(cd build && mv *.so $dir)
+#
+#rm -rf "./build"
 
 
 

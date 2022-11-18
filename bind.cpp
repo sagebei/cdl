@@ -1,4 +1,5 @@
 #include "condorcet_domain.h"
+#include "utils.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -9,7 +10,7 @@ namespace py = pybind11;
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "functions for CDs"; // optional module docstring
 
-    py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
+//    py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
