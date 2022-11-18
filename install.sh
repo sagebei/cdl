@@ -5,10 +5,10 @@ else
   mkdir "./build"
 fi
 
-# change this environment variable to your virtual environment directory, like "~/venv"
-#export PYTHONUSERBASE='/opt/anaconda3'
-#export PYTHONUSERBASE=$HOME'/venv'
-export PYTHONUSERBASE=$HOME"/PycharmProjects/venv"
+# change this environment variable to your virtual environment directory, like $HOME'/venv'
+export PYTHONUSERBASE='/opt/anaconda3'   # macos
+#export PYTHONUSERBASE=$HOME'/venv'      # hpc
+#export PYTHONUSERBASE=$HOME"/PycharmProjects/venv"  # ubuntu
 
 if [ ! -d "./pybind11" ]; then
   git clone https://github.com/pybind/pybind11.git
