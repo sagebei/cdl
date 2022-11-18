@@ -1,6 +1,6 @@
 # Condorcet Domain Library 
 
-[![Version](https://img.shields.io/badge/Version-0.01-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.1-green.svg)]()
 [![Python 3.8](https://img.shields.io/badge/Python-3.6+-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)](./license)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
