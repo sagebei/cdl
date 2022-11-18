@@ -7,8 +7,8 @@ fi
 
 # change this environment variable to your virtual environment directory, like "~/venv"
 #export PYTHONUSERBASE='/opt/anaconda3'
-#export PYTHONUSERBASE='~/venv'
-export PYTHONUSERBASE='~/PycharmProjects/venv'
+#export PYTHONUSERBASE=$HOME'/venv'
+export PYTHONUSERBASE=$HOME"/PycharmProjects/venv"
 
 if [ ! -d "./pybind11" ]; then
   git clone https://github.com/pybind/pybind11.git
@@ -26,7 +26,7 @@ echo $dir
 (cd build && make)
 (cd build && mv *.so $dir)
 
-#rm -rf "./build"
+rm -rf "./build"
 
 
 
