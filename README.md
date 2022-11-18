@@ -63,7 +63,7 @@ for bro in bros:
 
 1. Open a terminal and change working directory to the `cdl` folder
 2. Install `Python`, `gcc`, `cmake` if you have not
-3. Edit the export `PYTHONUSERBASE` variable to your virtual environment directory
+3. In `install.sh`, Edit the `PYTHONUSERBASE` variable to your virtual environment directory
 in which you will use the library. 
 4. Run `bash install.sh`. This will download `pybind11` libray that is essential to compile the code,
    and install the `dgl` library to the site-package folder such that you can import it in any Python program.
