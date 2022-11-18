@@ -7,7 +7,7 @@ rs.add([4], "1N3")
 
 trs = cd.initialize_by_scheme(rs)
 domain = cd.condorcet_domain(trs)
-print("Domain size", len(domain))
+print("Domain size: ", len(domain))
 cd.print_cd(domain)
 
 bros = cd.cd_brothers(domain)  # bros include domain itself
