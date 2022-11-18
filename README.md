@@ -66,7 +66,7 @@ for bro in bros:
 3. In `install.sh`, Edit the `PYTHONUSERBASE` variable to your virtual environment directory
 in which you will use the library. 
 4. Run `bash install.sh`. This will download `pybind11` libray that is essential to compile the code,
-   and install the `dgl` library to the site-package folder such that you can import it in any Python program.
+   and install the `dgl` library to the site-package folder in the virtual environment such that you can import it in any Python program.
 
 
 If you enconter any issues during the installation process, please raise an issue in this repository. Common issues are:
