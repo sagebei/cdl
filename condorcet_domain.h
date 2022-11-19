@@ -45,15 +45,16 @@ private:
 
 public:
     CondorcetDomain(int num=5);
-    TRS initialize(bool sort=true);
-    TRS initialize_by_scheme(RuleScheme& scheme) const;
+    TRS init(bool sort=true);
+    TRS init_by_scheme(RuleScheme& scheme) const;
+    void assign_rule(TRS& trs, int index, std::string rule);
     CD condorcet_domain(TRS& trs);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
     CDS cd_brothers(const CD& cd);
     TRS cd_to_trs(const CD& cd);
-    void change_rule(TRS& triplet_rules, int index, int label);
+
     void print_trs(const TRS& trs);
     void print_cd(const CD& cd);
 

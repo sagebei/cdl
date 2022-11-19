@@ -112,7 +112,7 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
 }
 
 
-TRS CondorcetDomain::initialize(bool sort)
+TRS CondorcetDomain::init(bool sort)
 {
     TRS triplet_rules;
 
@@ -124,7 +124,7 @@ TRS CondorcetDomain::initialize(bool sort)
             {
                 TripletRule tr;
                 tr.triplet = {i, j, k};
-                tr.rule = rules[1];
+                tr.rule = "";
                 triplet_rules.push_back(tr);
             }
         }
@@ -135,7 +135,7 @@ TRS CondorcetDomain::initialize(bool sort)
     return triplet_rules;
 }
 
-TRS CondorcetDomain::initialize_by_scheme(RuleScheme& scheme) const
+TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
 {
     unsigned long size = scheme.numbers.size();
     TRS triplet_rules;
@@ -276,11 +276,10 @@ TRS CondorcetDomain::cd_to_trs(const CD &cd)
 
 }
 
-void CondorcetDomain::change_rule(TRS& triplet_rules, int index, int label)
+void CondorcetDomain::assign_rule(TRS& trs, int index, std::string rule)
 {
-    std::array<std::string, 4> rules = {"1N3", "3N1", "2N3", "2N1"};
-    TripletRule& tr = *std::next(triplet_rules.begin(), index);
-    tr.rule = rules[label];
+    TripletRule& tr = *std::next(trs.begin(), index);
+    tr.rule = rule;
 }
 
 void CondorcetDomain::print_trs(const TRS& trs)
