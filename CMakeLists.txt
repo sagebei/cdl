@@ -3,21 +3,12 @@ project(cdl)
 set(CMAKE_CXX_STANDARD 17)
 find_package(Python COMPONENTS Interpreter Development)
 
-# Pybind11
-#add_subdirectory(pybind11)
-#pybind11_add_module(cdl
-#                    condorcet_domain.h
-#                    condorcet_domain.cpp
-#                    utils.h
-#                    utils.cpp
-#                    bind.cpp) # define the python module
-
 add_executable(cdl
-               main.cpp
-               condorcet_domain.cpp
-               condorcet_domain.h
-               utils.h
-               utils.cpp)
+        src/main.cpp
+        src/condorcet_domain.cpp
+        headers/condorcet_domain.h
+        headers/utils.h
+        src/utils.cpp)
 
 
 

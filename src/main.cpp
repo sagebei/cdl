@@ -1,4 +1,4 @@
-#include "condorcet_domain.h"
+#include "../headers/condorcet_domain.h"
 
 
 int main()

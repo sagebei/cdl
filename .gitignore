@@ -1,11 +1,14 @@
 # Prerequisites
+bind/build
+bind/build/*
+bind/pybind11
+bind/pybind11/*
 
 build/
 build/*
 cmake-build-debug/
 cmake-build-debug/*
-pybind11/
-pybind11/*
+
 .idea/
 .idea/*
 

@@ -1,5 +1,5 @@
-#include "condorcet_domain.h"
-#include "utils.h"
+#include "../headers/condorcet_domain.h"
+#include "../headers/utils.h"
 
 CondorcetDomain::CondorcetDomain(int num)
 {
@@ -258,7 +258,7 @@ CDS CondorcetDomain::cd_brothers(const CD& cd)
 TRS CondorcetDomain::cd_to_trs(const CD &cd)
 {
     TRS all_trs;
-    TRS trs = initialize();
+    TRS trs = init();
     for (auto tr: trs)
     {
         for (std::string rule: rules)
