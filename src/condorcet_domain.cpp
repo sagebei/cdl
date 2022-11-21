@@ -276,10 +276,11 @@ TRS CondorcetDomain::cd_to_trs(const CD &cd)
 
 }
 
-void CondorcetDomain::assign_rule(TRS& trs, int index, std::string rule)
+TRS& CondorcetDomain::assign_rule(TRS& trs, int index, std::string rule)
 {
     TripletRule& tr = *std::next(trs.begin(), index);
     tr.rule = rule;
+    return trs;
 }
 
 void CondorcetDomain::print_trs(const TRS& trs)

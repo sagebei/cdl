@@ -25,6 +25,7 @@ PYBIND11_MODULE(cdl, m) {
 
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
             .def(py::init<int>(), py::arg("n")=5)
+            .def_readwrite("rules", &CondorcetDomain::rules)
             .def("init", &CondorcetDomain::init, py::arg("sort")=false)
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"))
             .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("index"), py::arg("rule"))

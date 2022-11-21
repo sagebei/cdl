@@ -35,8 +35,6 @@ class CondorcetDomain
 {
 private:
     int n;
-    std::array<std::string, 4> rules;
-
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
@@ -44,10 +42,12 @@ private:
     TRS fetch_triplet_rules(TRS& trs, int i);
 
 public:
+    std::array<std::string, 4> rules;
+
     CondorcetDomain(int num=5);
     TRS init(bool sort=true);
     TRS init_by_scheme(RuleScheme& scheme) const;
-    void assign_rule(TRS& trs, int index, std::string rule);
+    TRS& assign_rule(TRS& trs, int index, std::string rule);
     CD condorcet_domain(TRS& trs);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);

@@ -12,6 +12,9 @@ int main()
     TRS trs = cd.init();
 
     cd.assign_rule(trs, 0, "3N1");
+    cd.assign_rule(trs, 1, "3N1");
+    cd.assign_rule(trs, 2, "3N1");
+//    cd.assign_rule(trs, 3, "3N1");
     cd.print_trs(trs);
 
     CD domain = cd.condorcet_domain(trs);
