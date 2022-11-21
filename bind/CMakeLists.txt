@@ -8,10 +8,9 @@ find_package(Python COMPONENTS Interpreter Development)
 add_subdirectory(pybind11)
 pybind11_add_module(cdl
                     bind.cpp
-                    ../headers/condorcet_domain.h
-                    ../headers/utils.h
                     ../src/condorcet_domain.cpp
                     ../src/utils.cpp) # define the python module
+target_include_directories(cdl PUBLIC ../include)
 
 
 
