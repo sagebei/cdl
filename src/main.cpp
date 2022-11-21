@@ -1,4 +1,4 @@
-#include "../headers/condorcet_domain.h"
+#include "condorcet_domain.h"
 
 
 int main()
@@ -8,8 +8,8 @@ int main()
 //    rs.add({2}, "3N1");
 //    rs.add({3}, "1N3");
 //
-//    TRS trs = cd.initialize_by_scheme(rs);
-    TRS trs = cd.initialize();
+//    TRS trs = cd.init_by_scheme(rs);
+    TRS trs = cd.init();
 
     cd.assign_rule(trs, 0, "3N1");
     cd.print_trs(trs);

@@ -1,5 +1,5 @@
-#include "../headers/condorcet_domain.h"
-#include "../headers/utils.h"
+#include "condorcet_domain.h"
+#include "utils.h"
 
 CondorcetDomain::CondorcetDomain(int num)
 {
