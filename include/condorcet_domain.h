@@ -43,6 +43,7 @@ private:
 
 public:
     std::array<std::string, 4> rules;
+    int num_triplets;
 
     CondorcetDomain(int num=5);
     TRS init(bool sort=true);

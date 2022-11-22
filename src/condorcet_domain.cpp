@@ -1,10 +1,11 @@
 #include "condorcet_domain.h"
 #include "utils.h"
 
-CondorcetDomain::CondorcetDomain(int num)
+CondorcetDomain::CondorcetDomain(int n)
 {
-    n = num;
+    this->n = n;
     rules = {"1N3", "3N1", "2N3", "2N1"};
+    num_triplets = factorial(n) / (factorial(n - 3) * 6);
 }
 
 void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
