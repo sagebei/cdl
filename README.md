@@ -11,6 +11,7 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 - fast and efficient construction of a CD given a set of triplet-rules
 - Closing operation: given a CD, find its corresponding triplet-rules
 - Hash a set of brother CDs such that all the CDs in it have the same hash number. 
+- Calculate the size of any the subset CDs.
 - etc.
 
 CDL is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
