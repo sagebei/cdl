@@ -34,6 +34,7 @@ class CondorcetDomain
 {
 private:
     int n;
+    std::vector<int> triplet_elems;
 
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);

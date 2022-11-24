@@ -6,6 +6,8 @@ CondorcetDomain::CondorcetDomain(int n)
     this->n = n;
     rules = {"1N3", "3N1", "2N3", "2N1"};
     num_triplets = factorial(n) / (factorial(n - 3) * 6);
+    for (int i = 1; i <=n; i ++)
+        triplet_elems.push_back(i);
 }
 
 void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
@@ -182,8 +184,7 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
 std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(TRS& trs, int sub_n)
 {
     CondorcetDomain cd = CondorcetDomain(sub_n);
-    std::vector<int> whole_set = {1, 2, 3, 4, 5};
-    std::vector<std::vector<int>> subsets = combinations(whole_set, sub_n);
+    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
 
     std::vector<std::size_t> sizes;
     for (std::vector<int>& subset: subsets)  // for each subset
