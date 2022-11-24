@@ -1,5 +1,4 @@
-#ifndef INSPIRATION_CONDORCET_DOMAIN_H
-#define INSPIRATION_CONDORCET_DOMAIN_H
+#pragma once
 
 #include <array>
 #include <iostream>
@@ -35,6 +34,7 @@ class CondorcetDomain
 {
 private:
     int n;
+
     void sort_triplet_rules(TRS& triplet_rules);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
@@ -46,10 +46,13 @@ public:
     int num_triplets;
 
     CondorcetDomain(int num=5);
+
     TRS init(bool sort=true);
     TRS init_by_scheme(RuleScheme& scheme) const;
     TRS& assign_rule(TRS& trs, int index, std::string rule);
+
     CD condorcet_domain(TRS& trs);
+    std::vector<std::size_t> subset_cd_sizes(TRS& trs, int sub_n);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
@@ -61,5 +64,5 @@ public:
 
 };
 
-#endif
+
 

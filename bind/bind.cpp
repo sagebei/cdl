@@ -10,12 +10,12 @@ namespace py = pybind11;
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "functions for CDs"; // optional module docstring
 
-//    py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
-
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
             .def_readwrite("triplet", &TripletRule::triplet)
             .def_readwrite("rule", &TripletRule::rule);
+
+    py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
 
     py::class_<RuleScheme>(m, "RuleScheme")
             .def(py::init<>())
@@ -31,6 +31,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"))
             .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))
+            .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("cd_brothers", &CondorcetDomain::cd_brothers, py::arg("cd"))
             .def("cd_to_trs", &CondorcetDomain::cd_to_trs, py::arg("cd"))

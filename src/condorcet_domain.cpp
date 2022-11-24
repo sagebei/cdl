@@ -112,7 +112,6 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
     return fetched_trs;
 }
 
-
 TRS CondorcetDomain::init(bool sort)
 {
     TRS triplet_rules;
@@ -178,6 +177,49 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     }
 
     return cd;
+}
+
+std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(TRS& trs, int sub_n)
+{
+    CondorcetDomain cd = CondorcetDomain(sub_n);
+    std::vector<int> whole_set = {1, 2, 3, 4, 5};
+    std::vector<std::vector<int>> subsets = combinations(whole_set, sub_n);
+
+    std::vector<std::size_t> sizes;
+    for (std::vector<int>& subset: subsets)  // for each subset
+    {
+        TRS sub_trs;
+        std::map<int, int> dict;
+        for (auto& tr: trs)  // find the triplet that is contained in the subset
+        {
+            int counter = 0;
+            for (int i = 0; i < subset.size(); i ++)
+            {
+                int value = subset[i];
+                dict[value] = i + 1;
+                std::array<int, 3> triplet = tr.triplet;
+                if (std::find(std::begin(triplet), std::end(triplet), value) != std::end(triplet))
+                    counter += 1;
+            }
+            if (counter == 3)  // if all the element in the triplet is present in the subset
+            {
+                TripletRule sub_tr;
+                sub_tr.rule = tr.rule;
+                for (int i = 0; i < tr.triplet.size(); i ++)
+                    sub_tr.triplet[i] = dict[tr.triplet[i]];
+                sub_trs.push_back(sub_tr);
+            }
+        }
+
+        for (auto it = dict.begin(); it != dict.end(); it++)
+            std::cout << it->first << ":" << it->second << " ";
+        std::cout << std::endl;
+        print_trs(sub_trs);
+        std::size_t sub_size = cd.condorcet_domain(sub_trs).size();
+        sizes.push_back(sub_size);
+    }
+
+    return sizes;
 }
 
 std::size_t CondorcetDomain::hash_cd(CD& cd)

@@ -3,14 +3,19 @@
 
 int main()
 {
-    CondorcetDomain cd(8);
-    std::cout << cd.num_triplets << std::endl;
-//    RuleScheme rs;
-//    rs.add({2}, "3N1");
-//    rs.add({3}, "1N3");
-//
-//    TRS trs = cd.init_by_scheme(rs);
+    CondorcetDomain cd(5);
+//    std::cout << cd.num_triplets << std::endl;
+    RuleScheme rs;
+    rs.add({2}, "3N1");
+    rs.add({3}, "1N3");
+
+    TRS trs = cd.init_by_scheme(rs);
+    cd.print_trs(trs);
 //    TRS trs = cd.init();
+    std::cout << cd.condorcet_domain(trs).size() << std::endl;
+    auto cd_sizes = cd.subset_cd_sizes(trs, 4);
+    for (auto size: cd_sizes)
+        std::cout << size << std::endl;
 //
 //    cd.assign_rule(trs, 0, "3N1");
 //    cd.assign_rule(trs, 1, "3N1");
@@ -31,7 +36,7 @@ int main()
 //    CDS bros = cd.cd_brothers(domain);
 //    for (CD& bro: bros)
 //    {
-////        std::cout << cd.hash_cd(bro) << std::endl;
+//        std::cout << cd.hash_cd(bro) << std::endl;
 //        cd.print_cd(bro);
 //    }
 //    std::cout << cd.hash_cd_brothers(bros) << std::endl;

@@ -13,7 +13,7 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 - Hash a set of brother CDs such that all the CDs in it have the same hash number. 
 - etc.
 
-CDL is a header-only library writen in C++ and offers Python Interfaces as a module that can be
+CDL is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
 installed and used globally, enabling users to seamlessly integrate with tools writen in Python.
 
 ## Get started with C++
