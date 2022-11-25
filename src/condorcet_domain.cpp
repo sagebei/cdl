@@ -212,10 +212,6 @@ std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(TRS& trs, int sub_n)
             }
         }
 
-        for (auto it = dict.begin(); it != dict.end(); it++)
-            std::cout << it->first << ":" << it->second << " ";
-        std::cout << std::endl;
-        print_trs(sub_trs);
         std::size_t sub_size = cd.condorcet_domain(sub_trs).size();
         sizes.push_back(sub_size);
     }

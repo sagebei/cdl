@@ -7,7 +7,7 @@ int main()
 //    std::cout << cd.num_triplets << std::endl;
     RuleScheme rs;
     rs.add({2}, "3N1");
-    rs.add({3}, "1N3");
+    rs.add({3, 4}, "1N3");
 
     TRS trs = cd.init_by_scheme(rs);
     cd.print_trs(trs);
