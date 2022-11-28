@@ -12,7 +12,7 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 - Closing operation: given a CD, find its corresponding triplet-rules
 - Hash a set of brother CDs such that all the CDs in it have the same hash number. 
 - Calculate the size of any the subset CDs.
-- Supported 4 rules: 1N3, 3N1, 2N3, and 2N1. Non-supposed rules are treated as not-assigned.
+- Supported 4 rules: `1N3`, `3N1`, `2N3`, and `2N1`. Non-supposed rules are treated as not-assigned.
 - etc.
 
 CDL is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
