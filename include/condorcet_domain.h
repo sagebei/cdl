@@ -48,10 +48,14 @@ public:
 
     CondorcetDomain(int num=5);
 
+    // creating and manipulating TRS
     TRS init(bool sort=true);
     TRS init_by_scheme(RuleScheme& scheme) const;
-    TRS& assign_rule(TRS& trs, int index, std::string rule);
+    TRS& assign(TRS& trs, std::array<int, 3>  triplet, std::string rule);
+    TRS& assign_by_index(TRS& trs, int index, std::string rule);
+    std::vector<std::array<int, 3>> unassigned_triplets(TRS& trs);
 
+    // manipulating CDs
     CD condorcet_domain(TRS& trs);
     std::vector<std::size_t> subset_cd_sizes(TRS& trs, int sub_n);
     std::size_t hash_cd(CD& cd);
@@ -60,6 +64,7 @@ public:
     CDS cd_brothers(const CD& cd);
     TRS cd_to_trs(const CD& cd);
 
+    // printing functions
     void print_trs(const TRS& trs);
     void print_cd(const CD& cd);
 

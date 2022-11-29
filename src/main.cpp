@@ -4,18 +4,32 @@
 int main()
 {
     CondorcetDomain cd(5);
-//    std::cout << cd.num_triplets << std::endl;
-    RuleScheme rs;
-    rs.add({2}, "3N1");
-    rs.add({3, 4}, "1N3");
-
-    TRS trs = cd.init_by_scheme(rs);
+    TRS trs = cd.init();
     cd.print_trs(trs);
+    cd.assign(trs, {1, 2, 5}, "3N1");
+    cd.assign(trs, {1, 3, 5}, "3N1");
+    cd.assign(trs, {1, 2, 3}, "3N1");
+    cd.assign(trs, {1, 4, 5}, "3N1");
+    cd.print_trs(trs);
+    auto unassigned = cd.unassigned_triplets(trs);
+    for (auto& u: unassigned)
+    {
+        for (int i: u)
+            std::cout << i;
+       std::cout << std::endl;
+    }
+//    std::cout << cd.num_triplets << std::endl;
+//    RuleScheme rs;
+//    rs.add({2}, "3N1");
+//    rs.add({3, 4}, "1N3");
+//
+//    TRS trs = cd.init_by_scheme(rs);
+//    cd.print_trs(trs);
 //    TRS trs = cd.init();
-    std::cout << cd.condorcet_domain(trs).size() << std::endl;
-    auto cd_sizes = cd.subset_cd_sizes(trs, 4);
-    for (auto size: cd_sizes)
-        std::cout << size << std::endl;
+//    std::cout << cd.condorcet_domain(trs).size() << std::endl;
+//    auto cd_sizes = cd.subset_cd_sizes(trs, 4);
+//    for (auto size: cd_sizes)
+//        std::cout << size << std::endl;
 //
 //    cd.assign_rule(trs, 0, "3N1");
 //    cd.assign_rule(trs, 1, "3N1");

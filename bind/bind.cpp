@@ -25,16 +25,18 @@ PYBIND11_MODULE(cdl, m) {
 
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
             .def(py::init<int>(), py::arg("n")=5)
-            .def_readonly("rules", &CondorcetDomain::rules)
+            .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
-            .def("init", &CondorcetDomain::init, py::arg("sort")=false)
+            .def("init", &CondorcetDomain::init, py::arg("sort")=false)  // creating and manipulating TRS
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"))
-            .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("index"), py::arg("rule"))
-            .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))
+            .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
+            .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
+            .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
+            .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("cd_brothers", &CondorcetDomain::cd_brothers, py::arg("cd"))
             .def("cd_to_trs", &CondorcetDomain::cd_to_trs, py::arg("cd"))
-            .def("print_cd", &CondorcetDomain::print_cd, py::arg("cd"))
+            .def("print_cd", &CondorcetDomain::print_cd, py::arg("cd"))  // printing functions
             .def("print_trs", &CondorcetDomain::print_trs, py::arg("trs"));
 }

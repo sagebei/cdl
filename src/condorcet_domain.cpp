@@ -316,11 +316,32 @@ TRS CondorcetDomain::cd_to_trs(const CD &cd)
 
 }
 
-TRS& CondorcetDomain::assign_rule(TRS& trs, int index, std::string rule)
+TRS& CondorcetDomain::assign(TRS& trs, std::array<int, 3>  triplet, std::string rule)
+{
+    for (TripletRule& tr: trs)
+    {
+        if (tr.triplet == triplet)
+            tr.rule = rule;
+    }
+    return trs;
+}
+
+TRS& CondorcetDomain::assign_by_index(TRS& trs, int index, std::string rule)
 {
     TripletRule& tr = *std::next(trs.begin(), index);
     tr.rule = rule;
     return trs;
+}
+
+std::vector<std::array<int, 3>> CondorcetDomain::unassigned_triplets(TRS& trs)
+{
+    std::vector<std::array<int, 3>> unassigned;
+    for (TripletRule& tr: trs)
+    {
+        if (tr.rule.empty())
+            unassigned.push_back(tr.triplet);
+    }
+    return unassigned;
 }
 
 void CondorcetDomain::print_trs(const TRS& trs)
