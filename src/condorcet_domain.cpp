@@ -344,7 +344,8 @@ std::vector<std::array<int, 3>> CondorcetDomain::unassigned_triplets(TRS& trs)
     return unassigned;
 }
 
-void CondorcetDomain::print_trs(const TRS& trs)
+
+void print_trs(const TRS& trs)
 {
     for (auto const& tr: trs)
     {
@@ -353,7 +354,7 @@ void CondorcetDomain::print_trs(const TRS& trs)
     std::cout << std::endl;
 }
 
-void CondorcetDomain::print_cd(const CD& cd)
+void print_cd(const CD& cd)
 {
     for (auto& elem: cd)
     {

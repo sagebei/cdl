@@ -3,6 +3,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
+#include <pybind11/iostream.h>
 
 
 namespace py = pybind11;
@@ -36,7 +37,14 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("cd_brothers", &CondorcetDomain::cd_brothers, py::arg("cd"))
-            .def("cd_to_trs", &CondorcetDomain::cd_to_trs, py::arg("cd"))
-            .def("print_cd", &CondorcetDomain::print_cd, py::arg("cd"))  // printing functions
-            .def("print_trs", &CondorcetDomain::print_trs, py::arg("trs"));
+            .def("cd_to_trs", &CondorcetDomain::cd_to_trs, py::arg("cd"));
+
+    // print function
+    m.def("print_trs", [](TRS trs) {
+        py::scoped_ostream_redirect stream(
+                std::cout,
+                py::module_::import("sys").attr("stdout")
+        );
+        print_trs(trs);
+        }, py::arg("trs"));
 }
