@@ -8,7 +8,7 @@
 namespace py = pybind11;
 
 PYBIND11_MODULE(cdl, m) {
-    m.doc() = "functions for CDs"; // optional module docstring
+    m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
