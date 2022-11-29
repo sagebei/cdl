@@ -20,7 +20,7 @@ if [ ! -d $SITE_PACKAGES ]; then
   mkdir $SITE_PACKAGES
 fi
 
-
+# removing the exising outdated library
 rm $SITE_PACKAGES/cdl*
 
 (cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
