@@ -55,7 +55,7 @@ public:
     TRS init_by_scheme(RuleScheme& scheme) const;
     TRS& assign(TRS& trs, Triplet triplet, std::string rule);
     TRS& assign_by_index(TRS& trs, int index, std::string rule);
-    std::vector<std::array<int, 3>> unassigned_triplets(TRS& trs);
+    std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(TRS trs, Triplet triplet);
 
     // manipulating CDs

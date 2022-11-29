@@ -184,10 +184,10 @@ TRS& CondorcetDomain::assign_by_index(TRS& trs, int index, std::string rule)
     return trs;
 }
 
-std::vector<Triplet> CondorcetDomain::unassigned_triplets(TRS& trs)
+std::vector<Triplet> CondorcetDomain::unassigned_triplets(const TRS& trs)
 {
     std::vector<Triplet> unassigned;
-    for (TripletRule& tr: trs)
+    for (const TripletRule& tr: trs)
     {
         if (tr.rule.empty())
             unassigned.push_back(tr.triplet);
