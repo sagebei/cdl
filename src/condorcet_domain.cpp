@@ -10,23 +10,23 @@ CondorcetDomain::CondorcetDomain(int n)
         triplet_elems.push_back(i);
 }
 
-void CondorcetDomain::sort_triplet_rules(TRS& triplet_rules)
+void CondorcetDomain::sort_trs(TRS& trs)
 {
-    auto start = triplet_rules.begin();
-    auto end = triplet_rules.end();
+    auto start = trs.begin();
+    auto end = trs.end();
 
-    TRS sorted_triplet_rules;
+    TRS sorted_trs;
     while(true)
     {
-        sorted_triplet_rules.push_back(*start);
+        sorted_trs.push_back(*start);
         start++;
         if(start == end) break;
 
         end--;
-        sorted_triplet_rules.push_back(*end);
+        sorted_trs.push_back(*end);
         if(start == end) break;
     }
-    triplet_rules = sorted_triplet_rules;
+    trs = sorted_trs;
 }
 
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
@@ -103,7 +103,7 @@ void CondorcetDomain::expand_cd(CD& cd, int& value)
     cd = updated_cd;
 }
 
-TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
+TRS CondorcetDomain::fetch_trs(TRS& trs, int i)
 {
     TRS fetched_trs;
     for (const auto& tr: trs)
@@ -116,7 +116,7 @@ TRS CondorcetDomain::fetch_triplet_rules(TRS& trs, int i)
 
 TRS CondorcetDomain::init(bool sort)
 {
-    TRS triplet_rules;
+    TRS trs;
 
     for (int i = 1; i <= n-2; i++)
     {
@@ -127,20 +127,20 @@ TRS CondorcetDomain::init(bool sort)
                 TripletRule tr;
                 tr.triplet = {i, j, k};
                 tr.rule = "";
-                triplet_rules.push_back(tr);
+                trs.push_back(tr);
             }
         }
     }
     if(sort)
-        sort_triplet_rules(triplet_rules);
+        sort_trs(trs);
 
-    return triplet_rules;
+    return trs;
 }
 
 TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
 {
     unsigned long size = scheme.numbers.size();
-    TRS triplet_rules;
+    TRS trs;
 
     for (int i = 1; i <= n-2; i++)
     {
@@ -160,11 +160,11 @@ TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
                     }
 
                 }
-                triplet_rules.push_back(tr);
+                trs.push_back(tr);
             }
         }
     }
-    return triplet_rules;
+    return trs;
 }
 
 TRS& CondorcetDomain::assign(TRS& trs, Triplet  triplet, std::string rule)
@@ -213,7 +213,7 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     CD cd = {{1, 2}, {2, 1}};
     for (int i = 3; i <= n; i++) {
         expand_cd(cd, i);
-        TRS fetched_trs = fetch_triplet_rules(trs, i);
+        TRS fetched_trs = fetch_trs(trs, i);
         for (const TripletRule& tr: fetched_trs) {
             filter_cd(tr, cd);
         }

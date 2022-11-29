@@ -38,11 +38,11 @@ private:
     int n;
     std::vector<int> triplet_elems;
 
-    void sort_triplet_rules(TRS& triplet_rules);
+    void sort_trs(TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
     void filter_trs(TRS& trs, const std::list<int>& elem);
-    TRS fetch_triplet_rules(TRS& trs, int i);
+    TRS fetch_trs(TRS& trs, int i);
 
 public:
     std::array<std::string, 4> rules;
