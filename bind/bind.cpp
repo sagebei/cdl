@@ -36,8 +36,8 @@ PYBIND11_MODULE(cdl, m) {
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
-            .def("cd_brothers", &CondorcetDomain::cd_brothers, py::arg("cd"))
-            .def("cd_to_trs", &CondorcetDomain::cd_to_trs, py::arg("cd"));
+            .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
+            .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"));
 
     // print function
     m.def("print_trs", [](TRS trs) {

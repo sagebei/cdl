@@ -61,8 +61,8 @@ public:
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
-    CDS cd_brothers(const CD& cd);
-    TRS cd_to_trs(const CD& cd);
+    CDS domain_brothers(const CD& cd);
+    TRS domain_to_trs(const CD& cd);
 
 };
 

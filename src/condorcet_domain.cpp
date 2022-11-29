@@ -261,7 +261,7 @@ void CondorcetDomain::sort_cd(CD& cd)
     cd.sort(compare_list);
 }
 
-CDS CondorcetDomain::cd_brothers(const CD& cd)
+CDS CondorcetDomain::domain_brothers(const CD& cd)
 {
     CDS cds;
     std::vector<int> seeds;
@@ -295,7 +295,7 @@ CDS CondorcetDomain::cd_brothers(const CD& cd)
     return cds;
 }
 
-TRS CondorcetDomain::cd_to_trs(const CD &cd)
+TRS CondorcetDomain::domain_to_trs(const CD &cd)
 {
     TRS all_trs;
     TRS trs = init();
