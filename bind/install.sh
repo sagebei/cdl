@@ -23,7 +23,7 @@ fi
 
 rm $SITE_PACKAGES/cdl*
 
-(cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ../ ..)
+(cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
 (cd build && make)
 (cd build && mv *.so $SITE_PACKAGES)
 
