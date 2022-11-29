@@ -8,9 +8,11 @@
 #include <map>
 #include <algorithm>
 
+typedef std::array<int, 3> Triplet;
+
 struct TripletRule
 {
-    std::array<int, 3> triplet;
+    Triplet triplet;
     std::string rule;
 };
 
@@ -51,9 +53,10 @@ public:
     // creating and manipulating TRS
     TRS init(bool sort=true);
     TRS init_by_scheme(RuleScheme& scheme) const;
-    TRS& assign(TRS& trs, std::array<int, 3>  triplet, std::string rule);
+    TRS& assign(TRS& trs, Triplet triplet, std::string rule);
     TRS& assign_by_index(TRS& trs, int index, std::string rule);
     std::vector<std::array<int, 3>> unassigned_triplets(TRS& trs);
+    std::vector<std::size_t> evaluate_rules_on_triplet(TRS trs, Triplet triplet);
 
     // manipulating CDs
     CD condorcet_domain(TRS& trs);

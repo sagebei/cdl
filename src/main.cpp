@@ -5,19 +5,24 @@ int main()
 {
     CondorcetDomain cd(5);
     TRS trs = cd.init();
-    cd.print_trs(trs);
+
     cd.assign(trs, {1, 2, 5}, "3N1");
-    cd.assign(trs, {1, 3, 5}, "3N1");
-    cd.assign(trs, {1, 2, 3}, "3N1");
-    cd.assign(trs, {1, 4, 5}, "3N1");
-    cd.print_trs(trs);
-    auto unassigned = cd.unassigned_triplets(trs);
-    for (auto& u: unassigned)
-    {
-        for (int i: u)
-            std::cout << i;
-       std::cout << std::endl;
-    }
+    print_trs(trs);
+    std::vector<std::size_t> sizes = cd.evaluate_rules_on_triplet(trs, {1, 2, 3});
+    for (std::size_t s: sizes)
+        std::cout << s << " ";
+
+//    cd.assign(trs, {1, 3, 5}, "3N1");
+//    cd.assign(trs, {1, 2, 3}, "3N1");
+//    cd.assign(trs, {1, 4, 5}, "3N1");
+//    cd.print_trs(trs);
+//    auto unassigned = cd.unassigned_triplets(trs);
+//    for (auto& u: unassigned)
+//    {
+//        for (int i: u)
+//            std::cout << i;
+//       std::cout << std::endl;
+//    }
 //    std::cout << cd.num_triplets << std::endl;
 //    RuleScheme rs;
 //    rs.add({2}, "3N1");

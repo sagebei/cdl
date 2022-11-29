@@ -167,6 +167,47 @@ TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
     return triplet_rules;
 }
 
+TRS& CondorcetDomain::assign(TRS& trs, Triplet  triplet, std::string rule)
+{
+    for (TripletRule& tr: trs)
+    {
+        if (tr.triplet == triplet)
+            tr.rule = rule;
+    }
+    return trs;
+}
+
+TRS& CondorcetDomain::assign_by_index(TRS& trs, int index, std::string rule)
+{
+    TripletRule& tr = *std::next(trs.begin(), index);
+    tr.rule = rule;
+    return trs;
+}
+
+std::vector<Triplet> CondorcetDomain::unassigned_triplets(TRS& trs)
+{
+    std::vector<Triplet> unassigned;
+    for (TripletRule& tr: trs)
+    {
+        if (tr.rule.empty())
+            unassigned.push_back(tr.triplet);
+    }
+    return unassigned;
+}
+
+std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Triplet triplet)
+{
+    std::vector<std::size_t> sizes = {};
+    for (std::string& rule: rules)
+    {
+        assign(trs, triplet, rule);
+        std::size_t s = condorcet_domain(trs).size();
+        sizes.push_back(s);
+    }
+    return sizes;
+}
+
+
 CD CondorcetDomain::condorcet_domain(TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};
@@ -198,7 +239,7 @@ std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(TRS& trs, int sub_n)
             {
                 int value = subset[i];
                 dict[value] = i + 1;
-                std::array<int, 3> triplet = tr.triplet;
+                Triplet triplet = tr.triplet;
                 if (std::find(std::begin(triplet), std::end(triplet), value) != std::end(triplet))
                     counter += 1;
             }
@@ -316,33 +357,6 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd)
 
 }
 
-TRS& CondorcetDomain::assign(TRS& trs, std::array<int, 3>  triplet, std::string rule)
-{
-    for (TripletRule& tr: trs)
-    {
-        if (tr.triplet == triplet)
-            tr.rule = rule;
-    }
-    return trs;
-}
-
-TRS& CondorcetDomain::assign_by_index(TRS& trs, int index, std::string rule)
-{
-    TripletRule& tr = *std::next(trs.begin(), index);
-    tr.rule = rule;
-    return trs;
-}
-
-std::vector<std::array<int, 3>> CondorcetDomain::unassigned_triplets(TRS& trs)
-{
-    std::vector<std::array<int, 3>> unassigned;
-    for (TripletRule& tr: trs)
-    {
-        if (tr.rule.empty())
-            unassigned.push_back(tr.triplet);
-    }
-    return unassigned;
-}
 
 
 void print_trs(const TRS& trs)
