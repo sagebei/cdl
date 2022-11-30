@@ -10,7 +10,9 @@ if [ ! -d "./pybind11" ]; then
 fi
 
 export PYTHONUSERBASE=$1
-SITE_PACKAGES=$(python -m site --user-site)
+source $PYTHONUSERBASE/bin/activate
+
+SITE_PACKAGES=$(python -c 'import site; print(site.getsitepackages()[0])')
 echo $SITE_PACKAGES
 if [ ! -d $SITE_PACKAGES ]; then
   mkdir $SITE_PACKAGES
