@@ -71,10 +71,9 @@ for bro in bros:
 
 1. Open a terminal and change working directory to the `cdl` folder
 2. Install `Python`, `gcc`, `cmake` if you have not
-3. In `install.sh`, Edit the `PYTHONUSERBASE` variable to your virtual environment directory
-in which you will use the library. 
-4. Run `bash install.sh`. This will download `pybind11` libray that is essential to compile the code,
-   and install the `dgl` library to the site-package folder in the virtual environment such that you can import it in any Python program.
+3. Run `bash install.sh \path\to\your\virtural_environment` to install the library to an existing virtual environment in which you will import it. This will download `pybind11` libray that is essential to compile the code,
+   and install the `dgl` library to the site-package folder in the virtual environment.
+   Examples: `bash install.sh \opt\anaconda3`, or `bash install.sh ~\PyCharmProjects\venv`. 
 
 
 If you encounter any issues during the installation process, please raise an issue in this repository. Common issues are:
