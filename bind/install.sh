@@ -5,14 +5,7 @@ else
   mkdir "./build"
 fi
 
-# change PYTHONUSERBASE to your virtual environment directory
-OS_NAME=$(uname)
-if [[ $OS_NAME == "Darwin" ]]; then  # macos
-  export PYTHONUSERBASE='/opt/anaconda3'
-elif [[ $OS_NAME == "Linux" ]]; then # Linux
-  export PYTHONUSERBASE=$HOME"/PycharmProjects/venv"
-#  export PYTHONUSERBASE=$HOME"/venv"
-fi
+export PYTHONUSERBASE=$1
 echo $PYTHONUSERBASE
 
 if [ ! -d "./pybind11" ]; then
