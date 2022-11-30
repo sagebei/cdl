@@ -7,9 +7,9 @@ fi
 
 # change PYTHONUSERBASE to your virtual environment directory
 OS_NAME=$(uname)
-if [[ $OS_NAME == "Darwin" ]]; then
-  export PYTHONUSERBASE='/opt/anaconda3'             # macos
-elif [[ $OS_NAME == "Linux" ]]; then
+if [[ $OS_NAME == "Darwin" ]]; then  # macos
+  export PYTHONUSERBASE='/opt/anaconda3'
+elif [[ $OS_NAME == "Linux" ]]; then # Linux
   export PYTHONUSERBASE=$HOME"/PycharmProjects/venv"
 #  export PYTHONUSERBASE=$HOME"/venv"
 fi
