@@ -5,13 +5,11 @@ else
   mkdir "./build"
 fi
 
-export PYTHONUSERBASE=$1
-echo $PYTHONUSERBASE
-
 if [ ! -d "./pybind11" ]; then
   git clone https://github.com/pybind/pybind11.git
 fi
 
+export PYTHONUSERBASE=$1
 SITE_PACKAGES=$(python -m site --user-site)
 echo $SITE_PACKAGES
 if [ ! -d $SITE_PACKAGES ]; then
