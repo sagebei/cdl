@@ -33,13 +33,13 @@ void CondorcetDomain::sort_trs(TRS& trs)
 
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 {
-    const auto& [first, second, third] = tr.triplet;
+    const Triplet& triplet = tr.triplet;
     const std::string& rule = tr.rule;
 
     cd.remove_if([&](const std::list<int>& elem) {
-        int first_index = get_index(elem, first);
-        int second_index = get_index(elem, second);
-        int third_index = get_index(elem, third);
+        int first_index = get_index(elem, triplet[0]);
+        int second_index = get_index(elem, triplet[1]);
+        int third_index = get_index(elem, triplet[2]);
 
         if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
             (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
@@ -55,12 +55,12 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 void CondorcetDomain::filter_trs(TRS& trs, const std::list<int>& elem)
 {
     trs.remove_if([&](TripletRule& tr){
-        const auto& [first, second, third] = tr.triplet;
+        const Triplet& triplet = tr.triplet;
         const std::string& rule = tr.rule;
 
-        int first_index = get_index(elem, first);
-        int second_index = get_index(elem, second);
-        int third_index = get_index(elem, third);
+        int first_index = get_index(elem, triplet[0]);
+        int second_index = get_index(elem, triplet[1]);
+        int third_index = get_index(elem, triplet[2]);
 
         if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
             (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
