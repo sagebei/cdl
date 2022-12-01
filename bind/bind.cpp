@@ -10,6 +10,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
+    m.attr("__version__") = 1.1;
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
