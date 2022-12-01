@@ -29,8 +29,6 @@ void CondorcetDomain::sort_trs(TRS& trs)
     trs = sorted_trs;
 }
 
-
-
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 {
     const Triplet& triplet = tr.triplet;
@@ -90,7 +88,7 @@ void CondorcetDomain::expand_cd(CD& cd, int& value)
     cd = updated_cd;
 }
 
-TRS CondorcetDomain::fetch_trs(TRS& trs, int i)
+TRS CondorcetDomain::fetch_trs(const TRS& trs, int i)
 {
     TRS fetched_trs;
     for (const auto& tr: trs)
@@ -104,7 +102,6 @@ TRS CondorcetDomain::fetch_trs(TRS& trs, int i)
 TRS CondorcetDomain::init(bool sort)
 {
     TRS trs;
-
     for (int i = 1; i <= n-2; i++)
     {
         for (int j = i+1; j <= n-1; j++)
@@ -118,15 +115,15 @@ TRS CondorcetDomain::init(bool sort)
             }
         }
     }
-    if(sort)
+    if (sort)
         sort_trs(trs);
 
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
+TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme) const
 {
-    unsigned long size = scheme.numbers.size();
+    std::size_t size = scheme.numbers.size();
     TRS trs;
 
     for (int i = 1; i <= n-2; i++)
@@ -137,9 +134,9 @@ TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
             {
                 TripletRule tr;
                 tr.triplet = {i, j, k};
-                for (int s = 0; s < size; s ++)
+                for (int s = 0; s < size; s++)
                 {
-                    std::vector<int>& number = scheme.numbers[s];
+                    const std::vector<int>& number = scheme.numbers[s];
                     if (std::find(number.begin(), number.end(), j) != number.end())
                     {
                         tr.rule = scheme.rules[s];
@@ -154,7 +151,7 @@ TRS CondorcetDomain::init_by_scheme(RuleScheme& scheme) const
     return trs;
 }
 
-TRS& CondorcetDomain::assign(TRS& trs, Triplet  triplet, std::string rule)
+TRS& CondorcetDomain::assign(TRS& trs, Triplet triplet, std::string rule)
 {
     for (TripletRule& tr: trs)
     {
@@ -195,7 +192,7 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Tri
 }
 
 
-CD CondorcetDomain::condorcet_domain(TRS& trs)
+CD CondorcetDomain::condorcet_domain(const TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};
     for (int i = 3; i <= n; i++) {
@@ -209,7 +206,7 @@ CD CondorcetDomain::condorcet_domain(TRS& trs)
     return cd;
 }
 
-std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(TRS& trs, int sub_n)
+std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(const TRS& trs, int sub_n)
 {
     CondorcetDomain cd = CondorcetDomain(sub_n);
     std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
@@ -343,8 +340,6 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd)
     return all_trs;
 
 }
-
-
 
 void print_trs(const TRS& trs)
 {

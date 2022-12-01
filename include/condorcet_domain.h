@@ -42,7 +42,7 @@ private:
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
     void filter_trs(TRS& trs, const std::list<int>& elem);
-    TRS fetch_trs(TRS& trs, int i);
+    TRS fetch_trs(const TRS& trs, int i);
 
 public:
     std::array<std::string, 4> rules;
@@ -52,15 +52,15 @@ public:
 
     // creating and manipulating TRS
     TRS init(bool sort=true);
-    TRS init_by_scheme(RuleScheme& scheme) const;
+    TRS init_by_scheme(const RuleScheme& scheme) const;
     TRS& assign(TRS& trs, Triplet triplet, std::string rule);
     TRS& assign_by_index(TRS& trs, int index, std::string rule);
     std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(TRS trs, Triplet triplet);
 
     // manipulating CDs
-    CD condorcet_domain(TRS& trs);
-    std::vector<std::size_t> subset_cd_sizes(TRS& trs, int sub_n);
+    CD condorcet_domain(const TRS& trs);
+    std::vector<std::size_t> subset_cd_sizes(const TRS& trs, int sub_n);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
