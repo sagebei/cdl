@@ -7,10 +7,11 @@ int main()
     TRS trs = cd.init();
 
     cd.assign(trs, {1, 2, 5}, "3N1");
-    print_trs(trs);
-    std::vector<std::size_t> sizes = cd.evaluate_rules_on_triplet(trs, {1, 2, 3});
-    for (std::size_t s: sizes)
-        std::cout << s << " ";
+    std::cout << cd.condorcet_domain(trs).size();
+//    print_trs(trs);
+//    std::vector<std::size_t> sizes = cd.evaluate_rules_on_triplet(trs, {1, 2, 3});
+//    for (std::size_t s: sizes)
+//        std::cout << s << " ";
 
 //    cd.assign(trs, {1, 3, 5}, "3N1");
 //    cd.assign(trs, {1, 2, 3}, "3N1");
