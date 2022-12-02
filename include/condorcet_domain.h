@@ -56,7 +56,7 @@ public:
     TRS assign_by_index(TRS trs, int index, std::string rule);
     std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(TRS trs, Triplet triplet);
-    Triplet dynamic_triplet_ordering(TRS trs);
+    Triplet dynamic_triplet_ordering(const TRS& trs);
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);

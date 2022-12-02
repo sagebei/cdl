@@ -194,7 +194,7 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Tri
     return sizes;
 }
 
-Triplet CondorcetDomain::dynamic_triplet_ordering(TRS trs)
+Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 {
 
 }
