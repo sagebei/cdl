@@ -70,10 +70,14 @@ for bro in bros:
 ## Installation for Python Program
 
 1. Open a terminal and change working directory to the `cdl` folder
-2. Install `Python`, `gcc`, `cmake` if you have not
-3. Run `bash install.sh \path\to\your\virtural_environment` to install the library to an existing virtual environment in which you will import it. This will download `pybind11` libray that is essential to compile the code,
+2. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not
+3. Run `bash install.sh \path\to\your\virtural_environment` to install 
+   the library to an existing virtual environment in which you will import it. 
+   This will download `pybind11` libray that is essential to compile the code,
    and install the `dgl` library to the site-package folder in the virtual environment.
-   Examples: `bash install.sh \opt\anaconda3`, or `bash install.sh ~\PyCharmProjects\venv`. 
+   Examples: `bash install.sh \opt\anaconda3` to install the library in the anaconda global environment, 
+   or `bash install.sh ~\PyCharmProjects\venv` to install it in a virtual environment
+   created in the PycharmProjects directory. 
 
 
 ## Cite
