@@ -99,7 +99,7 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, int i)
     return fetched_trs;
 }
 
-TRS CondorcetDomain::init(bool sort)
+TRS CondorcetDomain::init_empty(bool sort)
 {
     TRS trs;
     for (int i = 1; i <= n-2; i++)
@@ -121,7 +121,8 @@ TRS CondorcetDomain::init(bool sort)
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme) const
+
+TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool sort)
 {
     std::size_t size = scheme.numbers.size();
     TRS trs;
@@ -148,10 +149,12 @@ TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme) const
             }
         }
     }
+    if (sort)
+        sort_trs(trs);
     return trs;
 }
 
-TRS& CondorcetDomain::assign(TRS& trs, Triplet triplet, std::string rule)
+TRS CondorcetDomain::assign(TRS& trs, Triplet triplet, std::string rule)
 {
     for (TripletRule& tr: trs)
     {
@@ -161,7 +164,7 @@ TRS& CondorcetDomain::assign(TRS& trs, Triplet triplet, std::string rule)
     return trs;
 }
 
-TRS& CondorcetDomain::assign_by_index(TRS& trs, int index, std::string rule)
+TRS CondorcetDomain::assign_by_index(TRS trs, int index, std::string rule)
 {
     TripletRule& tr = *std::next(trs.begin(), index);
     tr.rule = rule;
@@ -189,6 +192,11 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Tri
         sizes.push_back(s);
     }
     return sizes;
+}
+
+Triplet CondorcetDomain::dynamic_triplet_ordering(TRS trs)
+{
+
 }
 
 
@@ -323,7 +331,7 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
 TRS CondorcetDomain::domain_to_trs(const CD &cd)
 {
     TRS all_trs;
-    TRS trs = init();
+    TRS trs = init_empty();
     for (auto tr: trs)
     {
         for (std::string rule: rules)

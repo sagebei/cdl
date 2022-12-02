@@ -3,7 +3,6 @@
 #include <array>
 #include <iostream>
 #include <vector>
-#include <forward_list>
 #include <list>
 #include <map>
 #include <algorithm>
@@ -51,12 +50,13 @@ public:
     CondorcetDomain(int num=5);
 
     // creating and manipulating TRS
-    TRS init(bool sort=true);
-    TRS init_by_scheme(const RuleScheme& scheme) const;
-    TRS& assign(TRS& trs, Triplet triplet, std::string rule);
-    TRS& assign_by_index(TRS& trs, int index, std::string rule);
+    TRS init_empty(bool sort=true);
+    TRS init_by_scheme(const RuleScheme& scheme,  bool sort);
+    TRS assign(TRS& trs, Triplet triplet, std::string rule);
+    TRS assign_by_index(TRS trs, int index, std::string rule);
     std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(TRS trs, Triplet triplet);
+    Triplet dynamic_triplet_ordering(TRS trs);
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
