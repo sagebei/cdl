@@ -44,6 +44,7 @@ int main()
 ```
 
 ## Get started with Python
+### For more examples, see [CDL python tutorial](https://github.com/sagebei/cdl/blob/main/bind/Get%20Started%20with%20CDL.ipynb)
 ```python
 from cdl import CondorcetDomain, RuleScheme
 
