@@ -76,12 +76,6 @@ for bro in bros:
    Examples: `bash install.sh \opt\anaconda3`, or `bash install.sh ~\PyCharmProjects\venv`. 
 
 
-If you encounter any issues during the installation process, please raise an issue in this repository. Common issues are:
-1. Imported target "pybind11::module" includes non-existent path. This is because the cmake cannot find the python installation.
-It can be fixed by running `cmake -DCMAKE_INSTALL_PREFIX=~/Installations -DMUQ_USE_PYTHON=ON -DPYTHON_EXECUTABLE=/opt/anaconda3/bin/python ../`
-where `/opt/anaconda3/bin/python` should be changed tp the path to your Python installation. 
-
-
 ## Cite
 Please cite our paper that introduced CDL library if you use it in a scientific publication. 
 
