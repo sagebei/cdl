@@ -29,7 +29,7 @@ PYBIND11_MODULE(cdl, m) {
             .def(py::init<int>(), py::arg("n")=5)
             .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
-            .def("init", &CondorcetDomain::init, py::arg("sort")=false)  // creating and manipulating TRS
+            .def("init_empty", &CondorcetDomain::init_empty)  // creating and manipulating TRS
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"))
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))

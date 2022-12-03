@@ -50,8 +50,8 @@ public:
     CondorcetDomain(int num=5);
 
     // creating and manipulating TRS
-    TRS init_empty(bool sort=true);
-    TRS init_by_scheme(const RuleScheme& scheme,  bool sort);
+    TRS init_empty();
+    TRS init_by_scheme(const RuleScheme& scheme);
     TRS assign(TRS trs, Triplet triplet, std::string rule);
     TRS assign_by_index(TRS trs, int index, std::string rule);
     std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
