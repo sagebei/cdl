@@ -154,7 +154,7 @@ TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool sort)
     return trs;
 }
 
-TRS CondorcetDomain::assign(TRS& trs, Triplet triplet, std::string rule)
+TRS CondorcetDomain::assign(TRS trs, Triplet triplet, std::string rule)
 {
     for (TripletRule& tr: trs)
     {
@@ -182,13 +182,13 @@ std::vector<Triplet> CondorcetDomain::unassigned_triplets(const TRS& trs)
     return unassigned;
 }
 
-std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Triplet triplet)
+std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, Triplet triplet)
 {
     std::vector<std::size_t> sizes = {};
     for (std::string& rule: rules)
     {
-        assign(trs, triplet, rule);
-        std::size_t s = condorcet_domain(trs).size();
+        TRS new_trs = assign(trs, triplet, rule);
+        std::size_t s = condorcet_domain(new_trs).size();
         sizes.push_back(s);
     }
     return sizes;
@@ -196,6 +196,23 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(TRS trs, Tri
 
 Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 {
+    std::map<std::size_t, Triplet> size_triplet;
+    std::vector<Triplet> unassigned = unassigned_triplets(trs);
+    for (const Triplet& unassigned_triplet : unassigned)
+    {
+        auto sizes = evaluate_rules_on_triplet(trs, unassigned_triplet);
+        auto max_size = *std::max_element(sizes.begin(), sizes.end());
+        std::cout << unassigned_triplet[0] << unassigned_triplet[1] << unassigned_triplet[2] << " ";
+        std::cout << max_size << std::endl;
+        size_triplet[max_size] = unassigned_triplet;
+    }
+    const auto max_size_triplet = *std::min_element(std::begin(size_triplet), std::end(size_triplet),
+                                                           [](const std::pair<std::size_t, Triplet>& p1, const std::pair<std::size_t, Triplet>& p2)
+                                                                 {
+                                                                     return p1.first < p2.first;
+                                                                 });
+
+    return max_size_triplet.second;
 
 }
 
