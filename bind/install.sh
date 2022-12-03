@@ -8,10 +8,10 @@ else
 fi
 
 # ensure Macbook uses the g++ compiler
-if [ $(uname) == "Darwin" ]; then
-  export CC=/usr/bin/gcc
-  export CXX=/usr/bin/g++
-fi
+#if [ $(uname) == "Darwin" ]; then
+#  export CC=/usr/bin/gcc
+#  export CXX=/usr/bin/g++
+#fi
 
 if [ ! -d "./pybind11" ]; then
   git clone https://github.com/pybind/pybind11.git
