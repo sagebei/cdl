@@ -3,7 +3,6 @@ project(cdl)
 set(CMAKE_CXX_STANDARD 17)
 
 #Pybind11
-#add_subdirectory(../headers)
 add_subdirectory(pybind11)
 pybind11_add_module(cdl
                     bind.cpp
