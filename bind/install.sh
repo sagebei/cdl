@@ -26,12 +26,12 @@ if [ ! -d $SITE_PACKAGES ]; then
   mkdir $SITE_PACKAGES
 fi
 
-# removing the exising outdated library
-rm $SITE_PACKAGES/cdl*
-
 # compile and install the library
 (cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
 (cd build && make)
+
+# removing the exising outdated library before installing the new one.
+rm $SITE_PACKAGES/cdl*
 (cd build && mv *.so $SITE_PACKAGES)
 
 # remove the unneeded build directory
