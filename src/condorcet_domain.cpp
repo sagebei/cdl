@@ -119,7 +119,6 @@ TRS CondorcetDomain::init_empty()
     return trs;
 }
 
-
 TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme)
 {
     std::size_t size = scheme.numbers.size();
