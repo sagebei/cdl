@@ -197,13 +197,12 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& t
 Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 {
     std::map<std::size_t, Triplet> size_triplet;
+
     std::vector<Triplet> unassigned = unassigned_triplets(trs);
     for (const Triplet& unassigned_triplet : unassigned)
     {
         auto sizes = evaluate_rules_on_triplet(trs, unassigned_triplet);
         auto max_size = *std::max_element(sizes.begin(), sizes.end());
-        std::cout << unassigned_triplet[0] << unassigned_triplet[1] << unassigned_triplet[2] << " ";
-        std::cout << max_size << std::endl;
         size_triplet[max_size] = unassigned_triplet;
     }
     const auto max_size_triplet = *std::min_element(std::begin(size_triplet), std::end(size_triplet),
