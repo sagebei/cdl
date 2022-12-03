@@ -8,10 +8,10 @@ else
 fi
 
 # ensure Macbook uses the g++ compiler
-#if [ $(uname) == "Darwin" ]; then
-#  export CC=/usr/bin/gcc
-#  export CXX=/usr/bin/g++
-#fi
+if [ $(uname) == "Darwin" ]; then
+  export CC=/usr/bin/gcc
+  export CXX=/usr/bin/g++
+fi
 
 if [ ! -d "./pybind11" ]; then
   git clone https://github.com/pybind/pybind11.git
@@ -27,7 +27,7 @@ if [ ! -d $SITE_PACKAGES ]; then
 fi
 
 # compile and install the library
-(cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python3.7 ..)
+(cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
 (cd build && make)
 
 # removing the exising outdated library before installing the new one.
