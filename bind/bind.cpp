@@ -17,8 +17,6 @@ PYBIND11_MODULE(cdl, m) {
             .def_readwrite("triplet", &TripletRule::triplet)
             .def_readwrite("rule", &TripletRule::rule);
 
-//    py::bind_vector<TRS>(m, "TRS"); // https://github.com/pybind/pybind11/issues/1668
-
     py::class_<RuleScheme>(m, "RuleScheme")
             .def(py::init<>())
             .def_readwrite("numbers", &RuleScheme::numbers)
