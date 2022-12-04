@@ -57,6 +57,7 @@ public:
     std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, Triplet triplet);
     Triplet dynamic_triplet_ordering(const TRS& trs);
+    std::vector<int> trs_to_state(const TRS& trs);
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);

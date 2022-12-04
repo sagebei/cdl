@@ -211,6 +211,26 @@ Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 
 }
 
+std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
+{
+    std::vector<int> state;
+    for (const TripletRule& tr: trs)
+    {
+        const std::string& rule = tr.rule;
+        if (rule.empty())
+            state.push_back(0);
+        else if (rule == rules[0])
+            state.push_back(1);
+        else if (rule == rules[1])
+            state.push_back(2);
+        else if (rule == rules[2])
+            state.push_back(3);
+        else if (rule == rules[3])
+            state.push_back(4);
+    }
+    return state;
+}
+
 
 CD CondorcetDomain::condorcet_domain(const TRS& trs)
 {

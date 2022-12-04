@@ -34,6 +34,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
             .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
             .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
+            .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
