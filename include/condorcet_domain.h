@@ -68,6 +68,9 @@ public:
     CDS domain_brothers(const CD& cd);
     TRS domain_to_trs(const CD& cd);
 
+    // enable default copy construction and copy assignment
+    CondorcetDomain(const CondorcetDomain& cd) = default;
+    CondorcetDomain& operator=(const CondorcetDomain& cd) = default;
 };
 
 // printing functions
