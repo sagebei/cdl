@@ -169,7 +169,7 @@ TRS CondorcetDomain::assign_by_index(TRS trs, int index, std::string rule)
 
 std::vector<Triplet> CondorcetDomain::unassigned_triplets(const TRS& trs)
 {
-    std::vector<Triplet> unassigned;
+    std::vector<Triplet> unassigned{};
     for (const TripletRule& tr: trs)
     {
         if (tr.rule.empty())
@@ -195,19 +195,22 @@ Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
     std::map<std::size_t, Triplet> size_triplet;
 
     std::vector<Triplet> unassigned = unassigned_triplets(trs);
+    if (unassigned.empty())
+        return Triplet{0, 0, 0};
+
     for (const Triplet& unassigned_triplet : unassigned)
     {
         auto sizes = evaluate_rules_on_triplet(trs, unassigned_triplet);
         auto max_size = *std::max_element(sizes.begin(), sizes.end());
         size_triplet[max_size] = unassigned_triplet;
     }
-    const auto max_size_triplet = *std::min_element(std::begin(size_triplet), std::end(size_triplet),
+    const auto max_size_triplet_ptr = std::min_element(std::begin(size_triplet), std::end(size_triplet),
                                                            [](const std::pair<std::size_t, Triplet>& p1, const std::pair<std::size_t, Triplet>& p2)
                                                                  {
                                                                      return p1.first < p2.first;
                                                                  });
 
-    return max_size_triplet.second;
+    return max_size_triplet_ptr->second;
 
 }
 
