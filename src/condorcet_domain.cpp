@@ -1,4 +1,6 @@
 #include "condorcet_domain.h"
+
+#include <utility>
 #include "utils.h"
 
 CondorcetDomain::CondorcetDomain(int n)
@@ -156,7 +158,7 @@ TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::assign(TRS trs, Triplet triplet, std::string rule)
+TRS CondorcetDomain::assign(TRS trs, const Triplet& triplet, const std::string& rule)
 {
     for (TripletRule& tr: trs)
     {
@@ -166,10 +168,10 @@ TRS CondorcetDomain::assign(TRS trs, Triplet triplet, std::string rule)
     return trs;
 }
 
-TRS CondorcetDomain::assign_by_index(TRS trs, int index, std::string rule)
+TRS CondorcetDomain::assign_by_index(TRS trs, int index, const std::string& rule)
 {
-    TripletRule& tr = *std::next(trs.begin(), index);
-    tr.rule = rule;
+    auto tr = std::next(trs.begin(), index);
+    tr->rule = rule;
     return trs;
 }
 

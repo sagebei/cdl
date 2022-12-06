@@ -6,9 +6,10 @@ int main()
     CondorcetDomain cd(5);
     RuleScheme rs;
     rs.add({2, 3, 4}, "1N3");
-    TRS trs = cd.init_by_scheme(rs);
+    TRS trs = cd.init_empty();
 
-    TRS trs1 = cd.assign(trs, {1, 2, 5}, "3N1");
+    TRS trs1 = cd.assign_by_index(trs, 1, "3N1");
+
     TRS trs2 = cd.assign(trs1, {1, 3, 5}, "1N3");
     TRS trs3 = cd.assign(trs2, {2, 3, 4}, "1N3");
     print_trs(trs3);
