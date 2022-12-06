@@ -99,7 +99,7 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, int i)
     return fetched_trs;
 }
 
-TRS CondorcetDomain::init_empty()
+TRS CondorcetDomain::init_empty(bool is_sorted)
 {
     TRS trs;
     for (int i = 1; i <= n-2; i++)
@@ -116,10 +116,13 @@ TRS CondorcetDomain::init_empty()
         }
     }
 
+    if (is_sorted)
+        sort_trs(trs);
+
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme)
+TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool is_sorted)
 {
     std::size_t size = scheme.numbers.size();
     TRS trs;
@@ -146,6 +149,9 @@ TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme)
             }
         }
     }
+
+    if (is_sorted)
+        sort_trs(trs);
 
     return trs;
 }
@@ -363,10 +369,10 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
     return cds;
 }
 
-TRS CondorcetDomain::domain_to_trs(const CD &cd)
+TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
 {
     TRS all_trs;
-    TRS trs = init_empty();
+    TRS trs = init_empty(is_sorted);
     for (auto tr: trs)
     {
         for (std::string rule: rules)
