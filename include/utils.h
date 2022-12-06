@@ -9,6 +9,8 @@ int factorial(int n);
 void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int index, std::vector<int>& set, std::vector<int>& current_subset);
 std::vector<std::vector<int>> combinations(std::vector<int>& set, int sub_n);
 
+int benchmark_size(int n);
+
 
 
 

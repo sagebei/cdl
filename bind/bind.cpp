@@ -49,4 +49,6 @@ PYBIND11_MODULE(cdl, m) {
         );
         print_trs(trs);
         }, py::arg("trs"));
+
+    m.def("benchmark", &benchmark_size, py::arg("n"));
 }

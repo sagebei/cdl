@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 // used to sort a list of list
 bool compare_list(const std::list<int>& first, const std::list<int>& second)
@@ -78,4 +79,34 @@ std::vector<std::vector<int>> combinations(std::vector<int>& set, int sub_n)
 }
 
 
+int benchmark_size(int n)
+{
+    switch (n) {
+        case 2:
+            return 2;
+        case 3:
+            return 4;
+        case 4:
+            return 9;
+        case 5:
+            return 20;
+        case 6:
+            return 45;
+        case 7:
+            return 100;
+        case 8:
+            return 222;
+        case 9:
+            return 488;
+        case 10:
+            return 1069;
+        case 11:
+            return 2324;
+        case 12:
+            return 5034;
+        default:
+            throw std::runtime_error{"n is larger than 12"};
+    }
+
+}
 
