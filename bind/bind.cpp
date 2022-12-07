@@ -15,7 +15,24 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
             .def_readwrite("triplet", &TripletRule::triplet)
-            .def_readwrite("rule", &TripletRule::rule);
+            .def_readwrite("rule", &TripletRule::rule)
+            .def(py::pickle(
+                    [](const TripletRule& tr)
+                    {
+                        return py::make_tuple(tr.triplet, tr.rule);
+                    },
+                    [](py::tuple t)
+                    {
+                        if (t.size() != 2)
+                            throw std::runtime_error("Invalid state for TripletRule object!");
+
+                        TripletRule tr{};
+                        tr.triplet = t[0].cast<Triplet>();
+                        tr.rule = t[1].cast<std::string>();
+
+                        return tr;
+                    }
+            ));
 
     py::class_<RuleScheme>(m, "RuleScheme")
             .def(py::init<>())
@@ -39,7 +56,24 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
-            .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted"));
+            .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted"))
+            .def(py::pickle(
+                    [](const CondorcetDomain& cd)
+                    {
+                        return py::make_tuple(cd.n, cd.rules);
+                    },
+                    [](py::tuple t)
+                    {
+                        if (t.size() != 2)
+                            throw std::runtime_error("Invalid state for CondorcetDomain object!");
+
+                        CondorcetDomain cd{};
+                        cd.n = t[0].cast<int>();
+                        cd.rules = t[1].cast<std::array<std::string, 4>>();
+
+                        return cd;
+                    }
+            ));
 
     // print function
     m.def("print_trs", [](TRS trs) {

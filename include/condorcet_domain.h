@@ -34,7 +34,6 @@ typedef std::vector<CD> CDS;
 class CondorcetDomain
 {
 private:
-    int n;
     std::vector<int> triplet_elems;
 
     void sort_trs(TRS& trs);
@@ -44,6 +43,7 @@ private:
     TRS fetch_trs(const TRS& trs, int i);
 
 public:
+    int n;
     std::array<std::string, 4> rules;
     int num_triplets;
 
