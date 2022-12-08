@@ -47,7 +47,7 @@ public:
     std::array<std::string, 4> rules;
     int num_triplets;
 
-    CondorcetDomain(int num=5);
+    CondorcetDomain(int n=5);
 
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=true);
