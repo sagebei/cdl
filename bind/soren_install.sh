@@ -7,4 +7,4 @@ mkdir build
 (cd build && make)
 
 rm ~/opt/anaconda3/lib/python3.7/site-packages/cdl*
-mv cdl* ~/opt/anaconda3/lib/python3.7/site-packages
+(cd build && mv cdl* ~/opt/anaconda3/lib/python3.7/site-packages)
