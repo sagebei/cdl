@@ -58,10 +58,11 @@ public:
     std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, Triplet triplet);
     Triplet dynamic_triplet_ordering(const TRS& trs);
     std::vector<int> trs_to_state(const TRS& trs);
+    TRS transfer_trs(const TRS& large, const TRS& small, const std::vector<int>& subset);
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
-    std::vector<std::size_t> subset_cd_sizes(const TRS& trs, int sub_n);
+    std::tuple<std::vector<std::vector<int>>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);

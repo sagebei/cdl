@@ -222,6 +222,22 @@ Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 
 }
 
+// [1, 2, 3, 5, 7] subset must be ordered
+TRS CondorcetDomain::transfer_trs(const TRS& large, const TRS& small, const std::vector<int>& subset)
+{
+    TRS transferred_trs = large;
+    std::map<int, int> dict;
+    for (int i = 0; i < subset.size(); i++)
+        dict[i + 1] = subset[i];
+
+    for (const TripletRule& s: small)
+    {
+        Triplet mapped_triplet = {dict[s.triplet[0]], dict[s.triplet[1]], dict[s.triplet[2]]};
+        transferred_trs = assign(transferred_trs, mapped_triplet, s.rule);
+    }
+    return transferred_trs;
+}
+
 std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
 {
     std::vector<int> state;
@@ -242,7 +258,6 @@ std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
     return state;
 }
 
-
 CD CondorcetDomain::condorcet_domain(const TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};
@@ -257,20 +272,20 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     return cd;
 }
 
-std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(const TRS& trs, int sub_n)
+std::tuple<std::vector<std::vector<int>>, std::vector<std::size_t>>  CondorcetDomain::subset_cd_sizes(const TRS& trs, int sub_n)
 {
     CondorcetDomain cd = CondorcetDomain(sub_n);
     std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
 
     std::vector<std::size_t> sizes;
-    for (std::vector<int>& subset: subsets)  // for each subset
+    for (const std::vector<int>& subset: subsets)  // for each subset
     {
         TRS sub_trs;
         std::map<int, int> dict;
         for (auto& tr: trs)  // find the triplet that is contained in the subset
         {
             int counter = 0;
-            for (int i = 0; i < subset.size(); i ++)
+            for (int i = 0; i < subset.size(); i++)
             {
                 int value = subset[i];
                 dict[value] = i + 1;
@@ -282,7 +297,7 @@ std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(const TRS& trs, int su
             {
                 TripletRule sub_tr;
                 sub_tr.rule = tr.rule;
-                for (int i = 0; i < tr.triplet.size(); i ++)
+                for (int i = 0; i < tr.triplet.size(); i++)
                     sub_tr.triplet[i] = dict[tr.triplet[i]];
                 sub_trs.push_back(sub_tr);
             }
@@ -292,7 +307,7 @@ std::vector<std::size_t> CondorcetDomain::subset_cd_sizes(const TRS& trs, int su
         sizes.push_back(sub_size);
     }
 
-    return sizes;
+    return std::make_tuple(subsets, sizes);
 }
 
 std::size_t CondorcetDomain::hash_cd(CD& cd)
