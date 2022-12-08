@@ -54,7 +54,7 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 
 void CondorcetDomain::filter_trs(TRS& trs, const std::list<int>& elem)
 {
-    trs.remove_if([&](TripletRule& tr){
+    trs.remove_if([&](const TripletRule& tr){
         const int& first = tr.triplet[0], second = tr.triplet[1], third = tr.triplet[2];
         const std::string& rule = tr.rule;
 
