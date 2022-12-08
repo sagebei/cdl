@@ -1,3 +1,5 @@
+# source soren_install.sh
+
 export CC=/usr/bin/gcc
 export CXX=/usr/bin/g++
 
