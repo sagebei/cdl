@@ -59,7 +59,7 @@ void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int in
 {
     if (n < sub_n) return;
     if (sub_n == 0) {
-        subsets.push_back (current_subset);
+        subsets.push_back(current_subset);
         return;
     }
     get_subset(subsets, n-1, sub_n, index+1, set, current_subset);
