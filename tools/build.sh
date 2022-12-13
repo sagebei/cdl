@@ -1,3 +1,5 @@
+# module load gcc/10.2.0 boost cmake
+
 mkdir build
 
 # compile and install the library
