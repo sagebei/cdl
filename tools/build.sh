@@ -4,7 +4,7 @@ mkdir build
 (cd build && cmake ..)
 (cd build && make)
 
-./build/tool
+./build/tools
 # remove the unneeded build directory
 rm -rf "./build"
 

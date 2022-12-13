@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 3.9)
 set(CMAKE_CXX_STANDARD 17)
+project(tools)
 
+find_package(Boost)
 
-project(tool)
-add_executable(tool
+add_executable(tools
         main.cpp
         ../src/condorcet_domain.cpp
         ../src/utils.cpp)
-target_include_directories(tool PUBLIC ../include)
+
+include_directories(${Boost_INCLUDE_DIR})
+target_include_directories(tools PUBLIC ../include)
+
 
 
