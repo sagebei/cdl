@@ -18,6 +18,11 @@ creating and manipulating triplet-rules and condorcet domains (CD), including
 CDL is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
 installed and used globally, enabling users to seamlessly integrate with tools writen in Python.
 
+Directory structure 
+- bind: export all the functionality to a python module and provide the bash script install it. 
+- core: the key functionality for manipulating triplet-rules and condorcet domains.
+- tools: 
+
 ## Get started with C++
 ```c++
 #include "condorcet_domain.h"
