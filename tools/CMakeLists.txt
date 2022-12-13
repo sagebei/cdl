@@ -6,11 +6,11 @@ find_package(Boost)
 
 add_executable(tools
         src/main.cpp
-        ../src/condorcet_domain.cpp
-        ../src/utils.cpp)
+        ../core/src/condorcet_domain.cpp
+        ../core/src/utils.cpp)
 
 include_directories(${Boost_INCLUDE_DIR})
-target_include_directories(tools PUBLIC ../include ./include)
+target_include_directories(tools PUBLIC ../core/include ./include)
 
 
 

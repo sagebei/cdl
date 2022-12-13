@@ -5,6 +5,7 @@ int main()
 {
     CondorcetDomain cd1(5);
     TRS trs = cd1.init_empty();
+    print_trs(trs);
     CD cd = cd1.condorcet_domain(trs);
     TRS t = cd1.domain_to_trs(cd, true);
 
