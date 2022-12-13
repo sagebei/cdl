@@ -14,7 +14,7 @@ PYBIND11_MAKE_OPAQUE(DATABASE);
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = 1.3;
+    m.attr("__version__") = 1.4;
 
     py::bind_map<DATABASE>(m, "DATABASE");
 
@@ -93,6 +93,11 @@ PYBIND11_MODULE(cdl, m) {
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
 
-    m.def("load_database", &load_database);
-    m.def("fetch_value", &fetch_value, py::arg("database"), py::arg("state"));
+//    m.def("load_database", &load_database);
+//    m.def("fetch_value", &fetch_value, py::arg("database"), py::arg("state"));
+
+    py::class_<DataStorage>(m, "DataStorage")
+        .def(py::init<>())
+        .def("load_database", &DataStorage::load_database, py::arg("filename")="/Users/Bei/CLionProjects/cdl/tools/full_trs_size.map")
+        .def("fetch_value", &DataStorage::fetch_value, py::arg("state"));
 }

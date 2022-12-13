@@ -62,17 +62,25 @@ DATABASE build_full_trs_cd(int n)
     return database;
 }
 
-DATABASE load_database(std::string filename)
+int DataStorage::fetch_value(const std::vector<int>& state)
 {
-    DATABASE database{};
-    std::ifstream is(filename);
-    boost::archive::text_iarchive ia(is);
-    ia & database;
-    return database;
+    return database.at(state);
+}
+
+DataStorage::DataStorage()
+{
 
 }
 
-void save_database(DATABASE database, std::string filename)
+
+void DataStorage::load_database(std::string filename)
+{
+    std::ifstream is(filename);
+    boost::archive::text_iarchive ia(is);
+    ia & database;
+}
+
+void DataStorage::save_database(std::string filename)
 {
     std::ofstream os(filename);
     boost::archive::text_oarchive oa(os);
@@ -93,7 +101,4 @@ void print_database(DATABASE database)
     }
 }
 
-int fetch_value(const DATABASE& database, const std::vector<int>& state)
-{
-    return database.at(state);
-}
+

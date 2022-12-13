@@ -9,12 +9,15 @@ int main()
     RuleScheme rs;
     rs.add({2, 3, 4}, "3N1");
 
+    DataStorage ds;
 
 //    DATABASE database = build_full_trs_cd(5);
-//    save_database(database, "full_trs_size.map");
-    DATABASE db = load_database("../bind/full_trs_size.map");
-    std::vector<int> state = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    std::cout << fetch_value(db, state) << std::endl;
+//    ds.save_database(database, "full_trs_size.map");
+    ds.load_database("/Users/Bei/CLionProjects/cdl/tools/full_trs_size.map");
+
+//    DATABASE db = load_database("../bind/full_trs_size.map");
+//    std::vector<int> state = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    std::cout << ds.fetch_value({1, 1, 1, 1, 1, 1, 1, 1, 1, 1}) << std::endl;
 //    for (int i = 0; i < cd.num_triplets; i++)
 //    {
 //        TRS trs = cd.init_by_scheme(rs);

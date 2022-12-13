@@ -18,11 +18,17 @@ struct VectorHasher
 
 typedef std::unordered_map<std::vector<int>, int, VectorHasher> DATABASE;
 
-
-DATABASE load_database(std::string filename);
-void save_database(DATABASE database, std::string filename);
-
 DATABASE build_full_trs_cd(int n);
 void print_database(DATABASE database);
 
-int fetch_value(const DATABASE& database, const std::vector<int>& state);
+class DataStorage
+{
+private:
+    DATABASE database;
+public:
+    DataStorage();
+    int fetch_value(const std::vector<int>& state);
+    void save_database(std::string filename);
+    void load_database(std::string filename);
+
+};
