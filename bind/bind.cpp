@@ -1,16 +1,22 @@
-#include "condorcet_domain.h"
-#include "utils.h"
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
 
+#include "condorcet_domain.h"
+#include "utils.h"
+#include "tools.h"
+
 
 namespace py = pybind11;
+
+PYBIND11_MAKE_OPAQUE(DATABASE);
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
     m.attr("__version__") = 1.3;
+
+    py::bind_map<DATABASE>(m, "DATABASE");
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -86,4 +92,7 @@ PYBIND11_MODULE(cdl, m) {
         }, py::arg("trs"));
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
+
+    m.def("load_database", &load_database);
+    m.def("fetch_value", &fetch_value, py::arg("database"), py::arg("state"));
 }
