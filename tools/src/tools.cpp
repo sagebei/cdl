@@ -93,7 +93,7 @@ void print_database(DATABASE database)
     }
 }
 
-int fetch_value(DATABASE& database, const std::vector<int>& state)
+int fetch_value(const DATABASE& database, const std::vector<int>& state)
 {
-    return database[state];
+    return database.at(state);
 }

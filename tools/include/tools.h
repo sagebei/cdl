@@ -25,4 +25,4 @@ void save_database(DATABASE database, std::string filename);
 DATABASE build_full_trs_cd(int n);
 void print_database(DATABASE database);
 
-int fetch_value(DATABASE& database, const std::vector<int>& state);
+int fetch_value(const DATABASE& database, const std::vector<int>& state);
