@@ -1,6 +1,8 @@
 #include<iostream>
-#include "condorcet_domain.h"
 #include <boost/version.hpp>
+#include "condorcet_domain.h"
+#include "tools.h"
+
 
 
 int main()
