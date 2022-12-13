@@ -1,14 +1,21 @@
 #include "tools.h"
 
 
-int VectorHasher::operator()(const std::vector<int>& vec) const
-{
-    int hash = vec.size();
-    for(auto &i : vec) {
-        hash ^= i + 0x9e3779b9 + (hash << 6) + (hash >> 2);
-    }
-    return hash;
+//int VectorHasher::operator()(const std::vector<int>& vec) const
+//{
+//    int hash = vec.size();
+//    for(auto &i : vec) {
+//        hash ^= i + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+//    }
+//    return hash;
+//}
+
+
+
+std::size_t VectorHasher::operator()(const std::vector<int>& vec) const {
+    return boost::hash_range(vec.begin(), vec.end());
 }
+
 
 DATABASE build_full_trs_cd(int n)
 {

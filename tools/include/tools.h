@@ -9,11 +9,12 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/unordered_map.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/functional/hash.hpp>
 #include "condorcet_domain.h"
 
 struct VectorHasher
 {
-    int operator()(const std::vector<int>& vec) const;
+    std::size_t operator()(const std::vector<int>& vec) const;
 };
 
 typedef std::unordered_map<std::vector<int>, int, VectorHasher> DATABASE;

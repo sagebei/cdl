@@ -8,7 +8,7 @@ mkdir build
 
 ./build/tools
 # remove the unneeded build directory
-rm -rf "./build"
+#rm -rf "./build"
 
 
 

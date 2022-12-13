@@ -5,9 +5,9 @@
 
 int main()
 {
-    CondorcetDomain cd(5);
-    RuleScheme rs;
-    rs.add({2, 3, 4}, "3N1");
+//    CondorcetDomain cd(5);
+//    RuleScheme rs;
+//    rs.add({2, 3, 4}, "3N1");
 
     DataStorage ds;
 
