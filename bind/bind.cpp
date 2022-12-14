@@ -5,18 +5,13 @@
 
 #include "condorcet_domain.h"
 #include "utils.h"
-#include "tools.h"
 
 
 namespace py = pybind11;
 
-PYBIND11_MAKE_OPAQUE(DATABASE);
-
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
     m.attr("__version__") = 1.4;
-
-    py::bind_map<DATABASE>(m, "DATABASE");
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())

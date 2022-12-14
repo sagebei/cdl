@@ -8,9 +8,8 @@ add_subdirectory(pybind11)
 pybind11_add_module(cdl
                     bind.cpp
         ../core/src/condorcet_domain.cpp
-        ../core/src/utils.cpp
-        ../tools/src/tools.cpp) # define the python module
+        ../core/src/utils.cpp) # define the python module
 
-target_include_directories(cdl PUBLIC ../core/include ../tools/include)
+target_include_directories(cdl PUBLIC ../core/include)
 
 
