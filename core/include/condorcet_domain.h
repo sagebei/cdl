@@ -54,7 +54,8 @@ public:
     TRS init_by_scheme(const RuleScheme& scheme, bool is_sorted=true);
     TRS assign(TRS trs, const Triplet& triplet, const std::string& rule);
     TRS assign_by_index(TRS trs, int index, const std::string& rule);
-    std::vector<std::array<int, 3>> unassigned_triplets(const TRS& trs);
+    std::vector<Triplet> unassigned_triplets(const TRS& trs);
+    std::vector<Triplet> assigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, Triplet triplet);
     Triplet dynamic_triplet_ordering(const TRS& trs);
     std::vector<int> trs_to_state(const TRS& trs);

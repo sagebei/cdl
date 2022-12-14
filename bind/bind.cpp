@@ -55,6 +55,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
+            .def("assigned_triplets", &CondorcetDomain::assigned_triplets, py::arg("trs"))
             .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
             .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
@@ -93,11 +94,4 @@ PYBIND11_MODULE(cdl, m) {
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
 
-//    m.def("load_database", &load_database);
-//    m.def("fetch_value", &fetch_value, py::arg("database"), py::arg("state"));
-
-    py::class_<DataStorage>(m, "DataStorage")
-        .def(py::init<>())
-        .def("load_database", &DataStorage::load_database, py::arg("filename")="/Users/Bei/CLionProjects/cdl/tools/full_trs_size.map")
-        .def("fetch_value", &DataStorage::fetch_value, py::arg("state"));
 }

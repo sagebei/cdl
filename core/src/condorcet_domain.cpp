@@ -186,6 +186,17 @@ std::vector<Triplet> CondorcetDomain::unassigned_triplets(const TRS& trs)
     return unassigned;
 }
 
+std::vector<Triplet> CondorcetDomain::assigned_triplets(const TRS& trs)
+{
+    std::vector<Triplet> assigned{};
+    for (const TripletRule& tr: trs)
+    {
+        if (!tr.rule.empty())
+            assigned.push_back(tr.triplet);
+    }
+    return assigned;
+}
+
 std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, Triplet triplet)
 {
     std::vector<std::size_t> sizes = {};
