@@ -45,6 +45,8 @@ PYBIND11_MODULE(cdl, m) {
             .def(py::init<int>(), py::arg("n")=5)
             .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
+            .def_readonly("subsets", &CondorcetDomain::subsets)
+
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=true)  // creating and manipulating TRS
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"), py::arg("is_sorted")=true)
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
@@ -55,6 +57,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
+
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("subsets_state", &CondorcetDomain::subsets_state, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
