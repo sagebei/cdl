@@ -23,6 +23,13 @@ Directory structure
 - core: the key functionality for manipulating triplet-rules and condorcet domains.
 - tools: 
 
+Brief introduction to the Condorcet Domain.
+
+<p align="center">
+  <img src="https://www.parisschoolofeconomics.eu/local/cache-vignettes/L690xH373/2-5-et-5-pse-mai-2021-xl-f57ef.png"
+        style="width:350px;">
+</p>
+
 ## Get started with C++
 ```c++
 #include "condorcet_domain.h"
