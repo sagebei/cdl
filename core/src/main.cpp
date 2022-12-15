@@ -3,35 +3,23 @@
 
 int main()
 {
-    CondorcetDomain cd1(5);
-    TRS trs = cd1.init_empty();
-    print_trs(trs);
-    CD cd = cd1.condorcet_domain(trs);
-    TRS t = cd1.domain_to_trs(cd, true);
+    CondorcetDomain cd(8, 5);
 
-//    RuleScheme rs1;
-//    rs1.add({2, 3, 4}, "1N3");
-//    TRS large = cd1.init_empty();
-//
-//    CondorcetDomain cd2(4);
-//    RuleScheme rs2;
-//    rs2.add({2, 3}, "1N3");
-//    TRS small = cd2.init_by_scheme(rs2);
-//
-//    TRS tranferred_trs = cd1.transfer_trs(large, small, {2, 3, 4, 5});
-//    print_trs(tranferred_trs);
-//    print_trs(large);
+    RuleScheme rs;
+    rs.add({2, 3}, "1N3");
+    rs.add({4, 5}, "3N1");
+    TRS trs = cd.init_by_scheme(rs);
 
-//    trs = cd.assign_by_index(trs, 1, "3N1");
-//    std::cout << cd.condorcet_domain(trs).size() << std::endl;
-//
-//    TRS trs1 = cd.assign_by_index(trs, 1, "3N1");
-//
-//    TRS trs2 = cd.assign(trs1, {1, 3, 5}, "1N3");
-//    TRS trs3 = cd.assign(trs2, {2, 3, 4}, "1N3");
-//    print_trs(trs3);
-//    Triplet triplet = cd.dynamic_triplet_ordering(trs3);
-//    std::cout << triplet[0] << triplet[1] << triplet[2];
+    auto states = cd.subsets_state(trs);
+    for (const auto& state: states)
+    {
+        for(const int& s: state)
+            std::cout<< s << " ";
+        std::cout << std::endl;
+    }
+    std::cout << states.size() << std::endl;
+
+    auto result = cd.subset_cd_sizes(trs);
 
     return 0;
 }

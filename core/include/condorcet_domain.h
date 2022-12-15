@@ -44,10 +44,12 @@ private:
 
 public:
     int n;
+    int sub_n;
     std::array<std::string, 4> rules;
     int num_triplets;
+    std::vector<std::vector<int>> subsets;
 
-    CondorcetDomain(int n=5);
+    CondorcetDomain(int n=8, int sub_n=5);
 
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=true);
@@ -63,7 +65,8 @@ public:
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
-    std::tuple<std::vector<std::vector<int>>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
+    std::vector<std::vector<int>> subsets_state(const TRS& trs);
+    std::tuple<std::vector<std::vector<int>>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
