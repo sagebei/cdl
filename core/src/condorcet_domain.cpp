@@ -3,15 +3,13 @@
 #include <utility>
 #include "utils.h"
 
-CondorcetDomain::CondorcetDomain(int n, int sub_n)
+CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
-    this->sub_n = sub_n;
     rules = {"1N3", "3N1", "2N3", "2N1"};
     num_triplets = factorial(n) / (factorial(n - 3) * 6);
     for (int i = 1; i <=n; i ++)
         triplet_elems.push_back(i);
-    subsets = combinations(triplet_elems, sub_n);
 }
 
 void CondorcetDomain::sort_trs(TRS& trs)
@@ -285,10 +283,11 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     return cd;
 }
 
-std::vector<std::vector<int>> CondorcetDomain::subsets_state(const TRS& trs)
+std::vector<std::vector<int>> CondorcetDomain::subsets_state(const TRS& trs, int sub_n)
 {
     std::vector<std::vector<int>> sub_states{};
-    CondorcetDomain sub_cd = CondorcetDomain(sub_n);
+    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
+    CondorcetDomain sub_cd(sub_n);
 
     for (const std::vector<int>& subset: subsets)  // for each subset
     {
@@ -323,11 +322,13 @@ std::vector<std::vector<int>> CondorcetDomain::subsets_state(const TRS& trs)
     return sub_states;
 }
 
-std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_cd_sizes(const TRS& trs)
+std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_cd_sizes(const TRS& trs, int sub_n)
 {
     std::vector<std::size_t> sizes;
-    CondorcetDomain sub_cd = CondorcetDomain(sub_n);
     std::vector<TRS> all_trs;
+
+    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
+    CondorcetDomain sub_cd(sub_n);
 
     for (const std::vector<int>& subset: subsets)  // for each subset
     {
