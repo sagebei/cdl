@@ -27,7 +27,7 @@ if [ ! -d $SITE_PACKAGES ]; then
 fi
 
 # compile and install the library
-(cd build && cmake -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
+(cd build && cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
 (cd build && make)
 
 # removing the exising outdated library before installing the new one.
