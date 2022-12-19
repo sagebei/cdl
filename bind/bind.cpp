@@ -11,7 +11,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = 1.6;
+    m.attr("__version__") = 1.7;
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -46,8 +46,8 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
 
-            .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=true)  // creating and manipulating TRS
-            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"), py::arg("is_sorted")=true)
+            .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
+            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"), py::arg("is_sorted")=false)
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
@@ -62,7 +62,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
-            .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted")=true)
+            .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted")=false)
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {
