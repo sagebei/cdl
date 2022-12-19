@@ -291,7 +291,7 @@ std::vector<std::vector<int>> CondorcetDomain::subsets_state(const TRS& trs, int
 
     for (const std::vector<int>& subset: subsets)  // for each subset
     {
-        TRS sub_trs = sub_cd.init_empty(true);
+        TRS sub_trs = sub_cd.init_empty(false);
         std::map<int, int> dict;
 
         for (const auto& tr: trs)  // find the triplet that is contained in the subset
