@@ -43,6 +43,7 @@ PYBIND11_MODULE(cdl, m) {
 
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
             .def(py::init<int>(), py::arg("n")=8)
+            .def_readonly("n", &CondorcetDomain::n)
             .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
 
