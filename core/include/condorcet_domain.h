@@ -63,7 +63,9 @@ public:
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
-    std::vector<std::vector<int>> subsets_state(const TRS& trs, int sub_n);
+
+    std::vector<TRS> subset_trss(const TRS& trs, int sub_n);
+    std::vector<std::vector<int>> subset_states(const TRS& trs, int sub_n);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);

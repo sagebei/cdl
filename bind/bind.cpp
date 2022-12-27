@@ -59,7 +59,8 @@ PYBIND11_MODULE(cdl, m) {
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
-            .def("subsets_state", &CondorcetDomain::subsets_state, py::arg("trs"), py::arg("sub_n")=5)
+            .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)
+            .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
