@@ -1,9 +1,11 @@
 #include "condorcet_domain.h"
-
+#include "wrapper.h"
 
 int main()
 {
     CondorcetDomain cd(8);
+    TRSWrapper wrapper(cd);
+
 
 //    RuleScheme rs;
 //    rs.add({2, 3}, "1N3");

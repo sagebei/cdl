@@ -6,6 +6,7 @@ project(core)
 add_executable(core
         ./src/main.cpp
         ./src/condorcet_domain.cpp
+        ./src/wrapper.cpp
         ./src/utils.cpp)
 target_include_directories(core PUBLIC ./include)
 
