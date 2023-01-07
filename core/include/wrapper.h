@@ -2,6 +2,7 @@
 
 #include "condorcet_domain.h"
 
+
 class TRSWrapper
 {
 private:
