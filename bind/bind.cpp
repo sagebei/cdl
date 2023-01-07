@@ -53,6 +53,8 @@ PYBIND11_MODULE(cdl, m) {
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
             .def("assigned_triplets", &CondorcetDomain::assigned_triplets, py::arg("trs"))
+            .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
+            .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
             .def("uplift_trs", &CondorcetDomain::uplift_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
 
