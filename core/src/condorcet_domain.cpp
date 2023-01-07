@@ -197,10 +197,10 @@ std::vector<Triplet> CondorcetDomain::assigned_triplets(const TRS& trs)
     return assigned;
 }
 
-std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, Triplet triplet)
+std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet)
 {
     std::vector<std::size_t> sizes = {};
-    for (std::string& rule: rules)
+    for (const std::string& rule: rules)
     {
         TRS new_trs = assign(trs, triplet, rule);
         std::size_t s = condorcet_domain(new_trs).size();
