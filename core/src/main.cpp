@@ -3,9 +3,13 @@
 
 int main()
 {
-    CondorcetDomain cd(8);
+    CondorcetDomain cd(6);
     TRSWrapper wrapper(cd);
-
+    RuleScheme rs;
+    rs.add({2, 4}, "1N3");
+    rs.add({5}, "3N1");
+    TRS trs = cd.init_by_scheme(rs);
+    wrapper.dynamic_triplet_ordering(trs);
 
 //    RuleScheme rs;
 //    rs.add({2, 3}, "1N3");

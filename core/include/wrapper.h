@@ -1,14 +1,10 @@
 #pragma once
 
+#include <limits.h>
 #include "condorcet_domain.h"
-
 
 class TRSWrapper
 {
-private:
-    std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, Triplet triplet);
-
-
 public:
     CondorcetDomain cd;
     std::map<Triplet, std::vector<std::string>> allowed_rules;

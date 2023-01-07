@@ -4,6 +4,7 @@
 #include <pybind11/iostream.h>
 
 #include "condorcet_domain.h"
+#include "wrapper.h"
 #include "utils.h"
 
 
@@ -41,6 +42,29 @@ PYBIND11_MODULE(cdl, m) {
             .def_readwrite("rules", &RuleScheme::rules)
             .def("add", &RuleScheme::add);
 
+    py::class_<TRSWrapper>(m, "TRSWrapper")
+            .def(py::init<CondorcetDomain>(), py::arg("cd"))
+            .def_readonly("allowed_rules", &TRSWrapper::allowed_rules)
+            .def("change_allowed_rules", &TRSWrapper::change_allowed_rules, py::arg("triplets"), py::arg("rules"))
+            .def("remove_rules", &TRSWrapper::remove_rules, py::arg("trs"), py::arg("contains"))
+            .def("next_unassigned_triplet", &TRSWrapper::next_unassigned_triplet, py::arg("trs"))
+            .def("dynamic_triplet_ordering", &TRSWrapper::dynamic_triplet_ordering, py::arg("trs"))
+            .def(py::pickle(
+                    [](const TRSWrapper& wrapper)
+                    {
+                        return py::make_tuple(wrapper.cd, wrapper.allowed_rules);
+                    },
+                    [](py::tuple t)
+                    {
+                        if (t.size() != 2)
+                            throw std::runtime_error("Invalid state for TRSWrapper object!");
+
+                        TRSWrapper wrapper(t[0].cast<CondorcetDomain>());
+                        wrapper.allowed_rules = t[1].cast<std::map<Triplet, std::vector<std::string>>>();
+                        return wrapper;
+                    }
+            ));
+
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
             .def(py::init<int>(), py::arg("n")=8)
             .def_readonly("n", &CondorcetDomain::n)
@@ -75,8 +99,7 @@ PYBIND11_MODULE(cdl, m) {
                         if (t.size() != 4)
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
-                        CondorcetDomain cd{};
-                        cd.n = t[0].cast<int>();
+                        CondorcetDomain cd(t[0].cast<int>());
                         cd.rules = t[1].cast<std::array<std::string, 4>>();
                         cd.num_triplets = t[2].cast<int>();
                         cd.triplet_elems = t[3].cast<std::vector<int>>();
