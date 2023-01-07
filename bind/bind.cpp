@@ -55,7 +55,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("assigned_triplets", &CondorcetDomain::assigned_triplets, py::arg("trs"))
             .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
             .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
-            .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
+            .def("uplift_trs", &CondorcetDomain::uplift_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs

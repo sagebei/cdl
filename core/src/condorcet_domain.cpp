@@ -234,9 +234,9 @@ Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
 }
 
 // [1, 2, 3, 5, 7] subset must be ordered
-TRS CondorcetDomain::transfer_trs(const TRS& large, const TRS& small, const std::vector<int>& subset)
+TRS CondorcetDomain::uplift_trs(const TRS& large, const TRS& small, const std::vector<int>& subset)
 {
-    TRS transferred_trs = large;
+    TRS uplifted_trs = large;
     std::map<int, int> dict;
     for (int i = 0; i < subset.size(); i++)
         dict[i + 1] = subset[i];
@@ -244,9 +244,9 @@ TRS CondorcetDomain::transfer_trs(const TRS& large, const TRS& small, const std:
     for (const TripletRule& s: small)
     {
         Triplet mapped_triplet = {dict[s.triplet[0]], dict[s.triplet[1]], dict[s.triplet[2]]};
-        transferred_trs = assign(transferred_trs, mapped_triplet, s.rule);
+        uplifted_trs = assign(uplifted_trs, mapped_triplet, s.rule);
     }
-    return transferred_trs;
+    return uplifted_trs;
 }
 
 std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
