@@ -197,42 +197,6 @@ std::vector<Triplet> CondorcetDomain::assigned_triplets(const TRS& trs)
     return assigned;
 }
 
-std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, Triplet triplet)
-{
-    std::vector<std::size_t> sizes = {};
-    for (std::string& rule: rules)
-    {
-        TRS new_trs = assign(trs, triplet, rule);
-        std::size_t s = condorcet_domain(new_trs).size();
-        sizes.push_back(s);
-    }
-    return sizes;
-}
-
-Triplet CondorcetDomain::dynamic_triplet_ordering(const TRS& trs)
-{
-    std::map<std::size_t, Triplet> size_triplet;
-
-    std::vector<Triplet> unassigned = unassigned_triplets(trs);
-    if (unassigned.empty())
-        return Triplet{0, 0, 0};
-
-    for (const Triplet& unassigned_triplet : unassigned)
-    {
-        auto sizes = evaluate_rules_on_triplet(trs, unassigned_triplet);
-        auto max_size = *std::max_element(sizes.begin(), sizes.end());
-        size_triplet[max_size] = unassigned_triplet;
-    }
-    const auto max_size_triplet_ptr = std::min_element(std::begin(size_triplet), std::end(size_triplet),
-                                                           [](const std::pair<std::size_t, Triplet>& p1, const std::pair<std::size_t, Triplet>& p2)
-                                                                 {
-                                                                     return p1.first < p2.first;
-                                                                 });
-
-    return max_size_triplet_ptr->second;
-
-}
-
 // [1, 2, 3, 5, 7] subset must be ordered
 TRS CondorcetDomain::uplift_trs(const TRS& large, const TRS& small, const std::vector<int>& subset)
 {
