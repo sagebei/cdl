@@ -31,5 +31,6 @@ public:
     Triplet dynamic_triplet_ordering(const TRS& trs);
 
     int largest_full_size(const TRS& trs);
+
 };
 
