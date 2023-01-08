@@ -1,5 +1,5 @@
 #include "wrapper.h"
-
+#include <limits>
 
 TRSWrapper::TRSWrapper(CondorcetDomain cd)
 {
@@ -39,30 +39,39 @@ Triplet TRSWrapper::next_unassigned_triplet(const TRS& trs)
 }
 
 
+std::vector<std::size_t> TRSWrapper::evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet)
+{
+    std::vector<std::size_t> sizes = {};
+    for (const std::string& rule: allowed_rules[triplet])
+    {
+        TRS new_trs = cd.assign(trs, triplet, rule);
+        std::size_t s = cd.condorcet_domain(new_trs).size();
+        sizes.push_back(s);
+    }
+    return sizes;
+}
+
 Triplet TRSWrapper::dynamic_triplet_ordering(const TRS& trs)
 {
-    unsigned int min_size = UINT_MAX;
-    Triplet min_triplet;
-
     std::vector<Triplet> unassigned = cd.unassigned_triplets(trs);
     if (unassigned.empty())
         return Triplet{0, 0, 0};
 
-    for (const Triplet& triplet : unassigned) {
-        for (const std::string &rule: allowed_rules[triplet]) {
-            TRS new_trs = cd.assign(trs, triplet, rule);
-            std::size_t s = cd.condorcet_domain(new_trs).size();
-            std::cout << triplet[0] << triplet[1] << triplet[2] << " : " << s << std::endl;
-            if (s < min_size)
-            {
-                min_size = s;
-                min_triplet = triplet;
-            }
+    unsigned int min_size = UINT_MAX;
+    Triplet min_triplet;
+
+    for (const Triplet& unassigned_triplet : unassigned)
+    {
+        auto sizes = evaluate_rules_on_triplet(trs, unassigned_triplet);
+        auto max_size = *std::max_element(sizes.begin(), sizes.end());
+        if (max_size < min_size)
+        {
+            min_size = max_size;
+            min_triplet = unassigned_triplet;
         }
     }
 
     return min_triplet;
-
 }
 
 

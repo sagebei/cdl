@@ -7,12 +7,12 @@
 #include "wrapper.h"
 #include "utils.h"
 
-
 namespace py = pybind11;
+
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = 1.8;
+    m.attr("__version__") = 1.85;
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -60,7 +60,7 @@ PYBIND11_MODULE(cdl, m) {
                             throw std::runtime_error("Invalid state for TRSWrapper object!");
 
                         TRSWrapper wrapper(t[0].cast<CondorcetDomain>());
-                        wrapper.allowed_rules = t[1].cast<std::map<Triplet, std::vector<std::string>>>();
+                        wrapper.allowed_rules = t[1].cast<AllowedRules>();
                         return wrapper;
                     }
             ));
