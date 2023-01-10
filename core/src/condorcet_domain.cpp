@@ -269,6 +269,22 @@ std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
     return state;
 }
 
+TRS CondorcetDomain::state_to_trs(const std::vector<int>& state)
+{
+    TRS trs = init_empty();
+    int i = 0;
+    for (TripletRule& tr : trs)
+    {
+        int s = state[i];
+        if (s == 0)
+            tr.rule = "";
+        else
+            tr.rule = rules[s-1];
+        i ++;
+    }
+    return trs;
+}
+
 CD CondorcetDomain::condorcet_domain(const TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};

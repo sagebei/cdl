@@ -81,6 +81,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
             .def("uplift_trs", &CondorcetDomain::uplift_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
+            .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)

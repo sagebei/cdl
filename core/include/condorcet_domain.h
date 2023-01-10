@@ -59,6 +59,7 @@ public:
     std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet);
     Triplet dynamic_triplet_ordering(const TRS& trs);
     std::vector<int> trs_to_state(const TRS& trs);
+    TRS state_to_trs(const std::vector<int>& state);
     TRS uplift_trs(const TRS& large, const TRS& small, const std::vector<int>& subset);
 
     // manipulating CDs
