@@ -12,7 +12,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = 1.85;
+    m.attr("__version__") = "1.0.3";
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -85,7 +85,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
-            .def("subset_weights", &CondorcetDomain::subset_weights, py::arg("sub_n"))
+            .def("subset_weights", &CondorcetDomain::subset_weights, py::arg("sub_n")=5)
             .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
