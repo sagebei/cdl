@@ -299,6 +299,23 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     return cd;
 }
 
+std::vector<int> CondorcetDomain::subset_weights(int sub_n)
+{
+    std::vector<int> weights{};
+    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
+    for (const std::vector<int>& subset : subsets)
+    {
+        int weight = 0;
+        for (int i = 0; i < subset.size() - 1; i ++)
+        {
+            weight += subset[i+1] - subset[i];
+        }
+        weight = n - weight;
+        weights.push_back(weight);
+    }
+    return weights;
+}
+
 std::vector<TRS> CondorcetDomain::subset_trss(const TRS& trs, int sub_n)
 {
     std::vector<TRS> sub_trss{};
