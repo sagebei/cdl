@@ -4,6 +4,8 @@
 int main()
 {
     CondorcetDomain cd(7);
+//    TRS trs = cd.init_random();
+//    print_trs(trs);
     std::vector<int> weights = cd.subset_weights(5);
     for (const int& w : weights)
         std::cout << w << " " << std::endl;

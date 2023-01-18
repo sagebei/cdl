@@ -6,6 +6,7 @@
 #include <list>
 #include <map>
 #include <algorithm>
+#include <random>
 
 typedef std::array<int, 3> Triplet;
 
@@ -51,6 +52,7 @@ public:
 
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=false);
+    TRS init_random(bool is_sorted=false);
     TRS init_by_scheme(const RuleScheme& scheme, bool is_sorted=false);
     TRS assign(TRS trs, const Triplet& triplet, const std::string& rule);
     TRS assign_by_index(TRS trs, int index, const std::string& rule);

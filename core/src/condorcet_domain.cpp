@@ -124,6 +124,33 @@ TRS CondorcetDomain::init_empty(bool is_sorted)
     return trs;
 }
 
+TRS CondorcetDomain::init_random(bool is_sorted)
+{
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<> distrib(0, 3);
+
+    TRS trs;
+    for (int i = 1; i <= n-2; i++)
+    {
+        for (int j = i+1; j <= n-1; j++)
+        {
+            for (int k = j+1; k <= n; k++)
+            {
+                TripletRule tr;
+                tr.triplet = {i, j, k};
+                tr.rule = rules[distrib(gen)];
+                trs.push_back(tr);
+            }
+        }
+    }
+
+    if (is_sorted)
+        sort_trs(trs);
+
+    return trs;
+}
+
 TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool is_sorted)
 {
     std::size_t size = scheme.numbers.size();

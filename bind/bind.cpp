@@ -72,6 +72,7 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
 
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
+            .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"), py::arg("is_sorted")=false)
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
@@ -84,7 +85,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
-            .def("subset_weights", &CondorcetDomain::subset_weights, py::arg("sub_b"))
+            .def("subset_weights", &CondorcetDomain::subset_weights, py::arg("sub_n"))
             .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
