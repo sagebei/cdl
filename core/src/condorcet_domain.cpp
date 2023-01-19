@@ -337,7 +337,6 @@ std::vector<int> CondorcetDomain::subset_weights(int sub_n)
         {
             weight += subset[i+1] - subset[i];
         }
-        weight = n - weight;
         weights.push_back(weight);
     }
     return weights;
