@@ -151,9 +151,8 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool is_sorted)
+TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted)
 {
-    std::size_t size = scheme.numbers.size();
     TRS trs;
 
     for (int i = 1; i <= n-2; i++)
@@ -164,16 +163,7 @@ TRS CondorcetDomain::init_by_scheme(const RuleScheme& scheme, bool is_sorted)
             {
                 TripletRule tr;
                 tr.triplet = {i, j, k};
-                for (int s = 0; s < size; s++)
-                {
-                    const std::vector<int>& number = scheme.numbers[s];
-                    if (std::find(number.begin(), number.end(), j) != number.end())
-                    {
-                        tr.rule = scheme.rules[s];
-                        break;
-                    }
-
-                }
+                tr.rule = scheme_fun(tr.triplet);
                 trs.push_back(tr);
             }
         }

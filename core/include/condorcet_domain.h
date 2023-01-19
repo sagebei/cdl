@@ -16,18 +16,6 @@ struct TripletRule
     std::string rule;
 };
 
-struct RuleScheme
-{
-    std::vector<std::vector<int>> numbers;
-    std::vector<std::string> rules;
-
-    void add(const std::vector<int>& number, const std::string& rule)
-    {
-        numbers.push_back(number);
-        rules.push_back(rule);
-    }
-};
-
 typedef std::list<TripletRule> TRS;
 typedef std::list<std::list<int>> CD;
 typedef std::vector<CD> CDS;
@@ -53,7 +41,7 @@ public:
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=false);
     TRS init_random(bool is_sorted=false);
-    TRS init_by_scheme(const RuleScheme& scheme, bool is_sorted=false);
+    TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
 
     TRS assign(TRS trs, const Triplet& triplet, const std::string& rule);
     TRS assign_by_index(TRS trs, int index, const std::string& rule);

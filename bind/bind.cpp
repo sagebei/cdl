@@ -2,6 +2,7 @@
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
 #include <pybind11/iostream.h>
+#include <pybind11/functional.h>
 
 #include "condorcet_domain.h"
 #include "wrapper.h"
@@ -36,12 +37,6 @@ PYBIND11_MODULE(cdl, m) {
                     }
             ));
 
-    py::class_<RuleScheme>(m, "RuleScheme")
-            .def(py::init<>())
-            .def_readwrite("numbers", &RuleScheme::numbers)
-            .def_readwrite("rules", &RuleScheme::rules)
-            .def("add", &RuleScheme::add);
-
     py::class_<TRSWrapper>(m, "TRSWrapper")
             .def(py::init<CondorcetDomain>(), py::arg("cd"))
             .def_readonly("allowed_rules", &TRSWrapper::allowed_rules)
@@ -73,7 +68,7 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
-            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme"), py::arg("is_sorted")=false)
+            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"), py::arg("is_sorted")=false)
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
             .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
