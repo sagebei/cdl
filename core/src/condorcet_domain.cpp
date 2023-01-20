@@ -175,6 +175,41 @@ TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& s
     return trs;
 }
 
+TRS CondorcetDomain::clear_trs(TRS trs)
+{
+    for (TripletRule& tr : trs)
+        tr.rule = "";
+
+    return trs;
+}
+
+TRS CondorcetDomain::shuffle_trs(TRS trs, int seed)
+{
+    TRS empty_trs = init_empty(false);
+    empty_trs = transfer_trs(trs, empty_trs);
+
+    std::vector<std::reference_wrapper<TripletRule>> v_trs(empty_trs.begin(), empty_trs.end());
+    std::mt19937_64 urbg(seed);
+    std::shuffle(v_trs.begin(), v_trs.end(), urbg);
+
+    TRS shuffled_trs(v_trs.begin(), v_trs.end());
+
+    return shuffled_trs;
+}
+
+TRS CondorcetDomain::transfer_trs(const TRS& from_trs, TRS to_trs)
+{
+    for (TripletRule& to_tr : to_trs)
+    {
+        for (const TripletRule& from_tr : from_trs)
+        {
+            if (to_tr.triplet == from_tr.triplet)
+                to_tr.rule = from_tr.rule;
+        }
+    }
+    return to_trs;
+}
+
 TRS CondorcetDomain::assign(TRS trs, const Triplet& triplet, const std::string& rule)
 {
     for (TripletRule& tr: trs)

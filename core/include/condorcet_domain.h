@@ -7,6 +7,8 @@
 #include <map>
 #include <algorithm>
 #include <random>
+#include <functional>
+#include <numeric>
 
 typedef std::array<int, 3> Triplet;
 
@@ -43,6 +45,10 @@ public:
     TRS init_random(bool is_sorted=false);
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
 
+    TRS clear_trs(TRS trs);
+    TRS shuffle_trs(TRS trs, int seed=0);
+    TRS transfer_trs(const TRS& from, TRS to);
+
     TRS assign(TRS trs, const Triplet& triplet, const std::string& rule);
     TRS assign_by_index(TRS trs, int index, const std::string& rule);
     std::vector<Triplet> unassigned_triplets(const TRS& trs);
@@ -60,6 +66,7 @@ public:
     std::vector<TRS> subset_trss(const TRS& trs, int sub_n);
     std::vector<std::vector<int>> subset_states(const TRS& trs, int sub_n);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
+
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
     void sort_cd(CD& cd);
