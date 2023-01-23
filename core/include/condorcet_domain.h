@@ -19,7 +19,7 @@ struct TripletRule
 };
 
 typedef std::vector<TripletRule> TRS;
-typedef std::map<Triple, int> TripletIndex;
+typedef std::map<Triplet, int> TripletIndex;
 
 typedef std::list<std::list<int>> CD;
 typedef std::vector<CD> CDS;
@@ -32,7 +32,7 @@ private:
     void build_triplet_index(const TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
-    void filter_trs(TRS& trs, const std::list<int>& elem);
+    void filter_trs(std::list<TripletRule>& trs, const std::list<int>& elem);
     TRS fetch_trs(const TRS& trs, int i);
 
 public:

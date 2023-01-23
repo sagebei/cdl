@@ -58,8 +58,9 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 
 }
 
-void CondorcetDomain::filter_trs(TRS& trs, const std::list<int>& elem)
+void CondorcetDomain::filter_trs(std::list<TripletRule>& trs, const std::list<int>& elem)
 {
+
     trs.remove_if([&](const TripletRule& tr){
         const int& first = tr.triplet[0], second = tr.triplet[1], third = tr.triplet[2];
         const std::string& rule = tr.rule;
@@ -220,7 +221,7 @@ TRS CondorcetDomain::transfer_trs(const TRS& from_trs, TRS to_trs)
 
 TRS CondorcetDomain::assign(TRS trs, const Triplet& triplet, const std::string& rule)
 {
-    int index = triplet_index(triplet);
+    int index = triplet_index[triplet];
     trs[index].rule = rule;
 
     return trs;
@@ -569,7 +570,7 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
     }
 
     TRS result_trs(all_trs.begin(), all_trs.end());
-    return all_trs;
+    return result_trs;
 }
 
 void print_trs(const TRS& trs)
