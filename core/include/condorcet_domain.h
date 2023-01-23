@@ -18,7 +18,9 @@ struct TripletRule
     std::string rule;
 };
 
-typedef std::list<TripletRule> TRS;
+typedef std::vector<TripletRule> TRS;
+typedef std::map<Triple, int> TripletIndex;
+
 typedef std::list<std::list<int>> CD;
 typedef std::vector<CD> CDS;
 
@@ -27,6 +29,7 @@ class CondorcetDomain
 private:
 
     void sort_trs(TRS& trs);
+    void build_triplet_index(const TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
     void filter_trs(TRS& trs, const std::list<int>& elem);
@@ -34,9 +37,10 @@ private:
 
 public:
     int n;
-    std::array<std::string, 4> rules;
+    std::array<std::string, 4> rules{};
     int num_triplets;
-    std::vector<int> triplet_elems;
+    std::vector<int> triplet_elems{};
+    TripletIndex triplet_index{};
 
     CondorcetDomain(int n=8);
 
