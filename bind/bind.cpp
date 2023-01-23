@@ -95,17 +95,22 @@ PYBIND11_MODULE(cdl, m) {
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {
-                        return py::make_tuple(cd.n, cd.rules, cd.num_triplets, cd.triplet_elems);
+                        return py::make_tuple(cd.n,
+                                              cd.rules,
+                                              cd.num_triplets,
+                                              cd.triplet_elems,
+                                              cd.triplet_index);
                     },
                     [](py::tuple t)
                     {
-                        if (t.size() != 4)
+                        if (t.size() != 5)
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
                         CondorcetDomain cd(t[0].cast<int>());
                         cd.rules = t[1].cast<std::array<std::string, 4>>();
                         cd.num_triplets = t[2].cast<int>();
                         cd.triplet_elems = t[3].cast<std::vector<int>>();
+                        cd.triplet_index = t[4].cast<TripletIndex>();
 
                         return cd;
                     }
