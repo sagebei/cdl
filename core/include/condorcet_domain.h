@@ -32,7 +32,7 @@ private:
     void build_triplet_index(const TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
-    void filter_trs(std::list<TripletRule>& trs, const std::list<int>& elem);
+    void filter_trs_list(std::list<TripletRule>& trs, const std::list<int>& elem);
     TRS fetch_trs(const TRS& trs, int i);
 
 public:

@@ -58,7 +58,7 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 
 }
 
-void CondorcetDomain::filter_trs(std::list<TripletRule>& trs, const std::list<int>& elem)
+void CondorcetDomain::filter_trs_list(std::list<TripletRule>& trs, const std::list<int>& elem)
 {
 
     trs.remove_if([&](const TripletRule& tr){
@@ -155,7 +155,9 @@ TRS CondorcetDomain::init_random(bool is_sorted)
 
     if (is_sorted)
         sort_trs(trs);
+
     build_triplet_index(trs);
+
     return trs;
 }
 
@@ -181,6 +183,7 @@ TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& s
         sort_trs(trs);
 
     build_triplet_index(trs);
+
     return trs;
 }
 
@@ -197,13 +200,12 @@ TRS CondorcetDomain::shuffle_trs(TRS trs, int seed)
     TRS empty_trs = init_empty(false);
     empty_trs = transfer_trs(trs, empty_trs);
 
-    std::vector<std::reference_wrapper<TripletRule>> v_trs(empty_trs.begin(), empty_trs.end());
     std::mt19937_64 urbg(seed);
-    std::shuffle(v_trs.begin(), v_trs.end(), urbg);
+    std::shuffle(empty_trs.begin(), empty_trs.end(), urbg);
 
-    TRS shuffled_trs(v_trs.begin(), v_trs.end());
+    build_triplet_index(empty_trs);
 
-    return shuffled_trs;
+    return empty_trs;
 }
 
 TRS CondorcetDomain::transfer_trs(const TRS& from_trs, TRS to_trs)
@@ -408,7 +410,6 @@ std::vector<TRS> CondorcetDomain::subset_trss(const TRS& trs, int sub_n)
                 sub_trs = sub_cd.assign(sub_trs, sub_triplet, rule);
             }
         }
-
         sub_trss.push_back(sub_trs);
     }
 
@@ -566,7 +567,7 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
     }
     for (const std::list<int>& elem : cd)
     {
-        filter_trs(all_trs, elem);
+        filter_trs_list(all_trs, elem);
     }
 
     TRS result_trs(all_trs.begin(), all_trs.end());
