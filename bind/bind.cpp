@@ -65,13 +65,15 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("n", &CondorcetDomain::n)
             .def_readonly("rules", &CondorcetDomain::rules)   // member variables
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
+            .def_readonly("triplet_elems", &CondorcetDomain::triplet_elems)
+            .def_readonly("triplet_index", &CondorcetDomain::triplet_index)
 
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"), py::arg("is_sorted")=false)
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))
-            .def("shuffle_trs", &CondorcetDomain::shuffle_trs, py::arg("trs"), py::arg("seed"))
+            .def("shuffle_trs", &CondorcetDomain::shuffle_trs, py::arg("trs"), py::arg("seed")=0)
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("from"), py::arg("to"))
 
             .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
