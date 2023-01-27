@@ -453,6 +453,60 @@ std::vector<std::vector<int>> CondorcetDomain::subset_states(const TRS& trs, int
     return sub_states;
 }
 
+std::vector<TRS> CondorcetDomain::subset_trss_lex(const TRS& trs, int sub_n)
+{
+    std::vector<TRS> sub_trss{};
+    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
+
+    for (const std::vector<int>& subset: subsets)  // for each subset
+    {
+        TRS sub_trs{};  // the order of the trs matters
+
+        std::map<int, int> dict;
+        for (int i = 0; i < subset.size(); i++)  // construct the dictionary
+        {
+            const int& value = subset[i];
+            dict[value] = i + 1;
+        }
+
+        for (const TripletRule& tr: trs)  // find the triplet that is contained in the subset
+        {
+            const auto& [triplet, rule] = tr;
+
+            int counter = 0;
+            for (const int& value : subset)
+            {
+                if (std::find(std::begin(triplet), std::end(triplet), value) != std::end(triplet))
+                    counter += 1;
+            }
+            if (counter == 3)  // if all the element in the triplet is present in the subset
+            {
+                TripletRule sub_triplet_rule;
+                for (int i = 0; i < 3; i++)
+                    sub_triplet_rule.triplet[i] = dict[triplet[i]];
+                sub_triplet_rule.rule = rule;
+                sub_trs.push_back(sub_triplet_rule);
+            }
+        }
+        sub_trss.push_back(sub_trs);
+    }
+
+    return sub_trss;
+}
+
+std::vector<std::vector<int>> CondorcetDomain::subset_states_lex(const TRS& trs, int sub_n)
+{
+    std::vector<std::vector<int>> sub_states{};
+    std::vector<TRS> trss = subset_trss_lex(trs, sub_n);
+    for (const TRS& sub_trs : trss)
+    {
+        std::vector<int> sub_state = trs_to_state(sub_trs);
+        sub_states.push_back(sub_state);
+    }
+
+    return sub_states;
+}
+
 std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_cd_sizes(const TRS& trs, int sub_n)
 {
     std::vector<std::size_t> sizes;
