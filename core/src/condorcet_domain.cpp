@@ -161,6 +161,30 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
+TRS CondorcetDomain::init_lex()
+{
+    TRS trs;
+    for (int i = 1; i < n+1; i ++)
+    {
+        for (int k = 1; k < n+1; k ++)
+        {
+            for (int j = 1; j < n+1; j ++)
+            {
+
+                if (i < j && j < k)
+                {
+                    TripletRule tr;
+                    tr.triplet = {i, j, k};
+                    tr.rule = "";
+                    trs.push_back(tr);
+                }
+            }
+        }
+    }
+
+    return trs;
+}
+
 TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted)
 {
     TRS trs;

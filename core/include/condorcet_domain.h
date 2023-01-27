@@ -47,6 +47,7 @@ public:
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=false);
     TRS init_random(bool is_sorted=false);
+    TRS init_lex();
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
 
     TRS clear_trs(TRS trs);
