@@ -67,10 +67,12 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
             .def_readonly("triplet_elems", &CondorcetDomain::triplet_elems)
             .def_readonly("triplet_index", &CondorcetDomain::triplet_index)
+            .def_readonly("subsets", &CondorcetDomain::subsets)
+            .def_readonly("subset_dicts", &CondorcetDomain::subset_dicts)
 
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
-            .def("init_lex", &CondorcetDomain::init_lex)
+            .def("init_lex", &CondorcetDomain::init_lex, py::arg("rule")="")
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"), py::arg("is_sorted")=false)
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))
@@ -88,9 +90,12 @@ PYBIND11_MODULE(cdl, m) {
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
 
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
-            .def("subset_weights", &CondorcetDomain::subset_weights, py::arg("sub_n")=5)
+            .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)
+            .def("subset_weights", &CondorcetDomain::subset_weights)
             .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"), py::arg("sub_n")=5)
+            .def("subset_trss_lex", &CondorcetDomain::subset_trss_lex, py::arg("trs"))
+            .def("subset_states_lex", &CondorcetDomain::subset_states_lex, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
@@ -102,7 +107,11 @@ PYBIND11_MODULE(cdl, m) {
                                               cd.rules,
                                               cd.num_triplets,
                                               cd.triplet_elems,
-                                              cd.triplet_index);
+                                              cd.triplet_index,
+                                              cd.sub_n,
+                                              cd.subset_size,
+                                              cd.subsets,
+                                              cd.subset_dicts);
                     },
                     [](py::tuple t)
                     {
@@ -114,6 +123,10 @@ PYBIND11_MODULE(cdl, m) {
                         cd.num_triplets = t[2].cast<int>();
                         cd.triplet_elems = t[3].cast<std::vector<int>>();
                         cd.triplet_index = t[4].cast<TripletIndex>();
+                        cd.sub_n = t[5].cast<int>();
+                        cd.subset_size = t[6].cast<int>();
+                        cd.subsets = t[7].cast<std::vector<std::vector<int>>>();
+                        cd.subset_dicts = t[8].cast<std::vector<std::map<int, int>>>();
 
                         return cd;
                     }

@@ -1,7 +1,5 @@
 #include "condorcet_domain.h"
 
-#include <utility>
-#include "utils.h"
 
 CondorcetDomain::CondorcetDomain(int n)
 {
@@ -161,7 +159,7 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::init_lex()
+TRS CondorcetDomain::init_lex(std::string rule)
 {
     TRS trs;
     for (int i = 1; i < n+1; i ++)
@@ -175,7 +173,7 @@ TRS CondorcetDomain::init_lex()
                 {
                     TripletRule tr;
                     tr.triplet = {i, j, k};
-                    tr.rule = "";
+                    tr.rule = rule;
                     trs.push_back(tr);
                 }
             }
@@ -383,10 +381,27 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     return cd;
 }
 
-std::vector<int> CondorcetDomain::subset_weights(int sub_n)
+void CondorcetDomain::init_subset(int sub_n)
+{
+    this->sub_n = sub_n;
+    subsets = combinations(triplet_elems, sub_n);
+    subset_size = subsets.size();
+
+    for (const std::vector<int>& subset: subsets)
+    {
+        std::map<int, int> dict{};
+        for (int i = 0; i < sub_n; i++)  // construct the dictionary
+        {
+            const int& value = subset[i];
+            dict[value] = i + 1;
+        }
+        subset_dicts.push_back(dict);
+    }
+}
+
+std::vector<int> CondorcetDomain::subset_weights()
 {
     std::vector<int> weights{};
-    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
     for (const std::vector<int>& subset : subsets)
     {
         int weight = 0;
@@ -453,28 +468,19 @@ std::vector<std::vector<int>> CondorcetDomain::subset_states(const TRS& trs, int
     return sub_states;
 }
 
-std::vector<TRS> CondorcetDomain::subset_trss_lex(const TRS& trs, int sub_n)
+std::vector<TRS> CondorcetDomain::subset_trss_lex(const TRS& trs)
 {
     std::vector<TRS> sub_trss{};
-    std::vector<std::vector<int>> subsets = combinations(triplet_elems, sub_n);
 
-    for (const std::vector<int>& subset: subsets)  // for each subset
+    for (int subset_idx = 0; subset_idx < subset_size; subset_idx++)  // for each subset
     {
-        TRS sub_trs{};  // the order of the trs matters
-
-        std::map<int, int> dict;
-        for (int i = 0; i < subset.size(); i++)  // construct the dictionary
-        {
-            const int& value = subset[i];
-            dict[value] = i + 1;
-        }
-
+        TRS sub_trs{};
         for (const TripletRule& tr: trs)  // find the triplet that is contained in the subset
         {
             const auto& [triplet, rule] = tr;
 
             int counter = 0;
-            for (const int& value : subset)
+            for (const int& value : subsets[subset_idx])
             {
                 if (std::find(std::begin(triplet), std::end(triplet), value) != std::end(triplet))
                     counter += 1;
@@ -483,7 +489,7 @@ std::vector<TRS> CondorcetDomain::subset_trss_lex(const TRS& trs, int sub_n)
             {
                 TripletRule sub_triplet_rule;
                 for (int i = 0; i < 3; i++)
-                    sub_triplet_rule.triplet[i] = dict[triplet[i]];
+                    sub_triplet_rule.triplet[i] = subset_dicts[subset_idx][triplet[i]];
                 sub_triplet_rule.rule = rule;
                 sub_trs.push_back(sub_triplet_rule);
             }
@@ -494,10 +500,10 @@ std::vector<TRS> CondorcetDomain::subset_trss_lex(const TRS& trs, int sub_n)
     return sub_trss;
 }
 
-std::vector<std::vector<int>> CondorcetDomain::subset_states_lex(const TRS& trs, int sub_n)
+std::vector<std::vector<int>> CondorcetDomain::subset_states_lex(const TRS& trs)
 {
     std::vector<std::vector<int>> sub_states{};
-    std::vector<TRS> trss = subset_trss_lex(trs, sub_n);
+    std::vector<TRS> trss = subset_trss_lex(trs);
     for (const TRS& sub_trs : trss)
     {
         std::vector<int> sub_state = trs_to_state(sub_trs);

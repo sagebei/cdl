@@ -9,6 +9,8 @@
 #include <random>
 #include <functional>
 #include <numeric>
+#include <utility>
+#include "utils.h"
 
 typedef std::array<int, 3> Triplet;
 
@@ -42,12 +44,18 @@ public:
     std::vector<int> triplet_elems{};
     TripletIndex triplet_index{};
 
+    // member variable for build subsets
+    int sub_n{};
+    int subset_size{};
+    std::vector<std::vector<int>> subsets{};
+    std::vector<std::map<int, int>> subset_dicts{};
+
     CondorcetDomain(int n=8);
 
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=false);
     TRS init_random(bool is_sorted=false);
-    TRS init_lex();
+    TRS init_lex(std::string rule="");
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
 
     TRS clear_trs(TRS trs);
@@ -67,11 +75,12 @@ public:
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
 
-    std::vector<int> subset_weights(int sub_n);
+    void init_subset(int sub_n);
+    std::vector<int> subset_weights();
     std::vector<TRS> subset_trss(const TRS& trs, int sub_n);
-    std::vector<std::vector<int>> subset_states_lex(const TRS& trs, int sub_n);
-    std::vector<TRS> subset_trss_lex(const TRS& trs, int sub_n);
     std::vector<std::vector<int>> subset_states(const TRS& trs, int sub_n);
+    std::vector<TRS> subset_trss_lex(const TRS& trs);
+    std::vector<std::vector<int>> subset_states_lex(const TRS& trs);
 
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
 
