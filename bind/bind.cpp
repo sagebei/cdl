@@ -72,7 +72,7 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
-            .def("init_lex", &CondorcetDomain::init_lex, py::arg("rule")="")
+            .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule")="")
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"), py::arg("is_sorted")=false)
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))
@@ -92,11 +92,9 @@ PYBIND11_MODULE(cdl, m) {
             .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
             .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)
             .def("subset_weights", &CondorcetDomain::subset_weights)
-            .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"), py::arg("sub_n")=5)
-            .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"), py::arg("sub_n")=5)
-            .def("subset_trss_lex", &CondorcetDomain::subset_trss_lex, py::arg("trs"))
-            .def("subset_states_lex", &CondorcetDomain::subset_states_lex, py::arg("trs"))
-            .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"), py::arg("sub_n")=5)
+            .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"))
+            .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"))
+            .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted")=false)

@@ -55,7 +55,7 @@ public:
     // creating and manipulating TRS
     TRS init_empty(bool is_sorted=false);
     TRS init_random(bool is_sorted=false);
-    TRS init_lex(std::string rule="");
+    TRS init_trs(std::string rule="");
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
 
     TRS clear_trs(TRS trs);
@@ -77,12 +77,9 @@ public:
 
     void init_subset(int sub_n);
     std::vector<int> subset_weights();
-    std::vector<TRS> subset_trss(const TRS& trs, int sub_n);
-    std::vector<std::vector<int>> subset_states(const TRS& trs, int sub_n);
-    std::vector<TRS> subset_trss_lex(const TRS& trs);
-    std::vector<std::vector<int>> subset_states_lex(const TRS& trs);
-
-    std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs, int sub_n);
+    std::vector<TRS> subset_trss(const TRS& trs);
+    std::vector<std::vector<int>> subset_states(const TRS& trs);
+    std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
     std::size_t hash_cd(CD& cd);
     std::size_t hash_cd_brothers(CDS& cds);
