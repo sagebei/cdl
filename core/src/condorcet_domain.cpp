@@ -180,6 +180,7 @@ TRS CondorcetDomain::init_trs(std::string rule)
         }
     }
 
+    build_triplet_index(trs);
     return trs;
 }
 
