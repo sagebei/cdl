@@ -106,30 +106,6 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, int i)
     return fetched_trs;
 }
 
-TRS CondorcetDomain::init_empty(bool is_sorted)
-{
-    TRS trs;
-    for (int i = 1; i <= n-2; i++)
-    {
-        for (int j = i+1; j <= n-1; j++)
-        {
-            for (int k = j+1; k <= n; k++)
-            {
-                TripletRule tr;
-                tr.triplet = {i, j, k};
-                tr.rule = "";
-                trs.push_back(tr);
-            }
-        }
-    }
-
-    if (is_sorted)
-        sort_trs(trs);
-
-    build_triplet_index(trs);
-    return trs;
-}
-
 TRS CondorcetDomain::init_random(bool is_sorted)
 {
     std::random_device rd;  //Will be used to obtain a seed for the random number engine
@@ -184,29 +160,28 @@ TRS CondorcetDomain::init_trs(std::string rule)
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted)
+TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun)
 {
     TRS trs;
-
-    for (int i = 1; i <= n-2; i++)
+    for (int i = 1; i < n+1; i ++)
     {
-        for (int j = i+1; j <= n-1; j++)
+        for (int k = 1; k < n+1; k ++)
         {
-            for (int k = j+1; k <= n; k++)
+            for (int j = 1; j < n+1; j ++)
             {
-                TripletRule tr;
-                tr.triplet = {i, j, k};
-                tr.rule = scheme_fun(tr.triplet);
-                trs.push_back(tr);
+
+                if (i < j && j < k)
+                {
+                    TripletRule tr;
+                    tr.triplet = {i, j, k};
+                    tr.rule = scheme_fun(tr.triplet);;
+                    trs.push_back(tr);
+                }
             }
         }
     }
 
-    if (is_sorted)
-        sort_trs(trs);
-
     build_triplet_index(trs);
-
     return trs;
 }
 
@@ -220,7 +195,7 @@ TRS CondorcetDomain::clear_trs(TRS trs)
 
 TRS CondorcetDomain::shuffle_trs(TRS trs, int seed)
 {
-    TRS empty_trs = init_empty(false);
+    TRS empty_trs = init_trs();
     empty_trs = transfer_trs(trs, empty_trs);
 
     std::mt19937_64 urbg(seed);
@@ -560,10 +535,10 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
 {
     std::list<TripletRule> all_trs;
 
-    TRS trs = init_empty(is_sorted);
+    TRS trs = init_trs();
     for (auto tr: trs)
     {
-        for (std::string rule: rules)
+        for (const std::string& rule: rules)
         {
             tr.rule = rule;
             all_trs.push_back(tr);

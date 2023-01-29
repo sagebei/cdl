@@ -53,10 +53,9 @@ public:
     CondorcetDomain(int n=8);
 
     // creating and manipulating TRS
-    TRS init_empty(bool is_sorted=false);
     TRS init_random(bool is_sorted=false);
     TRS init_trs(std::string rule="");
-    TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun, bool is_sorted=false);
+    TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
 
     TRS clear_trs(TRS trs);
     TRS shuffle_trs(TRS trs, int seed=0);

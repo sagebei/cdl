@@ -4,7 +4,7 @@
 TRSWrapper::TRSWrapper(CondorcetDomain cd)
 {
     this->cd = cd;
-    TRS empty_trs = cd.init_empty();
+    TRS empty_trs = cd.init_trs();
     for (const TripletRule& tr: empty_trs)
     {
         allowed_rules[tr.triplet] = {"1N3", "3N1"};

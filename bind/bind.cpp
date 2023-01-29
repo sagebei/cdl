@@ -70,10 +70,10 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("subsets", &CondorcetDomain::subsets)
             .def_readonly("subset_dicts", &CondorcetDomain::subset_dicts)
 
-            .def("init_empty", &CondorcetDomain::init_empty, py::arg("is_sorted")=false)  // creating and manipulating TRS
+            // creating and manipulating TRS
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule")="")
-            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"), py::arg("is_sorted")=false)
+            .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"))
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))
             .def("shuffle_trs", &CondorcetDomain::shuffle_trs, py::arg("trs"), py::arg("seed")=0)
