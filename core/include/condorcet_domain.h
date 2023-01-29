@@ -74,6 +74,7 @@ public:
 
     // manipulating CDs
     CD condorcet_domain(const TRS& trs);
+    std::size_t size(const TRS& trs);
 
     // subset functions
     void init_subset(int sub_n);

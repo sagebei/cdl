@@ -326,8 +326,9 @@ TRS CondorcetDomain::uplift_trs(const TRS& large, const TRS& small, const std::v
 
     for (const TripletRule& s: small)
     {
-        Triplet mapped_triplet = {dict[s.triplet[0]], dict[s.triplet[1]], dict[s.triplet[2]]};
-        uplifted_trs = assign(uplifted_trs, mapped_triplet, s.rule);
+        const auto& [triplet, rule] = s;
+        Triplet mapped_triplet = {dict[triplet[0]], dict[triplet[1]], dict[triplet[2]]};
+        uplifted_trs = assign(uplifted_trs, mapped_triplet, rule);
     }
     return uplifted_trs;
 }
@@ -382,11 +383,17 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     return cd;
 }
 
+std::size_t CondorcetDomain::size(const TRS& trs)
+{
+    return condorcet_domain(trs).size();
+}
+
 void CondorcetDomain::init_subset(int sub_n)
 {
     this->sub_n = sub_n;
     subsets = combinations(triplet_elems, sub_n);
     subset_size = subsets.size();
+    subset_dicts.clear();
 
     for (const std::vector<int>& subset: subsets)
     {
