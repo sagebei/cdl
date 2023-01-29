@@ -79,7 +79,7 @@ public:
     // subset functions
     void init_subset(int sub_n);
     std::vector<int> subset_weights();
-    std::vector<TRS> subset_trss(const TRS& trs);
+    std::vector<TRS> subset_trs_list(const TRS& trs);
     std::vector<std::vector<int>> subset_states(const TRS& trs);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 

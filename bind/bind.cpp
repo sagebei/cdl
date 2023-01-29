@@ -94,10 +94,10 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)
             .def("subset_weights", &CondorcetDomain::subset_weights)
-            .def("subset_trss", &CondorcetDomain::subset_trss, py::arg("trs"))
+            .def("subset_trs_list", &CondorcetDomain::subset_trs_list, py::arg("trs"))
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"))
-
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
+
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"), py::arg("is_sorted")=false)

@@ -422,9 +422,9 @@ std::vector<int> CondorcetDomain::subset_weights()
     return weights;
 }
 
-std::vector<TRS> CondorcetDomain::subset_trss(const TRS& trs)
+std::vector<TRS> CondorcetDomain::subset_trs_list(const TRS& trs)
 {
-    std::vector<TRS> sub_trss{};
+    std::vector<TRS> trs_list{};
 
     for (int subset_idx = 0; subset_idx < subset_size; subset_idx++)  // for each subset
     {
@@ -442,17 +442,17 @@ std::vector<TRS> CondorcetDomain::subset_trss(const TRS& trs)
                 sub_trs.push_back(sub_triplet_rule);
             }
         }
-        sub_trss.push_back(sub_trs);
+        trs_list.push_back(sub_trs);
     }
 
-    return sub_trss;
+    return trs_list;
 }
 
 std::vector<std::vector<int>> CondorcetDomain::subset_states(const TRS& trs)
 {
     std::vector<std::vector<int>> sub_states{};
-    std::vector<TRS> trss = subset_trss(trs);
-    for (const TRS& sub_trs : trss)
+    std::vector<TRS> trs_list = subset_trs_list(trs);
+    for (const TRS& sub_trs : trs_list)
     {
         std::vector<int> sub_state = trs_to_state(sub_trs);
         sub_states.push_back(sub_state);
@@ -468,8 +468,8 @@ std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_c
 
     CondorcetDomain sub_cd(sub_n);
 
-    std::vector<TRS> trss = subset_trss(trs);
-    for (const TRS& sub_trs : trss)
+    std::vector<TRS> trs_list = subset_trs_list(trs);
+    for (const TRS& sub_trs : trs_list)
     {
         std::size_t sub_size = sub_cd.condorcet_domain(sub_trs).size();
 
