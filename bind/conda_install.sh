@@ -12,18 +12,10 @@ if [ ! -d "./pybind11" ]; then
 fi
 
 # locate the SITE_PACKAGE folder
-module load anaconda3/2021.11
 
-export PYTHONUSERBASE=$1
-conda activate $PYTHONUSERBASE
-SITE_PACKAGES=$(python -c 'import site; print(site.getsitepackages()[0])')
-echo $SITE_PACKAGES
-if [ ! -d $SITE_PACKAGES ]; then
-  mkdir $SITE_PACKAGES
-fi
-
+SITE_PACKAGES=/data/home/acw554/cvenv/lib/python3.10/site-packages
 # compile and install the library
-(cd build && cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=$PYTHONUSERBASE/bin/python ..)
+(cd build && cmake -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/data/home/acw554/cvenv/bin/python ..)
 (cd build && make)
 
 # removing the exising outdated library before installing the new one.
