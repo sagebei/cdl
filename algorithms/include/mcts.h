@@ -1,14 +1,7 @@
-//
-// Created by Bei Zhou on 05/01/2023.
-//
-
-#ifndef CDL_MCTS_H
-#define CDL_MCTS_H
-
+#pragma once
 
 class mcts {
 
 };
 
 
-#endif //CDL_MCTS_H
