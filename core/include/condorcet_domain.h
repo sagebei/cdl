@@ -31,7 +31,6 @@ class CondorcetDomain
 private:
 
     void sort_trs(TRS& trs);
-    void build_triplet_index(const TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, int& value);
     void filter_trs_list(std::list<TripletRule>& trs, const std::list<int>& elem);
@@ -53,6 +52,7 @@ public:
     CondorcetDomain(int n=8);
 
     // creating and manipulating TRS
+    void build_triplet_index(const TRS& trs);
     TRS init_random(bool is_sorted=false);
     TRS init_trs(std::string rule="");
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
@@ -80,6 +80,7 @@ public:
     std::vector<int> subset_weights();
     std::vector<TRS> subset_trs_list(const TRS& trs);
     std::vector<std::vector<int>> subset_states(const TRS& trs);
+    std::vector<std::vector<int>> subset_states_any_ordering(const TRS& trs);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
     // cd brothers

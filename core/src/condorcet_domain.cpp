@@ -436,6 +436,31 @@ std::vector<std::vector<int>> CondorcetDomain::subset_states(const TRS& trs)
     return sub_states;
 }
 
+std::vector<std::vector<int>> CondorcetDomain::subset_states_any_ordering(const TRS& trs)
+{
+    std::vector<std::vector<int>> sub_states{};
+    CondorcetDomain sub_cd(sub_n);
+
+    std::vector<TRS> trs_list = subset_trs_list(trs);
+    for (const TRS& sub_trs : trs_list)
+    {
+        TRS sub_trs_init = sub_cd.init_trs();
+        for (const TripletRule& tr : sub_trs)
+        {
+            for (const TripletRule& tr_init : sub_trs_init)
+            {
+                if (tr.triplet == tr_init.triplet)
+                    sub_trs_init = sub_cd.assign(sub_trs_init, tr.triplet, tr.rule);
+            }
+        }
+
+        std::vector<int> sub_state = trs_to_state(sub_trs_init);
+        sub_states.push_back(sub_state);
+    }
+
+    return sub_states;
+}
+
 std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_cd_sizes(const TRS& trs)
 {
     std::vector<std::size_t> sizes;

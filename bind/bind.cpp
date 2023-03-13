@@ -71,6 +71,7 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("subset_dicts", &CondorcetDomain::subset_dicts)
 
             // creating and manipulating TRS
+            .def("build_triplet_index", &CondorcetDomain::build_triplet_index, py::arg("trs"))
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule")="")
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"))
@@ -96,6 +97,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_weights", &CondorcetDomain::subset_weights)
             .def("subset_trs_list", &CondorcetDomain::subset_trs_list, py::arg("trs"))
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"))
+            .def("subset_states_any_ordering", &CondorcetDomain::subset_states_any_ordering, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
 
             .def("hash_cd_brothers", &CondorcetDomain::hash_cd_brothers, py::arg("cds"))
