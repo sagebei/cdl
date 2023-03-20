@@ -4,10 +4,9 @@
 CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
-    rules = {"1N3", "3N1", "2N3", "2N1"};
-    num_triplets = factorial(n) / (factorial(n - 3) * 6);
+    m_num_triplets = factorial(n) / (factorial(n - 3) * 6);
     for (int i = 1; i <=n; i ++)
-        triplet_elems.push_back(i);
+        m_triplet_elems.push_back(i);
 }
 
 void CondorcetDomain::sort_trs(TRS& trs)
@@ -32,23 +31,23 @@ void CondorcetDomain::sort_trs(TRS& trs)
 void CondorcetDomain::build_triplet_index(const TRS& trs)
 {
     for (int i = 0; i < trs.size(); i ++)
-        triplet_index[trs[i].triplet] = i;
+        m_triplet_index[trs[i].triplet] = i;
 }
 
 void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
 {
     const int& first = tr.triplet[0], second = tr.triplet[1], third = tr.triplet[2];
-    const std::string& rule = tr.rule;
+    const int rule_id = tr.rule_id;
 
     cd.remove_if([&](const std::list<int>& elem) {
         int first_index = get_index(elem, first);
         int second_index = get_index(elem, second);
         int third_index = get_index(elem, third);
 
-        if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
-            (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
-            (rule == "2N3" && second_index > first_index && second_index > third_index)  ||
-            (rule == "2N1" && second_index < first_index && second_index < third_index))
+        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||
+            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||
+            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||
+            (rule_id == 4 && second_index < first_index && second_index < third_index))
             return true;
         else
             return false;
@@ -61,16 +60,16 @@ void CondorcetDomain::filter_trs_list(std::list<TripletRule>& trs, const std::li
 
     trs.remove_if([&](const TripletRule& tr){
         const int& first = tr.triplet[0], second = tr.triplet[1], third = tr.triplet[2];
-        const std::string& rule = tr.rule;
+        const int rule_id = tr.rule_id;
 
         int first_index = get_index(elem, first);
         int second_index = get_index(elem, second);
         int third_index = get_index(elem, third);
 
-        if ((rule == "1N3" && first_index > second_index && first_index > third_index)   ||
-            (rule == "3N1" && third_index < first_index && third_index < second_index)   ||
-            (rule == "2N3" && second_index > first_index && second_index > third_index)  ||
-            (rule == "2N1" && second_index < first_index && second_index < third_index))
+        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||
+            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||
+            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||
+            (rule_id == 4 && second_index < first_index && second_index < third_index))
             return true;
         else
             return false;
@@ -108,9 +107,9 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, int i)
 
 TRS CondorcetDomain::init_random(bool is_sorted)
 {
-    std::random_device rd;  //Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
-    std::uniform_int_distribution<> distrib(0, 3);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(1, 4);
 
     TRS trs;
     for (int i = 1; i <= n-2; i++)
@@ -121,7 +120,7 @@ TRS CondorcetDomain::init_random(bool is_sorted)
             {
                 TripletRule tr;
                 tr.triplet = {i, j, k};
-                tr.rule = rules[distrib(gen)];
+                tr.rule_id = distrib(gen);
                 trs.push_back(tr);
             }
         }
@@ -135,7 +134,7 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::init_trs(std::string rule)
+TRS CondorcetDomain::init_trs(const int rule_id)
 {
     TRS trs;
     for (int i = 1; i < n+1; i ++)
@@ -149,7 +148,7 @@ TRS CondorcetDomain::init_trs(std::string rule)
                 {
                     TripletRule tr;
                     tr.triplet = {i, j, k};
-                    tr.rule = rule;
+                    tr.rule_id = rule_id;
                     trs.push_back(tr);
                 }
             }
@@ -174,7 +173,7 @@ TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& s
                 {
                     TripletRule tr;
                     tr.triplet = {i, j, k};
-                    tr.rule = scheme_fun(tr.triplet);;
+                    tr.rule_id = m_rule_id.at(scheme_fun(tr.triplet));
                     trs.push_back(tr);
                 }
             }
@@ -188,7 +187,7 @@ TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& s
 TRS CondorcetDomain::clear_trs(TRS trs)
 {
     for (TripletRule& tr : trs)
-        tr.rule = "";
+        tr.rule_id = 0;
 
     return trs;
 }
@@ -213,23 +212,37 @@ TRS CondorcetDomain::transfer_trs(const TRS& from_trs, TRS to_trs)
         for (const TripletRule& from_tr : from_trs)
         {
             if (to_tr.triplet == from_tr.triplet)
-                to_tr.rule = from_tr.rule;
+                to_tr.rule_id = from_tr.rule_id;
         }
     }
     return to_trs;
 }
 
-TRS CondorcetDomain::assign(TRS trs, const Triplet& triplet, const std::string& rule)
+TRS CondorcetDomain::assign_id(TRS trs, const Triplet& triplet, const int rule_id)
 {
-    int index = triplet_index[triplet];
-    trs[index].rule = rule;
+    int index = m_triplet_index[triplet];
+    trs[index].rule_id = rule_id;
 
     return trs;
 }
 
-TRS CondorcetDomain::assign_by_index(TRS trs, int index, const std::string& rule)
+TRS CondorcetDomain::assign_rule(TRS trs, const Triplet& triplet, const std::string& rule)
 {
-    trs[index].rule = rule;
+    int index = m_triplet_index[triplet];
+    trs[index].rule_id = m_rule_id.at(rule);
+
+    return trs;
+}
+
+TRS CondorcetDomain::assign_id_by_index(TRS trs, int index, const int rule_id)
+{
+    trs[index].rule_id = rule_id;
+    return trs;
+}
+
+TRS CondorcetDomain::assign_rule_by_index(TRS trs, int index, const std::string& rule)
+{
+    trs[index].rule_id = m_rule_id.at(rule);
     return trs;
 }
 
@@ -238,7 +251,7 @@ std::vector<Triplet> CondorcetDomain::unassigned_triplets(const TRS& trs)
     std::vector<Triplet> unassigned{};
     for (const TripletRule& tr: trs)
     {
-        if (tr.rule.empty())
+        if (tr.rule_id == 0)
             unassigned.push_back(tr.triplet);
     }
     return unassigned;
@@ -249,7 +262,7 @@ std::vector<Triplet> CondorcetDomain::assigned_triplets(const TRS& trs)
     std::vector<Triplet> assigned{};
     for (const TripletRule& tr: trs)
     {
-        if (!tr.rule.empty())
+        if (tr.rule_id != 0)
             assigned.push_back(tr.triplet);
     }
     return assigned;
@@ -258,9 +271,9 @@ std::vector<Triplet> CondorcetDomain::assigned_triplets(const TRS& trs)
 std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet)
 {
     std::vector<std::size_t> sizes = {};
-    for (const std::string& rule: rules)
+    for (const std::string& rule: m_rules)
     {
-        TRS new_trs = assign(trs, triplet, rule);
+        TRS new_trs = assign_rule(trs, triplet, rule);
         std::size_t s = condorcet_domain(new_trs).size();
         sizes.push_back(s);
     }
@@ -301,9 +314,9 @@ TRS CondorcetDomain::uplift_trs(const TRS& large, const TRS& small, const std::v
 
     for (const TripletRule& s: small)
     {
-        const auto& [triplet, rule] = s;
+        const auto& [triplet, rule_id] = s;
         Triplet mapped_triplet = {dict[triplet[0]], dict[triplet[1]], dict[triplet[2]]};
-        uplifted_trs = assign(uplifted_trs, mapped_triplet, rule);
+        uplifted_trs = assign_id(uplifted_trs, mapped_triplet, rule_id);
     }
     return uplifted_trs;
 }
@@ -312,19 +325,8 @@ std::vector<int> CondorcetDomain::trs_to_state(const TRS& trs)
 {
     std::vector<int> state;
     for (const TripletRule& tr: trs)
-    {
-        const std::string& rule = tr.rule;
-        if (rule.empty())
-            state.push_back(0);
-        else if (rule == rules[0])
-            state.push_back(1);
-        else if (rule == rules[1])
-            state.push_back(2);
-        else if (rule == rules[2])
-            state.push_back(3);
-        else if (rule == rules[3])
-            state.push_back(4);
-    }
+        state.push_back(tr.rule_id);
+
     return state;
 }
 
@@ -334,11 +336,7 @@ TRS CondorcetDomain::state_to_trs(const std::vector<int>& state)
     int i = 0;
     for (TripletRule& tr : trs)
     {
-        int s = state[i];
-        if (s == 0)
-            tr.rule = "";
-        else
-            tr.rule = rules[s-1];
+        tr.rule_id = state[i];
         i ++;
     }
     return trs;
@@ -365,12 +363,12 @@ std::size_t CondorcetDomain::size(const TRS& trs)
 
 void CondorcetDomain::init_subset(int sub_n)
 {
-    this->sub_n = sub_n;
-    subsets = combinations(triplet_elems, sub_n);
-    subset_size = subsets.size();
-    subset_dicts.clear();
+    m_sub_n = sub_n;
+    m_subsets = combinations(m_triplet_elems, m_sub_n);
+    m_subset_size = m_subsets.size();
+    m_subset_dicts.clear();
 
-    for (const std::vector<int>& subset: subsets)
+    for (const std::vector<int>& subset: m_subsets)
     {
         std::map<int, int> dict{};
         for (int i = 0; i < sub_n; i++)  // construct the dictionary
@@ -378,14 +376,14 @@ void CondorcetDomain::init_subset(int sub_n)
             const int& value = subset[i];
             dict[value] = i + 1;
         }
-        subset_dicts.push_back(dict);
+        m_subset_dicts.push_back(dict);
     }
 }
 
 std::vector<int> CondorcetDomain::subset_weights()
 {
     std::vector<int> weights{};
-    for (const std::vector<int>& subset : subsets)
+    for (const std::vector<int>& subset : m_subsets)
     {
         int weight = 0;
         for (int i = 0; i < subset.size() - 1; i ++)
@@ -401,19 +399,19 @@ std::vector<TRS> CondorcetDomain::subset_trs_list(const TRS& trs)
 {
     std::vector<TRS> trs_list{};
 
-    for (int subset_idx = 0; subset_idx < subset_size; subset_idx++)  // for each subset
+    for (int subset_idx = 0; subset_idx < m_subset_size; subset_idx++)  // for each subset
     {
         TRS sub_trs{};
         for (const TripletRule& tr: trs)  // find the triplet that is contained in the subset
         {
-            const auto& [triplet, rule] = tr;
-            const std::vector<int>& subset = subsets[subset_idx];
+            const auto& [triplet, rule_id] = tr;
+            const std::vector<int>& subset = m_subsets[subset_idx];
             if (std::includes(subset.begin(), subset.end(), triplet.begin(), triplet.end()))
             {
                 TripletRule sub_triplet_rule;
                 for (int i = 0; i < 3; i++)
-                    sub_triplet_rule.triplet[i] = subset_dicts[subset_idx][triplet[i]];
-                sub_triplet_rule.rule = rule;
+                    sub_triplet_rule.triplet[i] = m_subset_dicts[subset_idx][triplet[i]];
+                sub_triplet_rule.rule_id = rule_id;
                 sub_trs.push_back(sub_triplet_rule);
             }
         }
@@ -439,7 +437,7 @@ std::vector<std::vector<int>> CondorcetDomain::subset_states(const TRS& trs)
 std::vector<std::vector<int>> CondorcetDomain::subset_states_any_ordering(const TRS& trs)
 {
     std::vector<std::vector<int>> sub_states{};
-    CondorcetDomain sub_cd(sub_n);
+    CondorcetDomain sub_cd(m_sub_n);
 
     std::vector<TRS> trs_list = subset_trs_list(trs);
     for (const TRS& sub_trs : trs_list)
@@ -450,7 +448,7 @@ std::vector<std::vector<int>> CondorcetDomain::subset_states_any_ordering(const 
             for (const TripletRule& tr_init : sub_trs_init)
             {
                 if (tr.triplet == tr_init.triplet)
-                    sub_trs_init = sub_cd.assign(sub_trs_init, tr.triplet, tr.rule);
+                    sub_trs_init = sub_cd.assign_id(sub_trs_init, tr.triplet, tr.rule_id);
             }
         }
 
@@ -466,7 +464,7 @@ std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_c
     std::vector<std::size_t> sizes;
     std::vector<TRS> all_trs;
 
-    CondorcetDomain sub_cd(sub_n);
+    CondorcetDomain sub_cd(m_sub_n);
 
     std::vector<TRS> trs_list = subset_trs_list(trs);
     for (const TRS& sub_trs : trs_list)
@@ -561,11 +559,11 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
     std::list<TripletRule> all_trs;
 
     TRS trs = init_trs();
-    for (auto tr: trs)
+    for (TripletRule tr: trs)
     {
-        for (const std::string& rule: rules)
+        for (const std::string& rule: m_rules)
         {
-            tr.rule = rule;
+            tr.rule_id = m_rule_id.at(rule);
             all_trs.push_back(tr);
         }
     }
@@ -580,9 +578,14 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
 
 void print_trs(const TRS& trs)
 {
+    const std::map<int, std::string> m_id_rule{{0, ""},
+                                               {1, "1N3"},
+                                               {2, "3N1"},
+                                               {3, "2N3"},
+                                               {4, "2N1"}};
     for (auto const& tr: trs)
     {
-        std::cout<<tr.triplet[0]<< tr.triplet[1] << tr.triplet[2] << " : " << tr.rule << std::endl;
+        std::cout<<tr.triplet[0]<< tr.triplet[1] << tr.triplet[2] << " : " << m_id_rule.at(tr.rule_id) << std::endl;
     }
     std::cout << std::endl;
 }

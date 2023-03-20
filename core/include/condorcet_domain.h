@@ -17,7 +17,7 @@ typedef std::array<int, 3> Triplet;
 struct TripletRule
 {
     Triplet triplet;
-    std::string rule;
+    int rule_id;
 };
 
 typedef std::vector<TripletRule> TRS;
@@ -38,31 +38,39 @@ private:
 
 public:
     int n;
-    std::array<std::string, 4> rules{};
-    int num_triplets;
-    std::vector<int> triplet_elems{};
-    TripletIndex triplet_index{};
+    std::array<std::string, 4> m_rules{{"1N3", "3N1", "2N3", "2N1"}};
+    std::map<std::string, int> m_rule_id{{"", 0},
+                                         {m_rules[0], 1},
+                                         {m_rules[1], 2},
+                                         {m_rules[2], 3},
+                                         {m_rules[3], 4}};
+
+    int m_num_triplets;
+    std::vector<int> m_triplet_elems{};
+    TripletIndex m_triplet_index{};
 
     // member variable for build subsets
-    int sub_n{};
-    int subset_size{};
-    std::vector<std::vector<int>> subsets{};
-    std::vector<std::map<int, int>> subset_dicts{};
+    int m_sub_n{};
+    int m_subset_size{};
+    std::vector<std::vector<int>> m_subsets{};
+    std::vector<std::map<int, int>> m_subset_dicts{};
 
     CondorcetDomain(int n=8);
 
     // creating and manipulating TRS
     void build_triplet_index(const TRS& trs);
     TRS init_random(bool is_sorted=false);
-    TRS init_trs(std::string rule="");
+    TRS init_trs(const int rule_id=0);
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
 
     TRS clear_trs(TRS trs);
     TRS shuffle_trs(TRS trs, int seed=0);
     TRS transfer_trs(const TRS& from, TRS to);
 
-    TRS assign(TRS trs, const Triplet& triplet, const std::string& rule);
-    TRS assign_by_index(TRS trs, int index, const std::string& rule);
+    TRS assign_id(TRS trs, const Triplet& triplet, const int rule_id);
+    TRS assign_rule(TRS trs, const Triplet& triplet, const std::string& rule);
+    TRS assign_id_by_index(TRS trs, int index, const int rule_id);
+    TRS assign_rule_by_index(TRS trs, int index, const std::string& rule);
     std::vector<Triplet> unassigned_triplets(const TRS& trs);
     std::vector<Triplet> assigned_triplets(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet);

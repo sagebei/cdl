@@ -18,11 +18,11 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
             .def_readwrite("triplet", &TripletRule::triplet)
-            .def_readwrite("rule", &TripletRule::rule)
+            .def_readwrite("rule", &TripletRule::rule_id)
             .def(py::pickle(
                     [](const TripletRule& tr)
                     {
-                        return py::make_tuple(tr.triplet, tr.rule);
+                        return py::make_tuple(tr.triplet, tr.rule_id);
                     },
                     [](py::tuple t)
                     {
@@ -31,7 +31,7 @@ PYBIND11_MODULE(cdl, m) {
 
                         TripletRule tr{};
                         tr.triplet = t[0].cast<Triplet>();
-                        tr.rule = t[1].cast<std::string>();
+                        tr.rule_id = t[1].cast<int>();
 
                         return tr;
                     }
@@ -63,25 +63,28 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
             .def(py::init<int>(), py::arg("n")=8)
             .def_readonly("n", &CondorcetDomain::n)
-            .def_readonly("rules", &CondorcetDomain::rules)   // member variables
-            .def_readonly("num_triplets", &CondorcetDomain::num_triplets)
-            .def_readonly("triplet_elems", &CondorcetDomain::triplet_elems)
-            .def_readonly("triplet_index", &CondorcetDomain::triplet_index)
-            .def_readonly("subsets", &CondorcetDomain::subsets)
-            .def_readonly("subset_dicts", &CondorcetDomain::subset_dicts)
+            .def_readonly("rules", &CondorcetDomain::m_rules)   // member variables
+            .def_readonly("rule_id", &CondorcetDomain::m_rule_id)
+            .def_readonly("num_triplets", &CondorcetDomain::m_num_triplets)
+            .def_readonly("triplet_elems", &CondorcetDomain::m_triplet_elems)
+            .def_readonly("triplet_index", &CondorcetDomain::m_triplet_index)
+            .def_readonly("subsets", &CondorcetDomain::m_subsets)
+            .def_readonly("subset_dicts", &CondorcetDomain::m_subset_dicts)
 
             // creating and manipulating TRS
             .def("build_triplet_index", &CondorcetDomain::build_triplet_index, py::arg("trs"))
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
-            .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule")="")
+            .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule_id")=0)
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"))
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))
             .def("shuffle_trs", &CondorcetDomain::shuffle_trs, py::arg("trs"), py::arg("seed")=0)
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("from"), py::arg("to"))
 
-            .def("assign", &CondorcetDomain::assign, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
-            .def("assign_by_index", &CondorcetDomain::assign_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
+            .def("assign_id", &CondorcetDomain::assign_id, py::arg("trs"), py::arg("triplet"), py::arg("rule_id"))
+            .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
+            .def("assign_id_by_index", &CondorcetDomain::assign_id_by_index, py::arg("trs"), py::arg("index"), py::arg("rule_id"))
+            .def("assign_rule_by_index", &CondorcetDomain::assign_rule_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
             .def("assigned_triplets", &CondorcetDomain::assigned_triplets, py::arg("trs"))
             .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
@@ -107,29 +110,31 @@ PYBIND11_MODULE(cdl, m) {
                     [](const CondorcetDomain& cd)
                     {
                         return py::make_tuple(cd.n,
-                                              cd.rules,
-                                              cd.num_triplets,
-                                              cd.triplet_elems,
-                                              cd.triplet_index,
-                                              cd.sub_n,
-                                              cd.subset_size,
-                                              cd.subsets,
-                                              cd.subset_dicts);
+                                              cd.m_rules,
+                                              cd.m_rule_id,
+                                              cd.m_num_triplets,
+                                              cd.m_triplet_elems,
+                                              cd.m_triplet_index,
+                                              cd.m_sub_n,
+                                              cd.m_subset_size,
+                                              cd.m_subsets,
+                                              cd.m_subset_dicts);
                     },
                     [](py::tuple t)
                     {
-                        if (t.size() != 5)
+                        if (t.size() != 10)
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
                         CondorcetDomain cd(t[0].cast<int>());
-                        cd.rules = t[1].cast<std::array<std::string, 4>>();
-                        cd.num_triplets = t[2].cast<int>();
-                        cd.triplet_elems = t[3].cast<std::vector<int>>();
-                        cd.triplet_index = t[4].cast<TripletIndex>();
-                        cd.sub_n = t[5].cast<int>();
-                        cd.subset_size = t[6].cast<int>();
-                        cd.subsets = t[7].cast<std::vector<std::vector<int>>>();
-                        cd.subset_dicts = t[8].cast<std::vector<std::map<int, int>>>();
+                        cd.m_rules = t[1].cast<std::array<std::string, 4>>();
+                        cd.m_rule_id = t[2].cast<std::map<std::string, int>>();
+                        cd.m_num_triplets = t[3].cast<int>();
+                        cd.m_triplet_elems = t[4].cast<std::vector<int>>();
+                        cd.m_triplet_index = t[5].cast<TripletIndex>();
+                        cd.m_sub_n = t[6].cast<int>();
+                        cd.m_subset_size = t[7].cast<int>();
+                        cd.m_subsets = t[8].cast<std::vector<std::vector<int>>>();
+                        cd.m_subset_dicts = t[9].cast<std::vector<std::map<int, int>>>();
 
                         return cd;
                     }

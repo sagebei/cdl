@@ -27,7 +27,7 @@ TRS TRSWrapper::remove_rules(TRS trs, const std::vector<int>& contains)
         for (const int& c : contains)
         {
             if (triplet[0] == c || triplet[1] == c || triplet[2] == c)
-                trs = cd.assign(trs, triplet, "");
+                trs = cd.assign_id(trs, triplet, 0);
         }
     }
     return trs;
@@ -44,7 +44,7 @@ std::vector<std::size_t> TRSWrapper::evaluate_rules_on_triplet(const TRS& trs, c
     std::vector<std::size_t> sizes = {};
     for (const std::string& rule: allowed_rules[triplet])
     {
-        TRS new_trs = cd.assign(trs, triplet, rule);
+        TRS new_trs = cd.assign_rule(trs, triplet, rule);
         std::size_t s = cd.condorcet_domain(new_trs).size();
         sizes.push_back(s);
     }
