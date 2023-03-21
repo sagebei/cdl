@@ -18,7 +18,7 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
             .def_readwrite("triplet", &TripletRule::triplet)
-            .def_readwrite("rule", &TripletRule::rule_id)
+            .def_readwrite("rule_id", &TripletRule::rule_id)
             .def(py::pickle(
                     [](const TripletRule& tr)
                     {
