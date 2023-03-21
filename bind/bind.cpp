@@ -10,6 +10,8 @@
 
 namespace py = pybind11;
 
+typedef std::map<std::tuple<int, int, int>, int> TripletTupleIndex;
+
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
@@ -111,12 +113,17 @@ PYBIND11_MODULE(cdl, m) {
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {
+                        TripletTupleIndex tti{};
+                        for (auto const& [key, val] : cd.m_triplet_index)
+                        {
+                            tti[std::make_tuple(key[0], key[1], key[2])] = val;
+                        }
                         return py::make_tuple(cd.n,
                                               cd.m_rules,
                                               cd.m_rule_id,
                                               cd.m_num_triplets,
                                               cd.m_triplet_elems,
-                                              cd.m_triplet_index,
+                                              tti,
                                               cd.m_sub_n,
                                               cd.m_subset_size,
                                               cd.m_subsets,
@@ -132,7 +139,13 @@ PYBIND11_MODULE(cdl, m) {
                         cd.m_rule_id = t[2].cast<std::map<std::string, int>>();
                         cd.m_num_triplets = t[3].cast<int>();
                         cd.m_triplet_elems = t[4].cast<std::vector<int>>();
-                        cd.m_triplet_index = t[5].cast<TripletIndex>();
+                        TripletIndex ti{};
+                        for (auto const& [key, val] : t[5].cast<TripletTupleIndex>())
+                        {
+                            Triplet triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
+                            ti[triple] = val;
+                        }
+                        cd.m_triplet_index = ti;
                         cd.m_sub_n = t[6].cast<int>();
                         cd.m_subset_size = t[7].cast<int>();
                         cd.m_subsets = t[8].cast<std::vector<std::vector<int>>>();
