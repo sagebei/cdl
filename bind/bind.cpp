@@ -68,13 +68,15 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("num_triplets", &CondorcetDomain::m_num_triplets)
             .def_readonly("triplet_elems", &CondorcetDomain::m_triplet_elems)
             .def_readonly("triplet_index", &CondorcetDomain::m_triplet_index)
+            .def_readonly("sub_n", &CondorcetDomain::m_sub_n)
+            .def_readonly("subset_size", &CondorcetDomain::m_subset_size)
             .def_readonly("subsets", &CondorcetDomain::m_subsets)
             .def_readonly("subset_dicts", &CondorcetDomain::m_subset_dicts)
 
             // creating and manipulating TRS
             .def("build_triplet_index", &CondorcetDomain::build_triplet_index, py::arg("trs"))
             .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
-            .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule_id")=0)
+            .def("init_trs", &CondorcetDomain::init_trs, py::arg("rule")="1N3")
             .def("init_by_scheme", &CondorcetDomain::init_by_scheme, py::arg("scheme_fun"))
 
             .def("clear_trs", &CondorcetDomain::clear_trs, py::arg("trs"))

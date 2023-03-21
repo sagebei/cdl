@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <map>
+#include <unordered_map>
 #include <algorithm>
 #include <random>
 #include <functional>
@@ -21,6 +22,7 @@ struct TripletRule
 };
 
 typedef std::vector<TripletRule> TRS;
+//typedef std::unordered_map<Triplet, int, TripletHasher> TripletIndex;
 typedef std::map<Triplet, int> TripletIndex;
 
 typedef std::list<std::list<int>> CD;
@@ -60,7 +62,7 @@ public:
     // creating and manipulating TRS
     void build_triplet_index(const TRS& trs);
     TRS init_random(bool is_sorted=false);
-    TRS init_trs(const int rule_id=0);
+    TRS init_trs(const std::string& rule="1N3");
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
 
     TRS clear_trs(TRS trs);

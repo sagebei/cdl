@@ -3,6 +3,17 @@
 #include <vector>
 #include <stdexcept>
 
+
+std::size_t TripletHasher::operator()(const std::array<int, 3>& arr) const
+{
+    std::size_t h = 0;
+
+    for (const int& a : arr) {
+        h ^= std::hash<int>{}(a)  + 0x9e3779b9 + (h << 6) + (h >> 2);
+    }
+    return h;
+}
+
 // used to sort a list of list
 bool compare_list(const std::list<int>& first, const std::list<int>& second)
 {

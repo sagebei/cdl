@@ -2,6 +2,12 @@
 
 #include <list>
 #include <vector>
+#include <array>
+
+struct TripletHasher
+{
+    std::size_t operator()(const std::array<int, 3>& arr) const;
+};
 
 bool compare_list(const std::list<int>& a, const std::list<int>& b);
 int get_index(const std::list<int>& elem, const int& value);

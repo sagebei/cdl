@@ -3,17 +3,7 @@
 #include <limits.h>
 #include <unordered_map>
 #include "condorcet_domain.h"
-
-struct TripletHasher
-{
-    int operator()(const Triplet &triplet) const {
-        int hash = 0;
-        for(const int &t : triplet) {
-            hash ^= t + 0x9e3779b9;
-        }
-        return hash;
-    }
-};
+#include "utils.h"
 
 typedef std::unordered_map<Triplet, std::vector<std::string>, TripletHasher> AllowedRules;
 

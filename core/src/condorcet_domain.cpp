@@ -134,7 +134,7 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::init_trs(const int rule_id)
+TRS CondorcetDomain::init_trs(const std::string& rule)
 {
     TRS trs;
     for (int i = 1; i < n+1; i ++)
@@ -148,7 +148,7 @@ TRS CondorcetDomain::init_trs(const int rule_id)
                 {
                     TripletRule tr;
                     tr.triplet = {i, j, k};
-                    tr.rule_id = rule_id;
+                    tr.rule_id = m_rule_id.at(rule);
                     trs.push_back(tr);
                 }
             }
