@@ -62,7 +62,7 @@ public:
     // creating and manipulating TRS
     void build_triplet_index(const TRS& trs);
     TRS init_random(bool is_sorted=false);
-    TRS init_trs(const std::string& rule="1N3");
+    TRS init_trs(const std::string& rule="");
     TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
 
     TRS clear_trs(TRS trs);
