@@ -1,21 +1,6 @@
 #include "tools.h"
 
 
-//int VectorHasher::operator()(const std::vector<int>& vec) const
-//{
-//    int hash = vec.size();
-//    for(auto &i : vec) {
-//        hash ^= i + 0x9e3779b9 + (hash << 6) + (hash >> 2);
-//    }
-//    return hash;
-//}
-
-
-
-std::size_t VectorHasher::operator()(const std::vector<int>& vec) const {
-    return boost::hash_range(vec.begin(), vec.end());
-}
-
 
 DATABASE build_full_trs_cd(int n)
 {
@@ -52,7 +37,7 @@ DATABASE build_full_trs_cd(int n)
                                         trs = cd.assign_by_index(trs, 8, r8);
                                         for (const std::string& r9: rules) {
                                             trs = cd.assign_by_index(trs, 9, r9);
-                                            int size = cd.condorcet_domain(trs).size();
+                                            int size = cd.size(trs);
                                             std::vector<int> state = cd.trs_to_state(trs);
 
                                             database[state] = size;
