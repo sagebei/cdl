@@ -590,7 +590,9 @@ void print_trs(const TRS& trs)
                                                {1, "1N3"},
                                                {2, "3N1"},
                                                {3, "2N3"},
-                                               {4, "2N1"}};
+                                               {4, "2N1"},
+                                               {5, "1N2"},
+                                               {6, "3N2"}};
     for (auto const& tr: trs)
     {
         std::cout<<tr.triplet[0]<< tr.triplet[1] << tr.triplet[2] << " : " << m_id_rule.at(tr.rule_id) << std::endl;
