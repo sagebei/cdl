@@ -40,12 +40,14 @@ private:
 
 public:
     int n;
-    std::array<std::string, 4> m_rules{{"1N3", "3N1", "2N3", "2N1"}};
+    std::array<std::string, 6> m_rules{{"1N3", "3N1", "2N3", "2N1", "1N2", "3N2"}};
     std::map<std::string, int> m_rule_id{{"", 0},
                                          {m_rules[0], 1},
                                          {m_rules[1], 2},
                                          {m_rules[2], 3},
-                                         {m_rules[3], 4}};
+                                         {m_rules[3], 4},
+                                         {m_rules[4], 5},
+                                         {m_rules[5], 6}};
 
     int m_num_triplets;
     std::vector<int> m_triplet_elems{};

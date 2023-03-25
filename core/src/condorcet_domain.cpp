@@ -44,10 +44,14 @@ void CondorcetDomain::filter_cd(const TripletRule& tr, CD& cd)
         int second_index = get_index(elem, second);
         int third_index = get_index(elem, third);
 
-        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||
-            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||
-            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||
-            (rule_id == 4 && second_index < first_index && second_index < third_index))
+        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||  // 1N3
+            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||  // 3N1
+            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||  // 2N3
+            (rule_id == 4 && second_index < first_index && second_index < third_index)  ||  // 2N1
+            (rule_id == 5 && first_index > second_index && first_index < third_index)   ||  // 1N2
+            (rule_id == 5 && first_index > third_index && first_index < second_index)   ||
+            (rule_id == 6 && third_index > first_index && third_index < second_index)   ||  // 3N2
+            (rule_id == 6 && third_index > second_index && third_index < first_index))
             return true;
         else
             return false;
@@ -66,10 +70,14 @@ void CondorcetDomain::filter_trs_list(std::list<TripletRule>& trs, const std::li
         int second_index = get_index(elem, second);
         int third_index = get_index(elem, third);
 
-        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||
-            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||
-            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||
-            (rule_id == 4 && second_index < first_index && second_index < third_index))
+        if ((rule_id == 1 && first_index > second_index && first_index > third_index)   ||  // 1N3
+            (rule_id == 2 && third_index < first_index && third_index < second_index)   ||  // 3N1
+            (rule_id == 3 && second_index > first_index && second_index > third_index)  ||  // 2N3
+            (rule_id == 4 && second_index < first_index && second_index < third_index)  ||  // 2N1
+            (rule_id == 5 && first_index > second_index && first_index < third_index)   ||  // 1N2
+            (rule_id == 5 && first_index > third_index && first_index < second_index)   ||
+            (rule_id == 6 && third_index > first_index && third_index < second_index)   ||  // 3N2
+            (rule_id == 6 && third_index > second_index && third_index < first_index))
             return true;
         else
             return false;
@@ -582,7 +590,9 @@ void print_trs(const TRS& trs)
                                                {1, "1N3"},
                                                {2, "3N1"},
                                                {3, "2N3"},
-                                               {4, "2N1"}};
+                                               {4, "2N1"},
+                                               {5, "1N2"},
+                                               {6, "3N2"}};
     for (auto const& tr: trs)
     {
         std::cout<<tr.triplet[0]<< tr.triplet[1] << tr.triplet[2] << " : " << m_id_rule.at(tr.rule_id) << std::endl;

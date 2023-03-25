@@ -135,7 +135,7 @@ PYBIND11_MODULE(cdl, m) {
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
                         CondorcetDomain cd(t[0].cast<int>());
-                        cd.m_rules = t[1].cast<std::array<std::string, 4>>();
+                        cd.m_rules = t[1].cast<std::array<std::string, 6>>();
                         cd.m_rule_id = t[2].cast<std::map<std::string, int>>();
                         cd.m_num_triplets = t[3].cast<int>();
                         cd.m_triplet_elems = t[4].cast<std::vector<int>>();
