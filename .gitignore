@@ -4,6 +4,8 @@ bind/build/*
 bind/pybind11
 bind/pybind11/*
 
+*.pkl
+
 .ipynb_checkpoints
 .ipynb_checkpoints/*
 build/
