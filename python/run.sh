@@ -2,7 +2,7 @@
 
 source ~/venv
 
-N_CORES=2
+N_CORES=8
 
 python complete_search.py -n 6 -cutoff 16 -rules "2N3" "2N1" -n_complete 5 -n_cores $N_CORES ;
 
