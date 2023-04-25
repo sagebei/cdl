@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/venv
+source ~/venv/bin/activate
 
 N_CORES=8
 
