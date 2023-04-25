@@ -2,9 +2,9 @@
 
 #$ -cwd
 #$ -pe smp 1
-#$ -l h_vmem=8G
+#$ -l h_vmem=1G
 #$ -j y
-#$ -l h_rt=10:0:0
+#$ -l h_rt=1:0:0
 
 source ~/venv/bin/activate
 
