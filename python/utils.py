@@ -81,7 +81,6 @@ class Search:
         if remove:
             os.remove(f"./{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
 
-
     def load_trs_list(self,
                       folder_name,
                       sub_folder_name,
