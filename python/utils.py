@@ -96,8 +96,8 @@ class Search:
 
         sizes = []
         for filename in os.listdir(f'{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
-            trs_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
-            for trs in trs_list:
+            trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+            for trs, _ in trs_score_list:
                 sizes.append(self.cd.size(trs))
 
         result = Counter(sizes)
