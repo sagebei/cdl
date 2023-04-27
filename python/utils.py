@@ -11,10 +11,10 @@ class StaticFeature5:
         self.cd.init_trs()
         self.cd.init_subset(5)
         if n_rules <= 4:
-            with open(f'{lib_path}/databases/database_5.pkl', "rb") as f:
+            with open(f'{lib_path}/python/databases/database_5.pkl', "rb") as f:
                 self.dataset_5 = pickle.load(f)
         else:
-            with open(f'{lib_path}/databases/database_5_six_rules.pkl', "rb") as f:
+            with open(f'{lib_path}/python/databases/database_5_six_rules.pkl', "rb") as f:
                 self.dataset_5 = pickle.load(f)
         self.lib_path = lib_path
 
