@@ -5,10 +5,10 @@ from tqdm import tqdm
 
 
 class ExhaustiveSearch(Search):
-    def __init__(self, cd, rules):
-        super().__init__(cd, rules)
+    def __init__(self, cd, rules, lib_path):
+        super().__init__(cd, rules, lib_path)
         self.cd = cd
-        self.sf = StaticFeature5(cd, n_rules=len(rules))
+        self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
         self.rules = rules
 
     def static_search(self,
@@ -52,6 +52,7 @@ parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-triplet_id", type=int)
 parser.add_argument("-core_id", type=int)
+parser.add_argument("-lib_path", type=str)
 args = parser.parse_args()
 config = vars(args)
 print(config)

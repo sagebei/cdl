@@ -3,18 +3,19 @@ from utils import Search
 import argparse
 import os
 
-parser = argparse.ArgumentParser(description="complete search for the first n triplet",
+parser = argparse.ArgumentParser(description="get the result",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int)
 parser.add_argument("-cutoff", type=int)
 parser.add_argument("-threshold", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
+parser.add_argument("-lib_path", type=str)
 args = parser.parse_args()
 config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
-es = Search(cd, rules=config['rules'])
+es = Search(cd, rules=config['rules'], lib_path=lib_path)
 folder_name = f"{config['cutoff']}_" + f"_".join(config['rules'])
 results = es.get_size_counter(folder_name, config['threshold'])
 print(results)
