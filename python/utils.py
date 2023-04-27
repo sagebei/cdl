@@ -87,14 +87,14 @@ class Search:
             pickle.dump(trs_list, f)
 
         if remove:
-            os.remove(f"{self.lib_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
+            os.remove(f"{self.lib_path}/python/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
 
     def load_trs_list(self,
                       folder_name,
                       sub_folder_name,
                       filename):
 
-        folder_name = f'{self.lib_path}/{self.cd.n}/{folder_name}/{sub_folder_name}/'
+        folder_name = f'{self.lib_path}/python/{self.cd.n}/{folder_name}/{sub_folder_name}/'
         with open(folder_name + filename, "rb") as f:
             trs_list = pickle.load(f)
         return trs_list
@@ -104,7 +104,7 @@ class Search:
                          threshold=0):
 
         sizes = []
-        for filename in os.listdir(f'{self.lib_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
+        for filename in os.listdir(f'{self.lib_path}/python/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
             trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
                 if score > threshold:
