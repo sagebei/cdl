@@ -58,7 +58,7 @@ config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
-es = ExhaustiveSearch(cd, rules=config['rules'])
+es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'])
 es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
                  top_n=config['top_n'],
