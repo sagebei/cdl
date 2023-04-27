@@ -1,5 +1,6 @@
 from cdl import *
 from utils import StaticFeature5, Search
+from utils import init_rules, flip_exceptions
 import argparse
 import numpy as np
 
@@ -58,6 +59,14 @@ print(config)
 cd = CondorcetDomain(n=config['n'])
 es = ExhaustiveSearch(cd, rules=config['rules'])
 trs = cd.init_trs()
+
+# low_exceptions = [(1, 3), (1, 4), (3, 4), (2, 5)]
+# high_exceptions = flip_exceptions(cd, low_exceptions)
+# trs = init_rules(cd,
+#                  trs,
+#                  low_exceptions,
+#                  high_exceptions)
+
 es.static_search(trs,
                  cutoff=config['cutoff'],
                  threshold=config['threshold'],

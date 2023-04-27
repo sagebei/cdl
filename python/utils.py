@@ -97,13 +97,15 @@ class Search:
         return trs_list
 
     def get_size_counter(self,
-                         folder_name):
+                         folder_name,
+                         threshold=0):
 
         sizes = []
         for filename in os.listdir(f'{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
             trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
-            for trs, _ in trs_score_list:
-                sizes.append(self.cd.size(trs))
+            for trs, score in trs_score_list:
+                if score > threshold:
+                    sizes.append(self.cd.size(trs))
 
         result = Counter(sizes)
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
