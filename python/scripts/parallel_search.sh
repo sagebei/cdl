@@ -1,11 +1,12 @@
 #!/bin/bash
 
 #$ -cwd
-#$ -pe smp 1
+#$ -pe smp 8
 #$ -l h_vmem=2G
 #$ -j y
-#$ -l h_rt=10:0:0
+#$ -l h_rt=1:0:0
 #$ -t 1-16
+#$ -N parallel
 
 module load gcc/12.1.0
 source ~/venv/bin/activate
