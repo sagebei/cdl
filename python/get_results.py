@@ -15,15 +15,15 @@ config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
-es = Search(cd, rules=config['rules'], lib_path=lib_path)
+es = Search(cd, rules=config['rules'], lib_path=config['lib_path'])
 folder_name = f"{config['cutoff']}_" + f"_".join(config['rules'])
 results = es.get_size_counter(folder_name, config['threshold'])
 print(results)
 
-if not os.path.exists("results"):
-    os.makedirs("results")
+if not os.path.exists(f"{config['lib_path']}/python/results"):
+    os.makedirs(f"{config['lib_path']}/python/results")
 
-with open(f"./results/{folder_name}.txt", "w") as f:
+with open(f"{config['lib_path']}/python/results/{folder_name}.txt", "w") as f:
     f.write(str(results))
 
 # python get_results.py -n 6 -cutoff 16 -threshold 0 -rules "2N3" "2N1"
