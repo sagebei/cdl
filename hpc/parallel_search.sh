@@ -13,7 +13,7 @@ source ~/venv/bin/activate
 
 python ../python/parallel_search.py -n 8  \
                                     -cutoff 16  \
-                                    -threshold 0 \
+                                    -threshold 10900 \
                                     -top_n 1000  \
                                     -rules "2N3" "2N1" "1N3" "3N1"  \
                                     -triplet_id 8 \
