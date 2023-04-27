@@ -21,20 +21,19 @@ class ExhaustiveSearch(Search):
         num_unassigned = len(self.cd.unassigned_triplets(trs))
 
         trs_score_list = self.expand_trs(trs)
-        trs_list = [trs for (trs, score) in trs_score_list]
 
         for n_iter in range(2, n_complete_triplet+1):
-            next_trs_value_list = []
+            next_trs_score_list = []
 
-            for trs in trs_list:
+            for trs, _ in trs_score_list:
                 trs_value_list = self.expand_trs(trs, cutoff)
-                next_trs_value_list.extend(trs_value_list)
+                next_trs_score_list.extend(trs_value_list)
 
-            trs_list.clear()
-            trs_list = [trs for (trs, score) in next_trs_value_list]
+            trs_score_list.clear()
+            trs_score_list = next_trs_score_list
 
-        split_trs_list = np.array_split(np.array(trs_list, dtype=object), n_cores)
-        for i, t in enumerate(split_trs_list):
+        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object), n_cores)
+        for i, t in enumerate(split_trs_score_list):
             self.save_trs_list(trs_list=t.tolist(),
                                core_id=1,
                                folder_name=folder_name,
