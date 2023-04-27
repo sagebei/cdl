@@ -54,13 +54,14 @@ class Search:
 
     def expand_trs(self,
                    trs,
-                   cutoff=16):
+                   cutoff=16,
+                   threshold=0):
 
         triplet = self.cd.unassigned_triplets(trs)[0]
         trs_value_list = []
         for rule in self.rules:
             trs = self.cd.assign_rule(trs, triplet, rule)
-            value = self.sf.score_function(trs, cutoff)
+            value = self.sf.score_function(trs, cutoff, threshold)
             trs_value_list.append((trs, value))
 
         return trs_value_list
