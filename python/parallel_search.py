@@ -31,6 +31,8 @@ class ExhaustiveSearch(Search):
                 next_trs_score_list.extend(trs_value_list)
 
             trs_score_list.clear()
+            next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
+            trs_score_list = next_trs_score_list[-top_n:]
 
             self.save_trs_list(trs_score_list,
                                core_id,
