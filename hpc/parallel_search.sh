@@ -16,6 +16,6 @@ python ../python/parallel_search.py -n 8  \
                                     -threshold 0 \
                                     -top_n 1000  \
                                     -rules "2N3" "2N1" "1N3" "3N1"  \
-                                    -triplet_id 6 \
+                                    -triplet_id 8 \
                                     -core_id ${SGE_TASK_ID} \
                                     -lib_path "/data/home/acw554/cdl"
