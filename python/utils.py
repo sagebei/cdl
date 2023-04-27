@@ -2,6 +2,7 @@ import pickle
 from collections import Counter
 import os
 from collections import OrderedDict
+import numpy as np
 
 
 class StaticFeature5:
@@ -24,7 +25,7 @@ class StaticFeature5:
 
         return sizes
 
-    def score_function(self, trs, cutoff=16):
+    def score_function(self, trs, cutoff=16, threshold=0):
         sizes = self.fetch_feature(trs)
 
         if min(sizes) < cutoff:
@@ -38,6 +39,10 @@ class StaticFeature5:
         num_20 = counter.get(20, 0)
 
         score = (0 * num_16) + (1 * num_17) + (2 * num_18) + (3 * num_19) + (4 * num_20)
+
+        if score < threshold:
+            return -1
+
         return score
 
 
@@ -104,5 +109,31 @@ class Search:
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
 
         return result
+
+
+def init_rules(cd, trs, low_exceptions, high_exceptions):
+    middle = np.array(low_exceptions).max()
+    for tr in trs:
+        i, j, k = tr.triplet
+        if j <= middle < k:
+            if (i, j) in low_exceptions:
+                trs = cd.assign_rule(trs, tr.triplet, "1N3")
+            else:
+                trs = cd.assign_rule(trs, tr.triplet, "3N1")
+        if i <= middle < j:
+            if (j, k) in high_exceptions:
+                trs = cd.assign_rule(trs, tr.triplet, "3N1")
+            else:
+                trs = cd.assign_rule(trs, tr.triplet, "1N3")
+
+    return trs
+
+
+def flip_exceptions(cd, exceptions):
+    flipout = []
+    for pair in exceptions:
+        flipout.append((cd.n+1-pair[1], cd.n+1-pair[0]))
+    return flipout
+
 
 

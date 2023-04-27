@@ -14,6 +14,7 @@ class ExhaustiveSearch(Search):
     def static_search(self,
                       trs,
                       cutoff=16,
+                      threshold=0,
                       n_complete_triplet=20,
                       n_cores=10):
 
@@ -26,7 +27,7 @@ class ExhaustiveSearch(Search):
             next_trs_score_list = []
 
             for trs, _ in trs_score_list:
-                trs_value_list = self.expand_trs(trs, cutoff)
+                trs_value_list = self.expand_trs(trs, cutoff, threshold)
                 next_trs_score_list.extend(trs_value_list)
 
             trs_score_list.clear()
@@ -47,6 +48,7 @@ parser = argparse.ArgumentParser(description="complete search for the first n tr
 parser.add_argument("-n", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-cutoff", type=int)
+parser.add_argument("-threshold", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
 args = parser.parse_args()
@@ -58,9 +60,10 @@ es = ExhaustiveSearch(cd, rules=config['rules'])
 trs = cd.init_trs()
 es.static_search(trs,
                  cutoff=config['cutoff'],
+                 threshold=config['threshold'],
                  n_complete_triplet=config['n_complete'],
                  n_cores=config['n_cores'])
 
 
-# python complete_search.py -n 6 -cutoff 16 -rules "2N3" "2N1" -n_complete 5 -n_cores 2
+# python complete_search.py -n 6 -cutoff 16 threshold=0 -rules "2N3" "2N1" -n_complete 5 -n_cores 2
 

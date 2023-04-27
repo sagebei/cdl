@@ -13,6 +13,7 @@ class ExhaustiveSearch(Search):
 
     def static_search(self,
                       cutoff=16,
+                      threshold=0,
                       top_n=1000,
                       triplet_id=5,
                       core_id=1):
@@ -27,7 +28,7 @@ class ExhaustiveSearch(Search):
             next_trs_score_list = []
 
             for trs, _ in trs_score_list:
-                trs_value_list = self.expand_trs(trs, cutoff)
+                trs_value_list = self.expand_trs(trs, cutoff, threshold)
                 next_trs_score_list.extend(trs_value_list)
 
             trs_score_list.clear()
@@ -47,6 +48,7 @@ parser = argparse.ArgumentParser(description="Run search on a single CPU core",
 parser.add_argument("-n", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-cutoff", type=int)
+parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-triplet_id", type=int)
 parser.add_argument("-core_id", type=int)
@@ -57,11 +59,12 @@ print(config)
 cd = CondorcetDomain(n=config['n'])
 es = ExhaustiveSearch(cd, rules=config['rules'])
 es.static_search(cutoff=config['cutoff'],
+                 threshold=config['threshold'],
                  top_n=config['top_n'],
                  triplet_id=config['triplet_id'],
                  core_id=config['core_id'])
 
 
-# python parallel_search.py -n 6 -cutoff 16 -top_n 1000 -rules "2N3" "2N1"  -triplet_id 6 -core_id 2
+# python parallel_search.py -n 6 -cutoff 16 -threshold 0 -top_n 1000 -rules "2N3" "2N1"  -triplet_id 6 -core_id 2
 
 
