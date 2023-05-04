@@ -18,4 +18,5 @@ python ../python/parallel_search.py -n 7  \
                                     -rules "2N3" "2N1" "1N3" "3N1"  \
                                     -triplet_id 6 \
                                     -core_id ${SGE_TASK_ID} \
-                                    -lib_path "/data/home/acw554/cdl"
+                                    -lib_path "~/store/KLAS/CONDORCET-NEW/cdl/" \
+                                    -result_path "~/store/KLAS/CONDORCET-NEW/cdl/results"

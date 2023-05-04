@@ -16,6 +16,9 @@ cmake-build-debug/*
 .idea/
 .idea/*
 
+results
+results/*
+
 # Compiled Object files
 *.slo
 *.lo
