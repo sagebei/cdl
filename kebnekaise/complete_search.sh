@@ -9,7 +9,7 @@
 
 
 # load the modules
-module load gcc/12.1.0
+module load GCC/11.3.0
 # activate the environment
 source ~/store/KLAS/CONDORCET-NEW/venv/bin/activate
 
@@ -21,5 +21,5 @@ python ../python/complete_search.py -n 7  \
                                     -rules "2N3" "2N1" "1N3" "3N1" \
                                     -n_complete 5 \
                                     -n_cores 16  \
-                                    -lib_path "~/store/KLAS/CONDORCET-NEW/cdl" \
-                                    -result_path "~/store/KLAS/CONDORCET-NEW/cdl/results"
+                                    -lib_path "/home/k/klasm/store/KLAS/CONDORCET-NEW/cdl" \
+                                    -result_path "/home/k/klasm/store/KLAS/CONDORCET-NEW/cdl/results"
