@@ -15,6 +15,6 @@ python ../python/complete_search.py -n 8  \
                                     -threshold 0  \
                                     -rules "2N3" "2N1" "1N3" "3N1" \
                                     -n_complete 7 \
-                                    -n_cores 100  \
+                                    -n_cores 1000  \
                                     -lib_path "/data/home/acw554/cdl" \
                                     -result_path "/data/scratch/acw554/results"

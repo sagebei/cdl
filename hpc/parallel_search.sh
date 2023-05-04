@@ -5,7 +5,7 @@
 #$ -l h_vmem=8G
 #$ -j y
 #$ -l h_rt=2:0:0
-#$ -t 1-100
+#$ -t 1-1000
 #$ -N parallel
 
 module load gcc/12.1.0
