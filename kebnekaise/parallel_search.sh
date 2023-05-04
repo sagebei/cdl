@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #$ -cwd
-#$ -pe smp 1
-#$ -l h_vmem=8G
+#$ -pe smp 1         # Request 1 CPU core per job
+#$ -l h_vmem=8G      # 8G RAM per core
 #$ -j y
-#$ -l h_rt=1:0:0
-#$ -t 1-16
+#$ -l h_rt=1:0:0     # Max 1hr runtime
+#$ -t 1-16           # start a array of 16 jobs whose ID will be 1, 2, ..., 16 respectively.
 #$ -N parallel
 
 module load gcc/12.1.0
