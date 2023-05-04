@@ -6,8 +6,8 @@ import numpy as np
 
 
 class ExhaustiveSearch(Search):
-    def __init__(self, cd, rules, lib_path):
-        super().__init__(cd, rules, lib_path)
+    def __init__(self, cd, rules, lib_path, result_path):
+        super().__init__(cd, rules, lib_path, result_path)
         self.cd = cd
         self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
         self.rules = rules
@@ -53,12 +53,13 @@ parser.add_argument("-threshold", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
 parser.add_argument("-lib_path", type=str)
+parser.add_argument("-result_path", type=str)
 args = parser.parse_args()
 config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
-es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'])
+es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
 trs = cd.init_trs()
 
 # low_exceptions = [(1, 3), (1, 4), (3, 4), (2, 5)]

@@ -48,11 +48,12 @@ class StaticFeature5:
 
 
 class Search:
-    def __init__(self, cd, rules, lib_path):
+    def __init__(self, cd, rules, lib_path, result_path):
         self.cd = cd
         self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
         self.rules = rules
         self.lib_path = lib_path
+        self.result_path = result_path
 
     def expand_trs(self,
                    trs,
@@ -79,7 +80,7 @@ class Search:
         name = sub_folder_name.split("_")
         n_iter, num_unassigned = int(name[0]), int(name[1])
 
-        trs_folder_name = f'{self.lib_path}/python/{self.cd.n}/{folder_name}/{n_iter}_{num_unassigned}/'
+        trs_folder_name = f'{self.result_path}/{self.cd.n}/{folder_name}/{n_iter}_{num_unassigned}/'
         if not os.path.exists(trs_folder_name):
             os.makedirs(trs_folder_name)
 
@@ -87,14 +88,14 @@ class Search:
             pickle.dump(trs_list, f)
 
         if remove:
-            os.remove(f"{self.lib_path}/python/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
+            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
 
     def load_trs_list(self,
                       folder_name,
                       sub_folder_name,
                       filename):
 
-        folder_name = f'{self.lib_path}/python/{self.cd.n}/{folder_name}/{sub_folder_name}/'
+        folder_name = f'{self.result_path}/{self.cd.n}/{folder_name}/{sub_folder_name}/'
         with open(folder_name + filename, "rb") as f:
             trs_list = pickle.load(f)
         return trs_list
@@ -104,7 +105,7 @@ class Search:
                          threshold=0):
 
         sizes = []
-        for filename in os.listdir(f'{self.lib_path}/python/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
+        for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
             trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
                 if score > threshold:

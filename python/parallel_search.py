@@ -5,8 +5,8 @@ from tqdm import tqdm
 
 
 class ExhaustiveSearch(Search):
-    def __init__(self, cd, rules, lib_path):
-        super().__init__(cd, rules, lib_path)
+    def __init__(self, cd, rules, lib_path, result_path):
+        super().__init__(cd, rules, lib_path, result_path)
         self.cd = cd
         self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
         self.rules = rules
@@ -53,12 +53,13 @@ parser.add_argument("-top_n", type=int)
 parser.add_argument("-triplet_id", type=int)
 parser.add_argument("-core_id", type=int)
 parser.add_argument("-lib_path", type=str)
+parser.add_argument("-result_path", type=str)
 args = parser.parse_args()
 config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
-es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'])
+es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
 es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
                  top_n=config['top_n'],
