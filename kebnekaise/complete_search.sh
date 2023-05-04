@@ -16,5 +16,5 @@ python ../python/complete_search.py -n 7  \
                                     -rules "2N3" "2N1" "1N3" "3N1" \
                                     -n_complete 5 \
                                     -n_cores 16  \
-                                    -lib_path "~/store/KLAS/CONDORCET-NEW/cdl/" \
-                                    -result_path "~/store/KLAS/CONDORCET-NEW/cdl/results"
+                                    -lib_path "~/store/KLAS/CONDORCET-NEW/cdl/" \   # where the library is installed
+                                    -result_path "~/store/KLAS/CONDORCET-NEW/cdl/results"  # where the results will be saved
