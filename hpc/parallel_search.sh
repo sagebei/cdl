@@ -19,5 +19,5 @@ python ../python/parallel_search.py -n 8  \
                                     -n_cores 1000 \
                                     -rules "2N3" "2N1" "1N3" "3N1"  \
                                     -lib_path "/data/home/acw554/cdl" \
-                                    -result_path "/data/scratch/acw554/results"
-                                    -core_id ${SGE_TASK_ID} \
+                                    -result_path "/data/scratch/acw554/results" \
+                                    -core_id ${SGE_TASK_ID}
