@@ -4,7 +4,7 @@
 #$ -pe smp 1
 #$ -l h_vmem=8G
 #$ -j y
-#$ -l h_rt=2:0:0
+#$ -l h_rt=10:0:0
 #$ -t 1-1000
 #$ -N parallel
 
