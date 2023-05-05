@@ -15,15 +15,16 @@ class ExhaustiveSearch(Search):
                       cutoff=16,
                       threshold=0,
                       top_n=1000,
-                      triplet_id=5,
+                      n_complete=5,
+                      n_cores=16,
                       core_id=1):
 
-        folder_name = f"{cutoff}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}" + f"_".join(self.rules)
         trs_score_list = self.load_trs_list(folder_name,
-                                            f"{triplet_id-1}_{self.cd.num_triplets}",
+                                            f"{n_complete}_{self.cd.num_triplets}",
                                             f"{core_id}.pkl")
 
-        for n_iter in range(triplet_id, cd.num_triplets+1):
+        for n_iter in range(n_complete+1, cd.num_triplets+1):
             print(f"{core_id}_{n_iter}")
             next_trs_score_list = []
 

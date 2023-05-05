@@ -65,7 +65,8 @@ class Search:
         for rule in self.rules:
             trs = self.cd.assign_rule(trs, triplet, rule)
             value = self.sf.score_function(trs, cutoff, threshold)
-            trs_value_list.append((trs, value))
+            if value > -1:
+                trs_value_list.append((trs, value))
 
         return trs_value_list
 

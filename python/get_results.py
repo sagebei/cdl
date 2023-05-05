@@ -8,6 +8,9 @@ parser = argparse.ArgumentParser(description="get the result",
 parser.add_argument("-n", type=int)
 parser.add_argument("-cutoff", type=int)
 parser.add_argument("-threshold", type=int)
+parser.add_argument("-top_n", type=int)
+parser.add_argument("-n_cores", type=int)
+parser.add_argument("-n_complete", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
@@ -17,7 +20,7 @@ print(config)
 
 cd = CondorcetDomain(n=config['n'])
 es = Search(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
-folder_name = f"{config['cutoff']}_" + f"_".join(config['rules'])
+folder_name = f"{config['cutoff']}_{config['threshold']}_{config['top_n']}_{config['n_cores']}_{config['n_complete']}" + f"_".join(config['rules'])
 results = es.get_size_counter(folder_name, config['threshold'])
 print(results)
 

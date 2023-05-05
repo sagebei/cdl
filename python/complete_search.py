@@ -16,15 +16,16 @@ class ExhaustiveSearch(Search):
                       trs,
                       cutoff=16,
                       threshold=0,
-                      n_complete_triplet=20,
+                      top_n=1000,
+                      n_complete=20,
                       n_cores=10):
 
-        folder_name = f"{cutoff}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}" + f"_".join(self.rules)
         num_unassigned = len(self.cd.unassigned_triplets(trs))
 
         trs_score_list = self.expand_trs(trs)
 
-        for n_iter in range(2, n_complete_triplet+1):
+        for n_iter in range(2, n_complete+1):
             next_trs_score_list = []
 
             for trs, _ in trs_score_list:
@@ -39,7 +40,7 @@ class ExhaustiveSearch(Search):
             self.save_trs_list(trs_list=t.tolist(),
                                core_id=1,
                                folder_name=folder_name,
-                               sub_folder_name=f"{n_complete_triplet}_{num_unassigned}",
+                               sub_folder_name=f"{n_complete}_{num_unassigned}",
                                filename=f"{i+1}.pkl",
                                remove=False)
 
@@ -50,6 +51,7 @@ parser.add_argument("-n", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-cutoff", type=int)
 parser.add_argument("-threshold", type=int)
+parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
 parser.add_argument("-lib_path", type=str)
@@ -72,7 +74,8 @@ trs = cd.init_trs()
 es.static_search(trs,
                  cutoff=config['cutoff'],
                  threshold=config['threshold'],
-                 n_complete_triplet=config['n_complete'],
+                 top_n=config['top_n'],
+                 n_complete=config['n_complete'],
                  n_cores=config['n_cores'])
 
 
