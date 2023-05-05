@@ -19,7 +19,7 @@ class ExhaustiveSearch(Search):
                       n_cores=16,
                       core_id=1):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_" + f"_".join(self.rules)
         trs_score_list = self.load_trs_list(folder_name,
                                             f"{n_complete}_{self.cd.num_triplets}",
                                             f"{core_id}.pkl")

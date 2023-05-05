@@ -20,7 +20,7 @@ print(config)
 
 cd = CondorcetDomain(n=config['n'])
 es = Search(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
-folder_name = f"{config['cutoff']}_{config['threshold']}_{config['top_n']}_{config['n_cores']}_{config['n_complete']}" + f"_".join(config['rules'])
+folder_name = f"{config['cutoff']}_{config['threshold']}_{config['top_n']}_{config['n_cores']}_{config['n_complete']}_" + f"_".join(config['rules'])
 results = es.get_size_counter(folder_name, config['threshold'])
 print(results)
 
