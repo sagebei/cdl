@@ -51,7 +51,7 @@ parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-cutoff", type=int)
 parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
-parser.add_argument("-triplet_id", type=int)
+parser.add_argument("-n_complete", type=int)
 parser.add_argument("-core_id", type=int)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
@@ -64,7 +64,8 @@ es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], re
 es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
                  top_n=config['top_n'],
-                 triplet_id=config['triplet_id'],
+                 n_complete=config['n_complete'],
+                 n_cores=config['n_cores'],
                  core_id=config['core_id'])
 
 
