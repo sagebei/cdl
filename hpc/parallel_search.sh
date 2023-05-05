@@ -13,7 +13,7 @@ source ~/venv/bin/activate
 
 python ../python/parallel_search.py -n 8  \
                                     -cutoff 16  \
-                                    -threshold 0 \
+                                    -threshold 100 \
                                     -top_n 10000  \
                                     -n_complete 7 \
                                     -n_cores 1000 \
