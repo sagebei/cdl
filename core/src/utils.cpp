@@ -56,10 +56,10 @@ int get_index(const std::list<int>& elem, const int& value)
 }
 
 
-int factorial(int n)
+unsigned long factorial(int n)
 {
-    int result = 1;
-    for (int i=1; i <= n; i++)
+    unsigned long result = 1;
+    for (unsigned long i=1; i <= n; i++)
     {
         result = result * i;
     }

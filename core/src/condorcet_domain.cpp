@@ -1,6 +1,5 @@
 #include "condorcet_domain.h"
 
-
 CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
