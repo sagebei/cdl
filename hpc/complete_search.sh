@@ -10,11 +10,11 @@
 module load gcc/12.1.0
 source ~/venv/bin/activate
 
-python ~/cdl/python/complete_search.py -n 9  \
+python ~/cdl/python/complete_search.py -n 7  \
                                        -cutoff 16  \
                                        -threshold 0  \
-                                       -top_n 100000  \
-                                       -n_complete 7 \
+                                       -top_n 1000  \
+                                       -n_complete 9 \
                                        -n_cores 2000  \
                                        -n_chunks 100000 \
                                        -shuffle 0 \
