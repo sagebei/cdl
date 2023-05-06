@@ -17,9 +17,10 @@ class ExhaustiveSearch(Search):
                       top_n=1000,
                       n_complete=5,
                       n_cores=16,
+                      shuffle=False,
                       core_id=1):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
         trs_score_list = self.load_trs_list(folder_name,
                                             f"{n_complete}_{self.cd.num_triplets}",
                                             f"{core_id}.pkl")
@@ -53,6 +54,7 @@ parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
+parser.add_argument("-shuffle", type=bool)
 parser.add_argument("-core_id", type=int)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
@@ -67,6 +69,7 @@ es.static_search(cutoff=config['cutoff'],
                  top_n=config['top_n'],
                  n_complete=config['n_complete'],
                  n_cores=config['n_cores'],
+                 shuffle=config['shuffle'],
                  core_id=config['core_id'])
 
 

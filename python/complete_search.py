@@ -3,6 +3,7 @@ from utils import StaticFeature5, Search
 from utils import init_rules, flip_exceptions
 import argparse
 import numpy as np
+import random
 
 
 class ExhaustiveSearch(Search):
@@ -18,9 +19,10 @@ class ExhaustiveSearch(Search):
                       threshold=0,
                       top_n=1000,
                       n_complete=20,
-                      n_cores=10):
+                      n_cores=10,
+                      shuffle=False):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
         num_unassigned = len(self.cd.unassigned_triplets(trs))
 
         trs_score_list = self.expand_trs(trs)
@@ -34,6 +36,9 @@ class ExhaustiveSearch(Search):
 
             trs_score_list.clear()
             trs_score_list = next_trs_score_list
+
+        if shuffle:
+            random.shuffle(trs_score_list)
 
         split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object), n_cores)
         for i, t in enumerate(split_trs_score_list):
@@ -54,6 +59,7 @@ parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
+parser.add_argument("-shuffle", type=int)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
 args = parser.parse_args()
@@ -76,7 +82,8 @@ es.static_search(trs,
                  threshold=config['threshold'],
                  top_n=config['top_n'],
                  n_complete=config['n_complete'],
-                 n_cores=config['n_cores'])
+                 n_cores=config['n_cores'],
+                 shuffle=config['shuffle'])
 
 
 # python complete_search.py -n 6 -cutoff 16 threshold=0 -rules "2N3" "2N1" -n_complete 5 -n_cores 2
