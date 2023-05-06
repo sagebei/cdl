@@ -48,7 +48,7 @@ class ExhaustiveSearch(Search):
                                f"{core_id}.pkl",
                                remove=True)
 
-        subfolder_name = folder_name + f"/{n_complete}_{self.cd.num_triplets}/"
+        subfolder_name = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
         unprocessed_filenames = os.listdir(subfolder_name)
         while len(unprocessed_filenames) > 0:
             filename = random.choice(unprocessed_filenames)
