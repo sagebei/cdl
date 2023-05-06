@@ -17,6 +17,7 @@ python ~/cdl/python/parallel_search.py -n 9  \
                                        -top_n 100000  \
                                        -n_complete 7 \
                                        -n_cores 2000  \
+                                       -n_chunks 10000 \
                                        -shuffle 0 \
                                        -rules "2N3" "2N1" "1N3" "3N1"  \
                                        -lib_path "/data/home/acw554/cdl" \

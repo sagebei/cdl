@@ -20,9 +20,10 @@ class ExhaustiveSearch(Search):
                       top_n=1000,
                       n_complete=20,
                       n_cores=10,
+                      n_chunks=1000,
                       shuffle=False):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
         num_unassigned = len(self.cd.unassigned_triplets(trs))
 
         trs_score_list = self.expand_trs(trs)
@@ -40,10 +41,9 @@ class ExhaustiveSearch(Search):
         if shuffle:
             random.shuffle(trs_score_list)
 
-        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object), n_cores)
+        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object), n_chunks)
         for i, t in enumerate(split_trs_score_list):
             self.save_trs_list(trs_list=t.tolist(),
-                               core_id=1,
                                folder_name=folder_name,
                                sub_folder_name=f"{n_complete}_{num_unassigned}",
                                filename=f"{i+1}.pkl",
@@ -59,6 +59,7 @@ parser.add_argument("-threshold", type=int)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)
+parser.add_argument("-n_chunks", type=int)
 parser.add_argument("-shuffle", type=bool)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
@@ -83,6 +84,7 @@ es.static_search(trs,
                  top_n=config['top_n'],
                  n_complete=config['n_complete'],
                  n_cores=config['n_cores'],
+                 n_chunks=config['n_chunks'],
                  shuffle=config['shuffle'])
 
 

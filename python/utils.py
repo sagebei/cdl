@@ -72,7 +72,6 @@ class Search:
 
     def save_trs_list(self,
                       trs_list,
-                      core_id,
                       folder_name,
                       sub_folder_name,
                       filename,
@@ -86,11 +85,16 @@ class Search:
             os.makedirs(trs_folder_name)
 
         with open(trs_folder_name + filename, "wb") as f:
-            pickle.dump(trs_list, f)
+            trs_score_list = []
+            for trs, score in trs_list:
+                state = self.cd.trs_to_state(trs)
+                trs_score_list.append((state, score))
+            pickle.dump(trs_score_list, f)
 
         if remove:
-            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{core_id}.pkl")
-
+            file_id = int(filename.split(".")[0])
+            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.pkl")
+            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.processing")
     def load_trs_list(self,
                       folder_name,
                       sub_folder_name,
@@ -98,7 +102,12 @@ class Search:
 
         folder_name = f'{self.result_path}/{self.cd.n}/{folder_name}/{sub_folder_name}/'
         with open(folder_name + filename, "rb") as f:
-            trs_list = pickle.load(f)
+            state_score_list = pickle.load(f)
+
+        trs_list = []
+        for state, score in state_score_list:
+            trs = self.cd.state_to_trs(state)
+            trs_list.append((trs, score))
         return trs_list
 
     def get_size_counter(self,
