@@ -27,7 +27,7 @@ print(results)
 if not os.path.exists(f"{config['result_path']}/counters"):
     os.makedirs(f"{config['result_path']}/counters")
 
-with open(f"{config['result_path']}/counters/{folder_name}.txt", "w") as f:
+with open(f"{config['result_path']}/counters/{config['n']}_{folder_name}.txt", "w") as f:
     f.write(str(results))
 
 # python get_results.py -n 6 -cutoff 16 -threshold 0 -rules "2N3" "2N1"
