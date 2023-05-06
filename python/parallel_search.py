@@ -21,6 +21,7 @@ class ExhaustiveSearch(Search):
                       core_id=1):
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
+        print(self.cd.num_triplets)
         trs_score_list = self.load_trs_list(folder_name,
                                             f"{n_complete}_{self.cd.num_triplets}",
                                             f"{core_id}.pkl")
