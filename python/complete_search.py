@@ -41,7 +41,8 @@ class ExhaustiveSearch(Search):
         if shuffle:
             random.shuffle(trs_score_list)
 
-        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object), n_chunks)
+        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object),
+                                              min(n_chunks, len(trs_score_list)))
         for i, t in enumerate(split_trs_score_list):
             self.save_trs_list(trs_list=t.tolist(),
                                folder_name=folder_name,

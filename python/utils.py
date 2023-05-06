@@ -92,9 +92,13 @@ class Search:
             pickle.dump(trs_score_list, f)
 
         if remove:
-            file_id = int(filename.split(".")[0])
-            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.pkl")
-            os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.processing")
+            try:
+                file_id = int(filename.split(".")[0])
+                os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.pkl")
+                os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.processing")
+            except FileNotFoundError:
+                pass
+
     def load_trs_list(self,
                       folder_name,
                       sub_folder_name,
