@@ -10,12 +10,12 @@
 module load gcc/12.1.0
 source ~/venv/bin/activate
 
-python ~/cdl/python/get_results.py -n 16  \
+python ~/cdl/python/get_results.py -n 15  \
                                    -cutoff 16  \
                                    -threshold 0  \
                                    -top_n 1000000000  \
                                    -n_complete 50 \
-                                   -n_cores 2000  \
+                                   -n_cores 1000  \
                                    -n_chunks 1000000 \
                                    -shuffle 1 \
                                    -rules "2N3" "2N1" \
