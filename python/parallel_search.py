@@ -61,7 +61,7 @@ class ExhaustiveSearch(Search):
 
                 trs_score_list = self.load_trs_list(folder_name,
                                                     f"{n_complete}_{self.cd.num_triplets}",
-                                                    subfolder_name+f"{file_id}.processing")
+                                                    f"{file_id}.processing")
 
                 for n_iter in range(n_complete+1, cd.num_triplets+1):
                     print(f"{file_id}_{n_iter}")
