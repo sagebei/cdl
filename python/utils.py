@@ -1,7 +1,7 @@
 import pickle
 from collections import Counter
 import os
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 import numpy as np
 
 
@@ -114,20 +114,29 @@ class Search:
         return trs_list
 
     def get_size_counter(self,
-                         folder_name,
-                         threshold=0):
+                         folder_name):
 
         sizes = []
         for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
             trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
-                if score > threshold:
-                    sizes.append(self.cd.size(trs))
+                sizes.append(self.cd.size(trs))
 
         result = Counter(sizes)
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
 
         return result
+
+    def save_result_as_dict(self, folder_name):
+        score_states_dict = defaultdict(list)
+
+        for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
+            trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+            for trs, score in trs_score_list:
+                score_states_dict[score].append(self.cd.trs_to_state(trs))
+
+        with open(f"{self.result_path}/{self.cd.n}/{folder_name}/result_dict.pkl", "wb") as f:
+            pickle.dump(score_states_dict, f)
 
 
 def init_rules(cd, trs, low_exceptions, high_exceptions):

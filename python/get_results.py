@@ -23,7 +23,11 @@ print(config)
 cd = CondorcetDomain(n=config['n'])
 es = Search(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
 folder_name = f"{config['cutoff']}_{config['threshold']}_{config['top_n']}_{config['n_cores']}_{config['n_chunks']}_{config['n_complete']}_{config['shuffle']}_" + f"_".join(config['rules'])
-results = es.get_size_counter(folder_name, config['threshold'])
+
+es.save_result_as_dict(folder_name)
+print("Result dict is ready.")
+
+results = es.get_size_counter(folder_name)
 print(results)
 
 if not os.path.exists(f"{config['result_path']}/counters"):
