@@ -7,6 +7,21 @@ import argparse
 from tqdm import tqdm
 
 
+def get_unprocessed_fileid(subfolder_name, n_cores):
+    filenames = os.listdir(subfolder_name)
+    unprocessed_ids = []
+    for filename in filenames:
+        file_id, file_extension = filename.split(".")
+        file_id = int(file_id)
+        if file_id > n_cores and file_extension == "pkl":
+            unprocessed_ids.append(file_id)
+
+    if len(unprocessed_ids) == 0:
+        return None
+
+    return random.choice(unprocessed_ids)
+
+
 class ExhaustiveSearch(Search):
     def __init__(self, cd, rules, lib_path, result_path):
         super().__init__(cd, rules, lib_path, result_path)
@@ -49,39 +64,34 @@ class ExhaustiveSearch(Search):
                                remove=True)
 
         subfolder_name = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
-        unprocessed_filenames = os.listdir(subfolder_name)
-        while len(unprocessed_filenames) > 0:
-            filename = random.choice(unprocessed_filenames)
-            file_id, file_extension = filename.split(".")
-            file_id = int(file_id)
+        file_id = get_unprocessed_fileid(subfolder_name, n_cores)
+        while file_id is not None:
+            os.rename(subfolder_name+f"{file_id}.pkl",
+                      subfolder_name+f"{file_id}.processing")
 
-            if file_id > n_cores and file_extension == "pkl":
-                os.rename(subfolder_name+filename,
-                          subfolder_name+f"{file_id}.processing")
+            trs_score_list = self.load_trs_list(folder_name,
+                                                f"{n_complete}_{self.cd.num_triplets}",
+                                                f"{file_id}.processing")
 
-                trs_score_list = self.load_trs_list(folder_name,
-                                                    f"{n_complete}_{self.cd.num_triplets}",
-                                                    f"{file_id}.processing")
+            for n_iter in range(n_complete+1, cd.num_triplets+1):
+                print(f"{file_id}_{n_iter}")
+                next_trs_score_list = []
 
-                for n_iter in range(n_complete+1, cd.num_triplets+1):
-                    print(f"{file_id}_{n_iter}")
-                    next_trs_score_list = []
+                for trs, _ in trs_score_list:
+                    trs_value_list = self.expand_trs(trs, cutoff, threshold)
+                    next_trs_score_list.extend(trs_value_list)
 
-                    for trs, _ in trs_score_list:
-                        trs_value_list = self.expand_trs(trs, cutoff, threshold)
-                        next_trs_score_list.extend(trs_value_list)
+                trs_score_list.clear()
+                next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
+                trs_score_list = next_trs_score_list[-top_n:]
 
-                    trs_score_list.clear()
-                    next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
-                    trs_score_list = next_trs_score_list[-top_n:]
+                self.save_trs_list(trs_score_list,
+                                   folder_name,
+                                   f"{n_iter}_{self.cd.num_triplets}",
+                                   f"{file_id}.pkl",
+                                   remove=True)
 
-                    self.save_trs_list(trs_score_list,
-                                       folder_name,
-                                       f"{n_iter}_{self.cd.num_triplets}",
-                                       filename,
-                                       remove=True)
-
-            unprocessed_filenames = os.listdir(subfolder_name)
+            file_id = get_unprocessed_fileid(subfolder_name, n_cores)
 
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
