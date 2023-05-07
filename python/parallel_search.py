@@ -81,7 +81,7 @@ class ExhaustiveSearch(Search):
                                        filename,
                                        remove=True)
 
-            unprocessed_filenames = os.listdir(subfolder_name + f"/{n_complete}_{self.cd.num_triplets}/")
+            unprocessed_filenames = os.listdir(subfolder_name)
 
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
