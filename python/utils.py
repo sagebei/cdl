@@ -3,6 +3,7 @@ from collections import Counter
 import os
 from collections import OrderedDict, defaultdict
 import numpy as np
+import shutil
 
 
 class StaticFeature5:
@@ -137,6 +138,12 @@ class Search:
 
         with open(f"{self.result_path}/{self.cd.n}/{folder_name}/result_dict.pkl", "wb") as f:
             pickle.dump(score_states_dict, f)
+
+    def remove_empty_folders(self, folder_name):
+        for subfoldername in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/'):
+            triplet_id = int(subfoldername.split("_")[0])
+            if triplet_id < self.cd.num_triplets:
+                shutil.rmtree(f'{self.result_path}/{self.cd.n}/{folder_name}/{subfoldername}')
 
 
 def init_rules(cd, trs, low_exceptions, high_exceptions):
