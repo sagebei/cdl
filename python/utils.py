@@ -132,6 +132,8 @@ class Search:
         with open(f"{self.result_path}/{self.cd.n}/{folder_name}/trs_score_size.pkl", "wb") as f:
             pickle.dump(trs_score_size_list, f)
 
+        shutil.rmtree(f"{self.result_path}/{self.cd.n}/{folder_name}/{int(folder_name.split('_')[5])}_{self.cd.num_triplets}")
+
         return result
 
     def save_result_as_dict(self, folder_name):
