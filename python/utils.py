@@ -118,13 +118,19 @@ class Search:
                          folder_name):
 
         sizes = []
+        trs_score_size_list = []
         for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
             trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
-                sizes.append(self.cd.size(trs))
+                size = self.cd.size(trs)
+                sizes.append(size)
+                trs_score_size_list.append((trs, score, size))
 
         result = Counter(sizes)
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
+
+        with open(f"{self.result_path}/{self.cd.n}/{folder_name}/trs_score_size.pkl", "wb") as f:
+            pickle.dump(trs_score_size_list, f)
 
         return result
 
@@ -138,12 +144,6 @@ class Search:
 
         with open(f"{self.result_path}/{self.cd.n}/{folder_name}/result_dict.pkl", "wb") as f:
             pickle.dump(score_states_dict, f)
-
-    def remove_empty_folders(self, folder_name):
-        for subfoldername in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/'):
-            triplet_id = int(subfoldername.split("_")[0])
-            if triplet_id < self.cd.num_triplets:
-                shutil.rmtree(f'{self.result_path}/{self.cd.n}/{folder_name}/{subfoldername}')
 
 
 def init_rules(cd, trs, low_exceptions, high_exceptions):

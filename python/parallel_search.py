@@ -57,11 +57,12 @@ class ExhaustiveSearch(Search):
             next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
             trs_score_list = next_trs_score_list[-top_n:]
 
-            self.save_trs_list(trs_score_list,
-                               folder_name,
-                               f"{n_iter}_{self.cd.num_triplets}",
-                               f"{core_id}.pkl",
-                               remove=True)
+            if n_iter == self.cd.num_triplets:
+                self.save_trs_list(trs_score_list,
+                                   folder_name,
+                                   f"{n_iter}_{self.cd.num_triplets}",
+                                   f"{core_id}.pkl",
+                                   remove=False)
 
         subfolder_name = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
         file_id = get_unprocessed_fileid(subfolder_name, n_cores)
@@ -85,11 +86,12 @@ class ExhaustiveSearch(Search):
                 next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
                 trs_score_list = next_trs_score_list[-top_n:]
 
-                self.save_trs_list(trs_score_list,
-                                   folder_name,
-                                   f"{n_iter}_{self.cd.num_triplets}",
-                                   f"{file_id}.pkl",
-                                   remove=True)
+                if n_iter == self.cd.num_triplets:
+                    self.save_trs_list(trs_score_list,
+                                       folder_name,
+                                       f"{n_iter}_{self.cd.num_triplets}",
+                                       f"{file_id}.pkl",
+                                       remove=False)
 
             file_id = get_unprocessed_fileid(subfolder_name, n_cores)
 

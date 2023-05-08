@@ -10,7 +10,7 @@
 module load gcc/12.1.0
 source ~/venv/bin/activate
 
-python ~/cdl/python/get_results.py -n 18  \
+python ~/cdl/python/get_results.py -n 20  \
                                    -cutoff 16  \
                                    -threshold 0  \
                                    -top_n 1000000000  \
