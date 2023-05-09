@@ -42,8 +42,7 @@ if folders[-1] == "":
     folders = folders[:-1]
 folder_path = "/".join(folders)
 
-n = int(folders[-1])
-
+n = int(folders[-2])
 cd = CondorcetDomain(n)
 num_triplets = cd.num_triplets
 
