@@ -9,8 +9,9 @@ def calculate_size(cd, folder_path, filename):
     trs_score_size_list = []
     data_file = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/{filename}"
     with open(data_file, "rb") as f:
-        trs_score_list = pickle.load(f)
-        for trs, score in trs_score_list:
+        state_score_list = pickle.load(f)
+        for state, score in state_score_list:
+            trs = cd.state_to_trs(state)
             size = cd.size(trs)
             trs_score_size_list.append((trs, score, size))
 
