@@ -1,6 +1,6 @@
 from cdl import *
 from utils import StaticFeature5, Search
-from utils import init_rules, flip_exceptions
+from tools import init_rules, flip_exceptions
 import argparse
 import numpy as np
 import random
