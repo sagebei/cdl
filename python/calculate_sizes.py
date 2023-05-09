@@ -4,25 +4,6 @@ import pickle
 import os
 from tools import get_unprocessed_fileid
 
-parser = argparse.ArgumentParser(description="get the result",
-                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-folder_path", type=str)
-parser.add_argument("-n_cores", type=int)
-parser.add_argument("-core_id", type=int)
-args = parser.parse_args()
-config = vars(args)
-print(config)
-
-folder_path = config['folder_path']
-core_id = config['core_id']
-n_cores = config['n_cores']
-
-folders = folder_path.split("/")
-n = int(folders[-1])
-
-cd = CondorcetDomain(n)
-num_triplets = cd.num_triplets
-
 
 def calculate_size(cd, folder_path, filename):
     trs_score_size_list = []
@@ -42,6 +23,29 @@ def calculate_size(cd, folder_path, filename):
 
     os.remove(data_file)
 
+
+parser = argparse.ArgumentParser(description="get the result",
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-folder_path", type=str)
+parser.add_argument("-n_cores", type=int)
+parser.add_argument("-core_id", type=int)
+args = parser.parse_args()
+config = vars(args)
+print(config)
+
+folder_path = config['folder_path']
+core_id = config['core_id']
+n_cores = config['n_cores']
+
+folders = folder_path.split("/")
+if folders[-1] == "":
+    folders = folders[:-1]
+folder_path = "/".join(folders)
+
+n = int(folders[-1])
+
+cd = CondorcetDomain(n)
+num_triplets = cd.num_triplets
 
 calculate_size(cd, folder_path, f"{core_id}.pkl")
 
