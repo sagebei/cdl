@@ -4,6 +4,7 @@ import pickle
 import os
 from tools import get_unprocessed_fileid
 from collections import Counter
+import shutil
 
 
 def calculate_size(cd, folder_path, filename):
@@ -20,7 +21,7 @@ def calculate_size(cd, folder_path, filename):
     if not os.path.exists(result_folder_path):
         os.makedirs(result_folder_path)
 
-    with open(result_folder_path + f"{filename.split('.')}.pkl", "wb") as f:
+    with open(result_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
         pickle.dump(trs_score_size_list, f)
 
     os.remove(data_file)
@@ -71,5 +72,12 @@ if len(os.listdir(sub_folder_path)) == 0:
 
     with open(f"{folder_path}/counter.txt", "w") as f:
         f.write(str(Counter(sizes)))
+
+    for i in range(num_triplets + 1):
+        try:
+            shutil.rmtree(folder_path + f"/{i}_{num_triplets}")
+        except FileNotFoundError:
+            pass
+
 
 
