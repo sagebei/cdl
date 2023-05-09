@@ -9,6 +9,7 @@ import shutil
 
 def calculate_size(cd, folder_path, filename):
     trs_score_size_list = []
+    sizes = []
     data_file = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/{filename}"
     with open(data_file, "rb") as f:
         state_score_list = pickle.load(f)
@@ -16,13 +17,19 @@ def calculate_size(cd, folder_path, filename):
             trs = cd.state_to_trs(state)
             size = cd.size(trs)
             trs_score_size_list.append((trs, score, size))
+            sizes.append(size)
 
-    result_folder_path = f"{folder_path}/trs_score_size/"
-    if not os.path.exists(result_folder_path):
-        os.makedirs(result_folder_path)
+    trs_score_size_folder_path = f"{folder_path}/trs_score_size/"
+    if not os.path.exists(trs_score_size_folder_path):
+        os.makedirs(trs_score_size_folder_path)
+    with open(trs_score_size_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
+        pickle.dump(trs_score_size_folder_path, f)
 
-    with open(result_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
-        pickle.dump(trs_score_size_list, f)
+    sizes_folder_path = f"{folder_path}/sizes/"
+    if not os.path.exists(sizes_folder_path):
+        os.makedirs(sizes_folder_path)
+    with open(sizes_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
+        pickle.dump(sizes, f)
 
     os.remove(data_file)
 
@@ -62,17 +69,16 @@ while file_id is not None:
 
 if len(os.listdir(sub_folder_path)) == 0:
     sizes = []
-    result_folder_path = f"{folder_path}/trs_score_size/"
+    result_folder_path = f"{folder_path}/sizes/"
     filenames = os.listdir(result_folder_path)
     for filename in filenames:
         with open(result_folder_path + filename, "rb") as f:
-            trs_score_size_list = pickle.load(f)
-            for (trs, score, size) in trs_score_size_list:
-                sizes.append(size)
+            sizes.extend(pickle.load(f))
 
     with open(f"{folder_path}/counter.txt", "w") as f:
         f.write(str(Counter(sizes)))
 
+    shutil.rmtree(f"{folder_path}/sizes/")
     for i in range(num_triplets + 1):
         try:
             shutil.rmtree(folder_path + f"/{i}_{num_triplets}")
