@@ -2,7 +2,6 @@ import pickle
 from collections import Counter
 import os
 from collections import OrderedDict, defaultdict
-import numpy as np
 import shutil
 
 
@@ -146,31 +145,6 @@ class Search:
 
         with open(f"{self.result_path}/{self.cd.n}/{folder_name}/result_dict.pkl", "wb") as f:
             pickle.dump(score_states_dict, f)
-
-
-def init_rules(cd, trs, low_exceptions, high_exceptions):
-    middle = np.array(low_exceptions).max()
-    for tr in trs:
-        i, j, k = tr.triplet
-        if j <= middle < k:
-            if (i, j) in low_exceptions:
-                trs = cd.assign_rule(trs, tr.triplet, "1N3")
-            else:
-                trs = cd.assign_rule(trs, tr.triplet, "3N1")
-        if i <= middle < j:
-            if (j, k) in high_exceptions:
-                trs = cd.assign_rule(trs, tr.triplet, "3N1")
-            else:
-                trs = cd.assign_rule(trs, tr.triplet, "1N3")
-
-    return trs
-
-
-def flip_exceptions(cd, exceptions):
-    flipout = []
-    for pair in exceptions:
-        flipout.append((cd.n+1-pair[1], cd.n+1-pair[0]))
-    return flipout
 
 
 

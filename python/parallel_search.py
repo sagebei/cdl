@@ -1,25 +1,10 @@
 import os
 import random
-
 from cdl import *
 from utils import StaticFeature5, Search
+from tools import get_unprocessed_fileid
 import argparse
 from tqdm import tqdm
-
-
-def get_unprocessed_fileid(subfolder_name, n_cores):
-    filenames = os.listdir(subfolder_name)
-    unprocessed_ids = []
-    for filename in filenames:
-        file_id, file_extension = filename.split(".")
-        file_id = int(file_id)
-        if file_id > n_cores and file_extension == "pkl":
-            unprocessed_ids.append(file_id)
-
-    if len(unprocessed_ids) == 0:
-        return None
-
-    return random.choice(unprocessed_ids)
 
 
 class ExhaustiveSearch(Search):
@@ -64,11 +49,11 @@ class ExhaustiveSearch(Search):
                                    f"{core_id}.pkl",
                                    remove=False)
 
-        subfolder_name = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
-        file_id = get_unprocessed_fileid(subfolder_name, n_cores)
+        sub_folder_path = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
+        file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
         while file_id is not None:
-            os.rename(subfolder_name+f"{file_id}.pkl",
-                      subfolder_name+f"{file_id}.processing")
+            os.rename(sub_folder_path+f"{file_id}.pkl",
+                      sub_folder_path+f"{file_id}.processing")
 
             trs_score_list = self.load_trs_list(folder_name,
                                                 f"{n_complete}_{self.cd.num_triplets}",
@@ -93,7 +78,7 @@ class ExhaustiveSearch(Search):
                                        f"{file_id}.pkl",
                                        remove=False)
 
-            file_id = get_unprocessed_fileid(subfolder_name, n_cores)
+            file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
