@@ -20,7 +20,7 @@ def calculate_size(cd, folder_path, filename):
     if not os.path.exists(result_folder_path):
         os.makedirs(result_folder_path)
 
-    with open(result_folder_path + filename, "wb") as f:
+    with open(result_folder_path + f"{filename.split('.')}.pkl", "wb") as f:
         pickle.dump(trs_score_size_list, f)
 
     os.remove(data_file)
@@ -59,8 +59,8 @@ while file_id is not None:
     file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
 
-sizes = []
 if len(os.listdir(sub_folder_path)) == 0:
+    sizes = []
     result_folder_path = f"{folder_path}/trs_score_size/"
     filenames = os.listdir(result_folder_path)
     for filename in filenames:
@@ -69,7 +69,7 @@ if len(os.listdir(sub_folder_path)) == 0:
             for (trs, score, size) in trs_score_size_list:
                 sizes.append(size)
 
-with open(f"{folder_path}/counter.txt", "w") as f:
-    f.write(str(Counter(sizes)))
+    with open(f"{folder_path}/counter.txt", "w") as f:
+        f.write(str(Counter(sizes)))
 
 
