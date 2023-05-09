@@ -3,6 +3,7 @@ import argparse
 import pickle
 import os
 from tools import get_unprocessed_fileid
+from collections import Counter
 
 
 def calculate_size(cd, folder_path, filename):
@@ -15,11 +16,11 @@ def calculate_size(cd, folder_path, filename):
             size = cd.size(trs)
             trs_score_size_list.append((trs, score, size))
 
-    result_folder = f"{folder_path}/trs_score_size/"
-    if not os.path.exists(result_folder):
-        os.makedirs(result_folder)
+    result_folder_path = f"{folder_path}/trs_score_size/"
+    if not os.path.exists(result_folder_path):
+        os.makedirs(result_folder_path)
 
-    with open(result_folder + filename, "wb") as f:
+    with open(result_folder_path + filename, "wb") as f:
         pickle.dump(trs_score_size_list, f)
 
     os.remove(data_file)
@@ -59,3 +60,16 @@ while file_id is not None:
 
     file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
+
+sizes = []
+if len(os.listdir(sub_folder_path)) == 0:
+    result_folder_path = f"{folder_path}/trs_score_size/"
+    filenames = os.listdir(result_folder_path)
+    for filename in filenames:
+        with open(result_folder_path + filename, "rb") as f:
+            trs_score_size_list = pickle.load(f)
+            for (trs, score, size) in trs_score_size_list:
+                sizes.append(size)
+
+with open(f"{folder_path}/counter.txt", "w") as f:
+    f.write(str(Counter(sizes)))
