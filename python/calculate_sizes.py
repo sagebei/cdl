@@ -15,7 +15,7 @@ def calculate_size(cd, folder_path, filename):
             size = cd.size(trs)
             trs_score_size_list.append((trs, score, size))
 
-    result_folder = f"{folder_path}/trs_score_size"
+    result_folder = f"{folder_path}/trs_score_size/"
     if not os.path.exists(result_folder):
         os.makedirs(result_folder)
 
