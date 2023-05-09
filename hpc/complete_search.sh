@@ -16,7 +16,7 @@ python ~/cdl/python/complete_search.py -n 8  \
                                        -top_n 10000  \
                                        -n_complete 12 \
                                        -n_cores 1000  \
-                                       -n_chunks 100000 \
+                                       -n_chunks 10000 \
                                        -shuffle 0 \
                                        -rules "2N3" "2N1" "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
