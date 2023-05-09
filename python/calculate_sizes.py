@@ -5,6 +5,7 @@ import os
 from tools import get_unprocessed_fileid
 from collections import Counter
 import shutil
+from collections import OrderedDict
 
 
 def calculate_size(cd, folder_path, filename):
@@ -76,7 +77,9 @@ if len(os.listdir(sub_folder_path)) == 0:
             sizes.extend(pickle.load(f))
 
     with open(f"{folder_path}/counter.txt", "w") as f:
-        f.write(str(Counter(sizes)))
+        result = Counter(sizes)
+        result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
+        f.write(str(result))
 
     shutil.rmtree(f"{folder_path}/sizes/")
     for i in range(num_triplets + 1):
