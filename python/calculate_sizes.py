@@ -7,8 +7,8 @@ from tools import get_unprocessed_fileid
 parser = argparse.ArgumentParser(description="get the result",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-folder_path", type=str)
-parser.add_argument("n_cores", type=int)
-parser.add_argument("core_id", type=int)
+parser.add_argument("-n_cores", type=int)
+parser.add_argument("-core_id", type=int)
 args = parser.parse_args()
 config = vars(args)
 print(config)

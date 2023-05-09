@@ -1,1 +1,1 @@
-rm complete.o* result.o* parallel.o*
+rm complete.o* sizes.o* parallel.o*
