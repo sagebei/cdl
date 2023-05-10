@@ -14,7 +14,7 @@ python ~/cdl/python/form_clusters.py -n 8  \
                                      -cutoff 16  \
                                      -threshold 0  \
                                      -top_n 10000  \
-                                     -n_complete 12 \
+                                     -n_complete 11 \
                                      -n_cores 1000  \
                                      -n_chunks 1000 \
                                      -shuffle "." \

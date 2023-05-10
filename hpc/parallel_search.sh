@@ -11,11 +11,11 @@
 module load gcc/12.1.0
 source ~/venv/bin/activate
 
-python ~/cdl/python/parallel_search.py -n 9  \
+python ~/cdl/python/parallel_search.py -n 8  \
                                        -cutoff 16  \
                                        -threshold 0  \
                                        -top_n 10000  \
-                                       -n_complete 12 \
+                                       -n_complete 11 \
                                        -n_cores 1000  \
                                        -n_chunks 1000 \
                                        -shuffle "." \
