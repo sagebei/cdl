@@ -45,7 +45,9 @@ class ExhaustiveSearch(Search):
             features.append(feature)
 
         clustered_trs_score_list = [[] for _ in range(n_chunks)]
-        cluster_model = KMeans(n_clusters=n_chunks, max_iter=1000)
+        cluster_model = KMeans(n_clusters=n_chunks,
+                               n_init=100,
+                               max_iter=1000)
         labels = cluster_model.fit_predict(features)
         for ((trs, score), label) in zip(trs_score_list, labels):
             clustered_trs_score_list[label].append((trs, score))
