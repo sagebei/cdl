@@ -1,3 +1,5 @@
+import pickle
+
 from cdl import *
 from utils import StaticFeature5, Search
 from tools import init_rules, flip_exceptions
@@ -44,20 +46,23 @@ class ExhaustiveSearch(Search):
             feature = self.sf.fetch_feature(trs)
             features.append(feature)
 
-        clustered_trs_score_list = [[] for _ in range(n_chunks)]
-        cluster_model = KMeans(n_clusters=n_chunks,
-                               n_init=100,
-                               max_iter=1000)
-        labels = cluster_model.fit_predict(features)
-        for ((trs, score), label) in zip(trs_score_list, labels):
-            clustered_trs_score_list[label].append((trs, score))
+        with open("/data/home/acw554/features.pkl", "wb") as f:
+            pickle.dump(features, f)
 
-        for i, t in enumerate(clustered_trs_score_list):
-            self.save_trs_list(trs_list=t,
-                               folder_name=folder_name,
-                               sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
-                               filename=f"{i+1}.pkl",
-                               remove=False)
+        # clustered_trs_score_list = [[] for _ in range(n_chunks)]
+        # cluster_model = KMeans(n_clusters=n_chunks,
+        #                        n_init=100,
+        #                        max_iter=1000)
+        # labels = cluster_model.fit_predict(features)
+        # for ((trs, score), label) in zip(trs_score_list, labels):
+        #     clustered_trs_score_list[label].append((trs, score))
+        #
+        # for i, t in enumerate(clustered_trs_score_list):
+        #     self.save_trs_list(trs_list=t,
+        #                        folder_name=folder_name,
+        #                        sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
+        #                        filename=f"{i+1}.pkl",
+        #                        remove=False)
 
 
 parser = argparse.ArgumentParser(description="complete search for the first n triplet",
