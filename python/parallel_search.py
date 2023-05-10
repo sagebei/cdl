@@ -1,10 +1,8 @@
 import os
-import random
 from cdl import *
 from utils import StaticFeature5, Search
 from tools import get_unprocessed_fileid
 import argparse
-from tqdm import tqdm
 
 
 class ExhaustiveSearch(Search):

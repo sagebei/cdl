@@ -24,11 +24,11 @@ class ExhaustiveSearch(Search):
                       shuffle=False):
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
-        num_unassigned = len(self.cd.unassigned_triplets(trs))
+        num_assigned = len(self.cd.assigned_triplets(trs))
 
         trs_score_list = self.expand_trs(trs)
 
-        for n_iter in range(2, n_complete+1):
+        for n_iter in range(num_assigned+2, num_assigned+n_complete+1):
             next_trs_score_list = []
 
             for trs, _ in trs_score_list:
@@ -46,7 +46,7 @@ class ExhaustiveSearch(Search):
         for i, t in enumerate(split_trs_score_list):
             self.save_trs_list(trs_list=t.tolist(),
                                folder_name=folder_name,
-                               sub_folder_name=f"{n_complete}_{num_unassigned}",
+                               sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
                                filename=f"{i+1}.pkl",
                                remove=False)
 
