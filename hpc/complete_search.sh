@@ -13,7 +13,7 @@ source ~/venv/bin/activate
 python ~/cdl/python/complete_search.py -n 9  \
                                        -cutoff 16  \
                                        -threshold 0  \
-                                       -top_n 10000  \
+                                       -top_n 100000  \
                                        -n_complete 13 \
                                        -n_cores 1000  \
                                        -n_chunks 10000 \
