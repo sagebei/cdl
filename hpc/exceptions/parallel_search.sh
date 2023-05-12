@@ -15,7 +15,7 @@ python ~/cdl/python/parallel_search.py -n 9  \
                                        -cutoff 16  \
                                        -threshold 0  \
                                        -top_n 100000  \
-                                       -n_complete 5 \
+                                       -n_complete 75 \
                                        -n_cores 1000  \
                                        -n_chunks 1000 \
                                        -shuffle "." \
