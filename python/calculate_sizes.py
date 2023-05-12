@@ -20,19 +20,19 @@ def calculate_size(cd, folder_path, filename):
             trs_score_size_list.append((trs, score, size))
             sizes.append(size)
 
+    # save trs_score_size list
     trs_score_size_folder_path = f"{folder_path}/trs_score_size/"
     if not os.path.exists(trs_score_size_folder_path):
         os.makedirs(trs_score_size_folder_path)
     with open(trs_score_size_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
         pickle.dump(trs_score_size_folder_path, f)
 
+    # save sizes
     sizes_folder_path = f"{folder_path}/sizes/"
     if not os.path.exists(sizes_folder_path):
         os.makedirs(sizes_folder_path)
     with open(sizes_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
         pickle.dump(sizes, f)
-
-    os.remove(data_file)
 
 
 parser = argparse.ArgumentParser(description="get the result",
@@ -71,6 +71,7 @@ while file_id is not None:
 
 
 if len(os.listdir(sub_folder_path)) == 0:
+    # build and save the size counter
     sizes = []
     result_folder_path = f"{folder_path}/sizes/"
     filenames = os.listdir(result_folder_path)
@@ -83,6 +84,7 @@ if len(os.listdir(sub_folder_path)) == 0:
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
         f.write(str(result))
 
+    # remove unused folders
     shutil.rmtree(f"{folder_path}/sizes/")
     for i in range(num_triplets + 1):
         try:
