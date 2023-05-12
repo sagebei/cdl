@@ -23,10 +23,11 @@ class ExhaustiveSearch(Search):
                       n_chunks=1000,
                       shuffle=False):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
+        num_assigned = len(self.cd.assigned_triplets(trs))
+
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
         self.folder_path += folder_name
 
-        num_assigned = len(self.cd.assigned_triplets(trs))
         trs_score_list = self.expand_trs(trs)
 
         for n_iter in range(num_assigned+2, num_assigned+n_complete+1):
