@@ -42,7 +42,7 @@ class ExhaustiveSearch(Search):
         if shuffle:
             random.shuffle(trs_score_list)
 
-        trs_score_list.sort(key=lambda trs_score: trs_score[1])
+        # trs_score_list.sort(key=lambda trs_score: trs_score[1])
         split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object),
                                               min(n_chunks, len(trs_score_list)))
         for i, t in enumerate(split_trs_score_list):
