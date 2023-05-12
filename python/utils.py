@@ -54,6 +54,7 @@ class Search:
         self.rules = rules
         self.lib_path = lib_path
         self.result_path = result_path
+        self.folder_path = f"{result_path}/{cd.n}/"
 
     def expand_trs(self,
                    trs,
@@ -61,65 +62,51 @@ class Search:
                    threshold=0):
 
         triplet = self.cd.unassigned_triplets(trs)[0]
-        trs_value_list = []
+        trs_score_list = []
         for rule in self.rules:
             trs = self.cd.assign_rule(trs, triplet, rule)
-            value = self.sf.score_function(trs, cutoff, threshold)
-            if value > -1:
-                trs_value_list.append((trs, value))
+            score = self.sf.score_function(trs, cutoff, threshold)
+            if score > -1:
+                trs_score_list.append((trs, score))
 
-        return trs_value_list
+        return trs_score_list
 
-    def save_trs_list(self,
-                      trs_list,
-                      folder_name,
-                      sub_folder_name,
-                      filename,
-                      remove=True):
+    def save_trs_score_list(self,
+                            trs_list,
+                            sub_folder_name,
+                            filename):
 
-        name = sub_folder_name.split("_")
-        n_iter, num_unassigned = int(name[0]), int(name[1])
+        sub_folder_path = f'{self.folder_path}/{sub_folder_name}/'
+        if not os.path.exists(sub_folder_path):
+            os.makedirs(sub_folder_path)
 
-        trs_folder_name = f'{self.result_path}/{self.cd.n}/{folder_name}/{n_iter}_{num_unassigned}/'
-        if not os.path.exists(trs_folder_name):
-            os.makedirs(trs_folder_name)
-
-        with open(trs_folder_name + filename, "wb") as f:
+        with open(sub_folder_path + filename, "wb") as f:
             trs_score_list = []
             for trs, score in trs_list:
                 state = self.cd.trs_to_state(trs)
                 trs_score_list.append((state, score))
             pickle.dump(trs_score_list, f)
 
-        if remove:
-            file_id = int(filename.split(".")[0])
-            try:
-                os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.pkl")
-            except FileNotFoundError:
-                os.remove(f"{self.result_path}/{self.cd.n}/{folder_name}/{n_iter - 1}_{num_unassigned}/{file_id}.processing")
+    def load_trs_score_list(self,
+                            sub_folder_name,
+                            filename):
 
-    def load_trs_list(self,
-                      folder_name,
-                      sub_folder_name,
-                      filename):
-
-        folder_name = f'{self.result_path}/{self.cd.n}/{folder_name}/{sub_folder_name}/'
-        with open(folder_name + filename, "rb") as f:
+        sub_folder_path = f'{self.folder_path}/{sub_folder_name}/'
+        with open(sub_folder_path + filename, "rb") as f:
             state_score_list = pickle.load(f)
 
-        trs_list = []
+        trs_score_list = []
         for state, score in state_score_list:
             trs = self.cd.state_to_trs(state)
-            trs_list.append((trs, score))
-        return trs_list
+            trs_score_list.append((trs, score))
+        return trs_score_list
 
-    def get_size_counter(self,
-                         folder_name):
+    def get_size_counter(self):
 
         sizes = []
         trs_score_size_list = []
-        for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
-            trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
+            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
                 size = self.cd.size(trs)
                 sizes.append(size)
@@ -128,22 +115,20 @@ class Search:
         result = Counter(sizes)
         result = OrderedDict(sorted(result.items(), key=lambda t: t[0]))
 
-        with open(f"{self.result_path}/{self.cd.n}/{folder_name}/trs_score_size.pkl", "wb") as f:
+        with open(f"{self.folder_path}/trs_score_size.pkl", "wb") as f:
             pickle.dump(trs_score_size_list, f)
-
-        shutil.rmtree(f"{self.result_path}/{self.cd.n}/{folder_name}/{int(folder_name.split('_')[5])}_{self.cd.num_triplets}")
 
         return result
 
-    def save_result_as_dict(self, folder_name):
+    def save_result_as_dict(self):
         score_states_dict = defaultdict(list)
 
-        for filename in os.listdir(f'{self.result_path}/{self.cd.n}/{folder_name}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
-            trs_score_list = self.load_trs_list(folder_name, f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
+            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
             for trs, score in trs_score_list:
                 score_states_dict[score].append(self.cd.trs_to_state(trs))
 
-        with open(f"{self.result_path}/{self.cd.n}/{folder_name}/result_dict.pkl", "wb") as f:
+        with open(f"{self.folder_path}/result_dict.pkl", "wb") as f:
             pickle.dump(score_states_dict, f)
 
 

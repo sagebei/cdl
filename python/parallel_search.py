@@ -24,9 +24,9 @@ class ExhaustiveSearch(Search):
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
 
-        trs_score_list = self.load_trs_list(folder_name,
-                                            f"{n_complete}_{self.cd.num_triplets}",
-                                            f"{core_id}.pkl")
+        self.folder_path += folder_name
+        trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
+                                                  f"{core_id}.pkl")
 
         for n_iter in range(n_complete+1, cd.num_triplets+1):
             print(f"{core_id}_{n_iter}")
@@ -41,21 +41,18 @@ class ExhaustiveSearch(Search):
             trs_score_list = next_trs_score_list[-top_n:]
 
             if n_iter == self.cd.num_triplets:
-                self.save_trs_list(trs_score_list,
-                                   folder_name,
-                                   f"{n_iter}_{self.cd.num_triplets}",
-                                   f"{core_id}.pkl",
-                                   remove=False)
+                self.save_trs_score_list(trs_score_list,
+                                         f"{n_iter}_{self.cd.num_triplets}",
+                                         f"{core_id}.pkl")
 
-        sub_folder_path = f"{self.result_path}/{self.cd.n}/{folder_name}/{n_complete}_{self.cd.num_triplets}/"
+        sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
         file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
         while file_id is not None:
             os.rename(sub_folder_path+f"{file_id}.pkl",
                       sub_folder_path+f"{file_id}.processing")
 
-            trs_score_list = self.load_trs_list(folder_name,
-                                                f"{n_complete}_{self.cd.num_triplets}",
-                                                f"{file_id}.processing")
+            trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
+                                                      f"{file_id}.processing")
 
             for n_iter in range(n_complete+1, cd.num_triplets+1):
                 print(f"{file_id}_{n_iter}")
@@ -70,11 +67,9 @@ class ExhaustiveSearch(Search):
                 trs_score_list = next_trs_score_list[-top_n:]
 
                 if n_iter == self.cd.num_triplets:
-                    self.save_trs_list(trs_score_list,
-                                       folder_name,
-                                       f"{n_iter}_{self.cd.num_triplets}",
-                                       f"{file_id}.pkl",
-                                       remove=False)
+                    self.save_trs_score_list(trs_score_list,
+                                             f"{n_iter}_{self.cd.num_triplets}",
+                                             f"{file_id}.pkl")
 
             file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 

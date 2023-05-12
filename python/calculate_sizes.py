@@ -64,7 +64,9 @@ file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 while file_id is not None:
     os.rename(sub_folder_path+f"{file_id}.pkl",
               sub_folder_path+f"{file_id}.processing")
-    calculate_size(cd, folder_path, f"{file_id}.processing")
+    calculate_size(cd,
+                   folder_path,
+                   f"{file_id}.processing")
     file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
 

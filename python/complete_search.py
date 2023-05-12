@@ -24,8 +24,9 @@ class ExhaustiveSearch(Search):
                       shuffle=False):
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
-        num_assigned = len(self.cd.assigned_triplets(trs))
+        self.folder_path += folder_name
 
+        num_assigned = len(self.cd.assigned_triplets(trs))
         trs_score_list = self.expand_trs(trs)
 
         for n_iter in range(num_assigned+2, num_assigned+n_complete+1):
@@ -41,14 +42,13 @@ class ExhaustiveSearch(Search):
         if shuffle:
             random.shuffle(trs_score_list)
 
+        trs_score_list.sort(key=lambda trs_score: trs_score[1])
         split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object),
                                               min(n_chunks, len(trs_score_list)))
         for i, t in enumerate(split_trs_score_list):
-            self.save_trs_list(trs_list=t.tolist(),
-                               folder_name=folder_name,
-                               sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
-                               filename=f"{i+1}.pkl",
-                               remove=False)
+            self.save_trs_score_list(trs_list=t.tolist(),
+                                     sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
+                                     filename=f"{i+1}.pkl")
 
 
 parser = argparse.ArgumentParser(description="complete search for the first n triplet",
@@ -89,5 +89,4 @@ es.static_search(trs,
                  shuffle=config['shuffle'])
 
 
-# python complete_search.py -n 6 -cutoff 16 threshold=0 -rules "2N3" "2N1" -n_complete 5 -n_cores 2
 
