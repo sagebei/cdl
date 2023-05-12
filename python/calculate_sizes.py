@@ -34,6 +34,9 @@ def calculate_size(cd, folder_path, filename):
     with open(sizes_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
         pickle.dump(sizes, f)
 
+    # remove the file that has been processed.
+    os.remove(data_file)
+
 
 parser = argparse.ArgumentParser(description="get the result",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
