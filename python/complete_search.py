@@ -75,7 +75,7 @@ trs = cd.init_trs()
 
 low_exceptions = [(1,3),(1,4),(3,4),(2,5)]
 # high_exceptions = flip_exceptions(cd, low_exceptions)
-high_exceptions = [(9,11),(8,11),(8,9),(7,10),(6,10),(6,7)]
+high_exceptions = [(8,10),(7,10),(7,8),(6,9)]
 trs = init_rules(cd,
                  trs,
                  low_exceptions,
