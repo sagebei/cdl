@@ -6,7 +6,7 @@
 #$ -j y
 #$ -l h_rt=24:0:0
 #$ -t 1-1000
-#$ -N p9
+#$ -N parallel
 
 module load gcc/12.1.0
 source ~/venv/bin/activate
