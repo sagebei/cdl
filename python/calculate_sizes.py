@@ -25,7 +25,7 @@ def calculate_size(cd, folder_path, filename):
     if not os.path.exists(trs_score_size_folder_path):
         os.makedirs(trs_score_size_folder_path)
     with open(trs_score_size_folder_path + f"{filename.split('.')[0]}.pkl", "wb") as f:
-        pickle.dump(trs_score_size_folder_path, f)
+        pickle.dump(trs_score_size_list, f)
 
     # save sizes
     sizes_folder_path = f"{folder_path}/sizes/"
