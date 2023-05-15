@@ -4,17 +4,17 @@
 #$ -j y
 #$ -pe smp 1            # Request cores (8 per GPU)
 #$ -l h_vmem=8G         # 11G RAM per core
-#$ -l h_rt=10:0:0      # Max 1hr runtime (can request up to 240hr)
+#$ -l h_rt=24:0:0      # Max 1hr runtime (can request up to 240hr)
 #$ -N complete
 
 module load gcc/12.1.0
 source ~/venv/bin/activate
 
-python ~/cdl/python/complete_search.py -n 15  \
+python ~/cdl/python/complete_search.py -n 16  \
                                        -cutoff 16  \
                                        -threshold 0  \
                                        -top_n 1000000000  \
-                                       -n_complete 30 \
+                                       -n_complete 50 \
                                        -n_cores 1000  \
                                        -n_chunks 1000000 \
                                        -shuffle 1 \
