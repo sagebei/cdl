@@ -7,7 +7,9 @@
 #$ -l h_rt=24:0:0      # Max 1hr runtime (can request up to 240hr)
 #$ -N complete
 
+modole load python/3.8.5
 module load gcc/12.1.0
+
 source ~/venv/bin/activate
 
 python ~/cdl/python/complete_search.py -n 20  \
