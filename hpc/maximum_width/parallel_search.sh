@@ -8,7 +8,7 @@
 #$ -t 1-1000
 #$ -N parallel
 
-modole load python/3.8.5
+module load python/3.8.5
 module load gcc/12.1.0
 
 source ~/venv/bin/activate
