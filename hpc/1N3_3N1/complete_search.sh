@@ -22,4 +22,4 @@ python ~/cdl/python/complete_search.py -n 12  \
                                        -shuffle 1 \
                                        -rules "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
-                                       -result_path "/data/scratch/acw554/maximum_width"
+                                       -result_path "/data/scratch/acw554/1N3_3N1"
