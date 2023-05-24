@@ -13,14 +13,14 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/parallel_search.py -n 12  \
-                                       -cutoff 16  \
-                                       -threshold 0.9  \
-                                       -top_n 1000000000000  \
-                                       -n_complete 30 \
-                                       -n_cores 1000  \
-                                       -n_chunks 100000 \
-                                       -shuffle 1 \
+python ~/cdl/python/parallel_search.py -n 11  \
+                                      -cutoff 16  \
+                                      -threshold 0.9  \
+                                      -top_n 100000000  \
+                                      -n_complete 15 \
+                                      -n_cores 1000  \
+                                      -n_chunks 100000 \
+                                      -shuffle 1 \
                                        -rules "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/1N3_3N1" \
