@@ -2,7 +2,7 @@
 
 #$ -cwd
 #$ -pe smp 1
-#$ -l h_vmem=16G
+#$ -l h_vmem=32G
 #$ -j y
 #$ -l h_rt=150:0:0
 #$ -t 1-1000
