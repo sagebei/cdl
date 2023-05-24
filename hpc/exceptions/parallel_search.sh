@@ -8,7 +8,9 @@
 #$ -t 1-1000
 #$ -N parallel
 
+module load python/3.8.5
 module load gcc/12.1.0
+
 source ~/venv/bin/activate
 
 python ~/cdl/python/parallel_search.py -n 12  \
