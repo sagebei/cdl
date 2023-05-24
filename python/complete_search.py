@@ -57,7 +57,7 @@ parser = argparse.ArgumentParser(description="complete search for the first n tr
 parser.add_argument("-n", type=int)
 parser.add_argument("-rules", nargs="*", type=str)
 parser.add_argument("-cutoff", type=int)
-parser.add_argument("-threshold", type=int)
+parser.add_argument("-threshold", type=float)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
 parser.add_argument("-n_cores", type=int)

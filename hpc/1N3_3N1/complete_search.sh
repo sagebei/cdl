@@ -14,12 +14,12 @@ source ~/venv/bin/activate
 
 python ~/cdl/python/complete_search.py -n 20  \
                                        -cutoff 16  \
-                                       -threshold 0  \
-                                       -top_n 1000000000  \
+                                       -threshold 0.9  \
+                                       -top_n 1000000000000  \
                                        -n_complete 90 \
                                        -n_cores 1000  \
                                        -n_chunks 1000000 \
                                        -shuffle 1 \
-                                       -rules "2N3" "2N1" \
+                                       -rules "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/maximum_width"

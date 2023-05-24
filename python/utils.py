@@ -2,7 +2,7 @@ import pickle
 from collections import Counter
 import os
 from collections import OrderedDict, defaultdict
-import shutil
+from tools import alternating_scheme_scores
 
 
 class StaticFeature5:
@@ -41,7 +41,7 @@ class StaticFeature5:
 
         score = (0 * num_16) + (1 * num_17) + (2 * num_18) + (3 * num_19) + (4 * num_20)
 
-        if score < threshold:
+        if score < threshold * alternating_scheme_scores[self.cd.n]:
             return -1
 
         return score
