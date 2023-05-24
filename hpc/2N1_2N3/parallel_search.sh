@@ -4,7 +4,7 @@
 #$ -pe smp 1
 #$ -l h_vmem=16G
 #$ -j y
-#$ -l h_rt=100:0:0
+#$ -l h_rt=150:0:0
 #$ -t 1-1000
 #$ -N parallel
 
@@ -13,7 +13,7 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/parallel_search.py -n 20  \
+python ~/cdl/python/parallel_search.py -n 21  \
                                        -cutoff 16  \
                                        -threshold 0.9  \
                                        -top_n 1000000000000  \
