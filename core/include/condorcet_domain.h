@@ -19,13 +19,12 @@ struct TripletRule
 typedef std::vector<TripletRule> TRS;
 typedef std::map<Triplet, Int32> TripletIndex;
 
-typedef std::list<std::list<Int8>> CD;
+typedef std::list<IntList> CD;
 typedef std::vector<CD> CDS;
 
 class CondorcetDomain
 {
 private:
-
     void sort_trs(TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);

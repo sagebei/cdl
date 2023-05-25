@@ -56,7 +56,8 @@ int get_index(const IntList& elem, const Int8& value)
 void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int32 index, std::vector<Int8>& set, std::vector<Int8>& current_subset)
 {
     if (n < sub_n) return;
-    if (sub_n == 0) {
+    if (sub_n == 0)
+    {
         subsets.push_back(current_subset);
         return;
     }
