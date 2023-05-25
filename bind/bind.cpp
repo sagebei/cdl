@@ -10,7 +10,7 @@
 
 namespace py = pybind11;
 
-typedef std::map<std::tuple<int, int, int>, int> TripletTupleIndex;
+typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripletTupleIndex;
 
 
 PYBIND11_MODULE(cdl, m) {
@@ -63,7 +63,7 @@ PYBIND11_MODULE(cdl, m) {
             ));
 
     py::class_<CondorcetDomain>(m, "CondorcetDomain")
-            .def(py::init<int>(), py::arg("n")=8)
+            .def(py::init<Int8>(), py::arg("n")=8)
             .def_readonly("n", &CondorcetDomain::n)
             .def_readonly("rules", &CondorcetDomain::m_rules)   // member variables
             .def_readonly("rule_id", &CondorcetDomain::m_rule_id)
@@ -134,11 +134,11 @@ PYBIND11_MODULE(cdl, m) {
                         if (t.size() != 10)
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
-                        CondorcetDomain cd(t[0].cast<int>());
+                        CondorcetDomain cd(t[0].cast<Int8>());
                         cd.m_rules = t[1].cast<std::array<std::string, 6>>();
-                        cd.m_rule_id = t[2].cast<std::map<std::string, int>>();
-                        cd.m_num_triplets = t[3].cast<int>();
-                        cd.m_triplet_elems = t[4].cast<std::vector<int>>();
+                        cd.m_rule_id = t[2].cast<std::map<std::string, Int8>>();
+                        cd.m_num_triplets = t[3].cast<Int32>();
+                        cd.m_triplet_elems = t[4].cast<std::vector<Int8>>();
                         TripletIndex ti{};
                         for (auto const& [key, val] : t[5].cast<TripletTupleIndex>())
                         {
@@ -146,10 +146,10 @@ PYBIND11_MODULE(cdl, m) {
                             ti[triple] = val;
                         }
                         cd.m_triplet_index = ti;
-                        cd.m_sub_n = t[6].cast<int>();
-                        cd.m_subset_size = t[7].cast<int>();
-                        cd.m_subsets = t[8].cast<std::vector<std::vector<int>>>();
-                        cd.m_subset_dicts = t[9].cast<std::vector<std::map<int, int>>>();
+                        cd.m_sub_n = t[6].cast<Int8>();
+                        cd.m_subset_size = t[7].cast<Int32>();
+                        cd.m_subsets = t[8].cast<std::vector<std::vector<Int8>>>();
+                        cd.m_subset_dicts = t[9].cast<std::vector<std::map<Int8, Int8>>>();
 
                         return cd;
                     }

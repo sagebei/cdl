@@ -3,16 +3,22 @@
 #include <list>
 #include <vector>
 #include <array>
+#include <cinttypes>
+
+typedef std::uint8_t Int8;
+typedef std::uint32_t Int32;
+typedef std::list<Int8> IntList;
+typedef std::array<Int8, 3> Triplet;
 
 struct TripletHasher
 {
-    std::size_t operator()(const std::array<int, 3>& arr) const;
+    std::size_t operator()(const Triplet& arr) const;
 };
 
-bool compare_list(const std::list<int>& a, const std::list<int>& b);
-int get_index(const std::list<int>& elem, const int& value);
-void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int index, std::vector<int>& set, std::vector<int>& current_subset);
-std::vector<std::vector<int>> combinations(std::vector<int>& set, int sub_n);
+bool compare_list(const IntList& a, const IntList& b);
+int get_index(const IntList& elem, const Int8& value);
+void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int32 index, std::vector<Int8>& set, std::vector<Int8>& current_subset);
+std::vector<std::vector<Int8>> combinations(std::vector<Int8>& set, Int8 sub_n);
 
 int benchmark_size(int n);
 

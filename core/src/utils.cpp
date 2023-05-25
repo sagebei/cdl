@@ -1,29 +1,27 @@
 #include "utils.h"
-#include <iostream>
-#include <vector>
 #include <stdexcept>
 
 
-std::size_t TripletHasher::operator()(const std::array<int, 3>& arr) const
+std::size_t TripletHasher::operator()(const Triplet& arr) const
 {
     std::size_t h = 0;
 
-    for (const int& a : arr) {
-        h ^= std::hash<int>{}(a)  + 0x9e3779b9 + (h << 6) + (h >> 2);
+    for (const Int8& a : arr) {
+        h ^= std::hash<Int8>{}(a)  + 0x9e3779b9 + (h << 6) + (h >> 2);
     }
     return h;
 }
 
 // used to sort a list of list
-bool compare_list(const std::list<int>& first, const std::list<int>& second)
+bool compare_list(const IntList& first, const IntList& second)
 {
     auto iter_first = first.begin();
     auto iter_second = second.begin();
 
-    for (int i = 0; i < first.size(); i ++)
+    for (Int8 i = 0; i < first.size(); i ++)
     {
-        int f = *iter_first;
-        int s = *iter_second;
+        Int8 f = *iter_first;
+        Int8 s = *iter_second;
 
         if (f < s)
         {
@@ -41,10 +39,10 @@ bool compare_list(const std::list<int>& first, const std::list<int>& second)
 }
 
 // get the index of a value in a list
-int get_index(const std::list<int>& elem, const int& value)
+int get_index(const IntList& elem, const Int8& value)
 {
     auto iter = elem.begin();
-    for (int i = 0; i < elem.size(); i ++)
+    for (Int8 i = 0; i < elem.size(); i ++)
     {
         if (value == *iter)
         {
@@ -55,7 +53,7 @@ int get_index(const std::list<int>& elem, const int& value)
     return -1;
 }
 
-void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int index, std::vector<int>& set, std::vector<int>& current_subset)
+void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int32 index, std::vector<Int8>& set, std::vector<Int8>& current_subset)
 {
     if (n < sub_n) return;
     if (sub_n == 0) {
@@ -70,10 +68,10 @@ void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int in
 
 
 // return all distinct subsets of given size of a set
-std::vector<std::vector<int>> combinations(std::vector<int>& set, int sub_n)
+std::vector<std::vector<Int8>> combinations(std::vector<Int8>& set, Int8 sub_n)
 {
-    std::vector<std::vector<int>> subsets;
-    std::vector<int> current_subset;
+    std::vector<std::vector<Int8>> subsets;
+    std::vector<Int8> current_subset;
     get_subset(subsets, set.size(), sub_n, 0, set, current_subset);
     return subsets;
 }
