@@ -3,7 +3,7 @@
 CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
-    m_num_triplets = factorial(n) / (factorial(n - 3) * 6);
+
     for (int i = 1; i <=n; i ++)
         m_triplet_elems.push_back(i);
 
