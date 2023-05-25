@@ -3,14 +3,15 @@
 CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
+    m_num_triplets = factorial(n) / (factorial(n - 3) * 6);
     for (int i = 1; i <=n; i ++)
         m_triplet_elems.push_back(i);
 
     for (int i = 1; i <= n-2; i++)
     {
-        for (int j = i+1; j <= n-1; j++)
+        for (int j = i + 1; j <= n - 1; j++)
         {
-            for (int k = j+1; k <= n; k++)
+            for (int k = j + 1; k <= n; k++)
                 m_num_triplets += 1;
         }
     }
@@ -127,16 +128,19 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     std::uniform_int_distribution<> distrib(1, 6);
 
     TRS trs;
-    for (int i = 1; i <= n-2; i++)
+    for (int i = 1; i < n+1; i ++)
     {
-        for (int j = i+1; j <= n-1; j++)
+        for (int k = 1; k < n+1; k ++)
         {
-            for (int k = j+1; k <= n; k++)
+            for (int j = 1; j < n+1; j ++)
             {
-                TripletRule tr;
-                tr.triplet = {i, j, k};
-                tr.rule_id = distrib(gen);
-                trs.push_back(tr);
+                if (i < j && j < k)
+                {
+                    TripletRule tr;
+                    tr.triplet = {i, j, k};
+                    tr.rule_id = distrib(gen);
+                    trs.push_back(tr);
+                }
             }
         }
     }
@@ -152,16 +156,19 @@ TRS CondorcetDomain::init_random(bool is_sorted)
 TRS CondorcetDomain::init_trs(const std::string& rule)
 {
     TRS trs;
-    for (int i = 1; i <= n-2; i++)
+    for (int i = 1; i < n+1; i ++)
     {
-        for (int j = i+1; j <= n-1; j++)
+        for (int k = 1; k < n+1; k ++)
         {
-            for (int k = j+1; k <= n; k++)
+            for (int j = 1; j < n+1; j ++)
             {
-                TripletRule tr;
-                tr.triplet = {i, j, k};
-                tr.rule_id = m_rule_id.at(rule);
-                trs.push_back(tr);
+                if (i < j && j < k)
+                {
+                    TripletRule tr;
+                    tr.triplet = {i, j, k};
+                    tr.rule_id = m_rule_id.at(rule);
+                    trs.push_back(tr);
+                }
             }
         }
     }
@@ -173,16 +180,19 @@ TRS CondorcetDomain::init_trs(const std::string& rule)
 TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun)
 {
     TRS trs;
-    for (int i = 1; i <= n-2; i++)
+    for (int i = 1; i < n+1; i ++)
     {
-        for (int j = i+1; j <= n-1; j++)
+        for (int k = 1; k < n+1; k ++)
         {
-            for (int k = j+1; k <= n; k++)
+            for (int j = 1; j < n+1; j ++)
             {
-                TripletRule tr;
-                tr.triplet = {i, j, k};
-                tr.rule_id = m_rule_id.at(scheme_fun(tr.triplet));
-                trs.push_back(tr);
+                if (i < j && j < k)
+                {
+                    TripletRule tr;
+                    tr.triplet = {i, j, k};
+                    tr.rule_id = m_rule_id.at(scheme_fun(tr.triplet));
+                    trs.push_back(tr);
+                }
             }
         }
     }
