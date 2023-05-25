@@ -55,17 +55,6 @@ int get_index(const std::list<int>& elem, const int& value)
     return -1;
 }
 
-
-unsigned long factorial(int n)
-{
-    unsigned long result = 1;
-    for (unsigned long i=1; i <= n; i++)
-    {
-        result = result * i;
-    }
-    return result;
-}
-
 void get_subset(std::vector<std::vector<int>>& subsets, int n, int sub_n, int index, std::vector<int>& set, std::vector<int>& current_subset)
 {
     if (n < sub_n) return;
@@ -118,6 +107,5 @@ int benchmark_size(int n)
         default:
             throw std::runtime_error{"n is larger than 12"};
     }
-
 }
 

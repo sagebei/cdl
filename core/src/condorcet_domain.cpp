@@ -3,9 +3,19 @@
 CondorcetDomain::CondorcetDomain(int n)
 {
     this->n = n;
-    m_num_triplets = factorial(n) / (factorial(n - 3) * 6);
     for (int i = 1; i <=n; i ++)
         m_triplet_elems.push_back(i);
+
+    for (int i = 1; i < n+1; i ++)
+    {
+        for (int k = 1; k < n+1; k ++)
+        {
+            for (int j = 1; j < n+1; j ++)
+            {
+                m_num_triplets += 1;
+            }
+        }
+    }
 }
 
 void CondorcetDomain::sort_trs(TRS& trs)
