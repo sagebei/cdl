@@ -39,7 +39,7 @@ private:
     TRS fetch_trs(const TRS& trs, int i);
 
 public:
-    int n;
+    int n{};
     std::array<std::string, 6> m_rules{{"1N3", "3N1", "2N3", "2N1", "1N2", "3N2"}};
     std::map<std::string, int> m_rule_id{{"", 0},
                                          {m_rules[0], 1},
@@ -49,7 +49,7 @@ public:
                                          {m_rules[4], 5},
                                          {m_rules[5], 6}};
 
-    int m_num_triplets;
+    int m_num_triplets{};
     std::vector<int> m_triplet_elems{};
     TripletIndex m_triplet_index{};
 

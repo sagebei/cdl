@@ -4,7 +4,7 @@
 
 int main()
 {
-    CondorcetDomain cd(20);
+    CondorcetDomain cd(9);
     std::cout << cd.m_num_triplets << std::endl;
 //    TRS trs = cd.init_random();
 //    print_trs(trs);
