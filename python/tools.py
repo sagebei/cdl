@@ -43,7 +43,7 @@ def get_unprocessed_fileid(sub_folder_path, n_cores):
     return random.choice(unprocessed_ids)
 
 
-alternating_scheme_sizes = {
+Fishburn_sizes = {
     4: 9,
     5: 20,
     6: 45,
@@ -66,7 +66,7 @@ alternating_scheme_sizes = {
 }
 
 
-alternating_scheme_scores = {
+Fishburn_scores = {
     6: 22,
     7: 72,
     8: 184,
