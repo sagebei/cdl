@@ -16,7 +16,7 @@ source ~/venv/bin/activate
 python ~/cdl/python/parallel_search.py -n 11  \
                                       -cutoff 16  \
                                       -threshold 0.9  \
-                                      -top_n 100000000  \
+                                      -top_n 100000  \
                                       -n_complete 15 \
                                       -n_cores 1000  \
                                       -n_chunks 100000 \

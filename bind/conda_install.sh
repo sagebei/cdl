@@ -1,5 +1,10 @@
 git pull
 
+module load cmake
+module load gcc/12.1.0
+module load anaconda3/2022.05
+conda activate /data/home/acw554/cvenv/
+
 if [ -d "./build" ]; then
   rm -rf "./build"
   mkdir "./build"
