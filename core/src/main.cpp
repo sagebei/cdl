@@ -1,11 +1,11 @@
 #include "condorcet_domain.h"
 #include "wrapper.h"
-#include "utils.h"
 
 int main()
 {
-    CondorcetDomain cd(9);
-    std::cout << cd.m_num_triplets << std::endl;
+    CondorcetDomain cd(6);
+    TRS trs = cd.init_by_scheme(Fishburn_scheme);
+
 //    TRS trs = cd.init_random();
 //    print_trs(trs);
 //    std::cout << std::endl;

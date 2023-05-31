@@ -1,9 +1,11 @@
 #pragma once
 
+#include <iostream>
 #include <list>
 #include <vector>
 #include <array>
-#include <cinttypes>
+#include <cstdint>
+
 
 typedef std::uint8_t Int8;
 typedef std::uint32_t Int32;
@@ -21,7 +23,7 @@ void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int
 std::vector<std::vector<Int8>> combinations(std::vector<Int8>& set, Int8 sub_n);
 
 int benchmark_size(int n);
-
+std::string Fishburn_scheme(const Triplet& triplet);
 
 
 

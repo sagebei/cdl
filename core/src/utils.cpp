@@ -108,3 +108,10 @@ int benchmark_size(int n)
     }
 }
 
+std::string Fishburn_scheme(const Triplet& triplet)
+{
+    if ((triplet[1] % 2) == 0)
+        return "2N1";
+    else
+        return "2N3";
+}

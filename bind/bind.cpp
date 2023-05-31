@@ -166,4 +166,6 @@ PYBIND11_MODULE(cdl, m) {
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
 
+    m.def("Fishburn_scheme", &Fishburn_scheme, py::arg("triplet"));
+
 }
