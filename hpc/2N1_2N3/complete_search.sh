@@ -16,7 +16,7 @@ python ~/cdl/python/complete_search.py -n 21  \
                                        -cutoff 16  \
                                        -threshold 0.9  \
                                        -top_n 1000000000000  \
-                                       -n_complete 90 \
+                                       -n_complete 70 \
                                        -n_cores 1000  \
                                        -n_chunks 1000000 \
                                        -shuffle 1 \
