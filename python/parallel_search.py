@@ -69,7 +69,7 @@ class ExhaustiveSearch(Search):
             self.save_trs_score_list(trs_score_list,
                                      f"{self.cd.num_triplets}_{self.cd.num_triplets}",
                                      f"{file_id}.pkl")
-            os.remove(sub_folder_path+f"{file_id}.processing")
+            os.remove(f"{self.folder_path}/{self.cd.num_triplets}_{self.cd.num_triplets}/"+f"{file_id}.processing")
 
             file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
