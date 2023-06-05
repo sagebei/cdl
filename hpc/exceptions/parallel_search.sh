@@ -15,12 +15,12 @@ source ~/venv/bin/activate
 
 python ~/cdl/python/parallel_search.py -n 12  \
                                        -cutoff 16  \
-                                       -threshold 0  \
-                                       -top_n 100000000  \
-                                       -n_complete 195 \
+                                       -threshold 0.9  \
+                                       -top_n 1000000  \
+                                       -n_complete 15 \
                                        -n_cores 1000  \
                                        -n_chunks 10000 \
-                                       -shuffle "." \
+                                       -shuffle 1 \
                                        -rules "2N3" "2N1" "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/exceptions" \
