@@ -25,11 +25,11 @@ class ExhaustiveSearch(Search):
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
 
         self.folder_path += folder_name
+        sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
         trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
                                                   f"{core_id}.pkl")
 
         for n_iter in range(n_complete+1, self.cd.num_triplets+1):
-            print(f"{core_id}_{n_iter}")
             next_trs_score_list = []
 
             for trs, _ in trs_score_list:
@@ -40,12 +40,11 @@ class ExhaustiveSearch(Search):
             next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
             trs_score_list = next_trs_score_list[-top_n:]
 
-            if n_iter == self.cd.num_triplets:
-                self.save_trs_score_list(trs_score_list,
-                                         f"{n_iter}_{self.cd.num_triplets}",
-                                         f"{core_id}.pkl")
+        self.save_trs_score_list(trs_score_list,
+                                 f"{self.cd.num_triplets}_{self.cd.num_triplets}",
+                                 f"{core_id}.pkl")
+        os.remove(sub_folder_path+f"{core_id}.pkl")
 
-        sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
         file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
         while file_id is not None:
             os.rename(sub_folder_path+f"{file_id}.pkl",
@@ -55,7 +54,6 @@ class ExhaustiveSearch(Search):
                                                       f"{file_id}.processing")
 
             for n_iter in range(n_complete+1, self.cd.num_triplets+1):
-                print(f"{file_id}_{n_iter}")
                 next_trs_score_list = []
 
                 for trs, _ in trs_score_list:
