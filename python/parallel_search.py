@@ -28,7 +28,7 @@ class ExhaustiveSearch(Search):
         trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
                                                   f"{core_id}.pkl")
 
-        for n_iter in range(n_complete+1, cd.num_triplets+1):
+        for n_iter in range(n_complete+1, self.cd.num_triplets+1):
             print(f"{core_id}_{n_iter}")
             next_trs_score_list = []
 
@@ -54,7 +54,7 @@ class ExhaustiveSearch(Search):
             trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
                                                       f"{file_id}.processing")
 
-            for n_iter in range(n_complete+1, cd.num_triplets+1):
+            for n_iter in range(n_complete+1, self.cd.num_triplets+1):
                 print(f"{file_id}_{n_iter}")
                 next_trs_score_list = []
 
@@ -66,10 +66,10 @@ class ExhaustiveSearch(Search):
                 next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
                 trs_score_list = next_trs_score_list[-top_n:]
 
-                if n_iter == self.cd.num_triplets:
-                    self.save_trs_score_list(trs_score_list,
-                                             f"{n_iter}_{self.cd.num_triplets}",
-                                             f"{file_id}.pkl")
+            self.save_trs_score_list(trs_score_list,
+                                     f"{self.cd.num_triplets}_{self.cd.num_triplets}",
+                                     f"{file_id}.pkl")
+            os.remove(sub_folder_path+f"{file_id}.processing")
 
             file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 
