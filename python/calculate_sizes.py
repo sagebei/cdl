@@ -79,6 +79,8 @@ while file_id is not None:
         calculate_size(cd,
                        folder_path,
                        f"{file_id}.processing")
+        os.remove(sub_folder_path+f"{file_id}.processing")
+
     except Exception as e:
         print(e)
 
