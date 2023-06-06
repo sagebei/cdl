@@ -74,13 +74,13 @@ cd = CondorcetDomain(n=config['n'])
 es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
 trs = cd.init_trs()
 
-low_exceptions = [(1,3),(1,4),(3,4),(2,5),(2,6),(5,6)]
-high_exceptions = flip_exceptions(cd, low_exceptions)
-high_exceptions = [(10,12),(9,12),(9,10),(8,11),(7,11),(7,8)]
-trs = init_rules(cd,
-                 trs,
-                 low_exceptions,
-                 high_exceptions)
+# low_exceptions = [(1,3),(1,4),(3,4),(2,5),(2,6),(5,6)]
+# high_exceptions = flip_exceptions(cd, low_exceptions)
+# high_exceptions = [(10,12),(9,12),(9,10),(8,11),(7,11),(7,8)]
+# trs = init_rules(cd,
+#                  trs,
+#                  low_exceptions,
+#                  high_exceptions)
 
 es.static_search(trs,
                  cutoff=config['cutoff'],
