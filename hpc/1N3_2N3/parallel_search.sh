@@ -13,7 +13,7 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/parallel_search.py -n 8  \
+python ~/cdl/python/parallel_search.py -n 9  \
                                        -cutoff 14  \
                                        -threshold 0  \
                                        -top_n 10000000  \
