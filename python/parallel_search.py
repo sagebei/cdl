@@ -26,24 +26,6 @@ class ExhaustiveSearch(Search):
 
         self.folder_path += folder_name
         sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
-        trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
-                                                  f"{core_id}.pkl")
-
-        for n_iter in range(n_complete+1, self.cd.num_triplets+1):
-            next_trs_score_list = []
-
-            for trs, _ in trs_score_list:
-                trs_value_list = self.expand_trs(trs, cutoff, threshold)
-                next_trs_score_list.extend(trs_value_list)
-
-            trs_score_list.clear()
-            next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
-            trs_score_list = next_trs_score_list[-top_n:]
-
-        self.save_trs_score_list(trs_score_list,
-                                 f"{self.cd.num_triplets}_{self.cd.num_triplets}",
-                                 f"{core_id}.pkl")
-        os.remove(sub_folder_path+f"{core_id}.pkl")
 
         file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
         while file_id is not None:
