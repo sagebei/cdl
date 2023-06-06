@@ -12,13 +12,13 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/complete_search.py -n 9  \
-                                       -cutoff 10  \
+python ~/cdl/python/complete_search.py -n 8  \
+                                       -cutoff 14  \
                                        -threshold 0  \
                                        -top_n 10000000  \
                                        -n_complete 30 \
                                        -n_cores 1000  \
-                                       -n_chunks 1000000 \
+                                       -n_chunks 100000 \
                                        -shuffle 1 \
                                        -rules "1N3" "2N3" \
                                        -lib_path "/data/home/acw554/cdl" \
