@@ -30,25 +30,25 @@ cd = CondorcetDomain(n)
 sub_folder_path = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/"
 file_id = get_unprocessed_fileid(sub_folder_path)
 while file_id is not None:
-    # try:
-    os.rename(sub_folder_path+f"{file_id}.pkl",
-              sub_folder_path+f"{file_id}.processing")
+    try:
+        os.rename(sub_folder_path+f"{file_id}.pkl",
+                  sub_folder_path+f"{file_id}.processing")
 
-    with open(sub_folder_path+f"{file_id}.processing", "rb") as f:
-        state_score_list = pickle.load(f)
-        iso_hashes = []
-        for (state, score) in state_score_list:
-            trs = cd.state_to_trs(state)
-            domain = cd.condorcet_domain(trs)
-            iso_hash = cd.isomorphic_cd_hash(domain)
-            iso_hashes.append(iso_hash)
-        with open(result_path+f"{file_id}.pkl", "wb") as fr:
-            pickle.dump(iso_hashes, fr)
+        with open(sub_folder_path+f"{file_id}.processing", "rb") as f:
+            state_score_list = pickle.load(f)
+            iso_hashes = []
+            for (state, score) in state_score_list:
+                trs = cd.state_to_trs(state)
+                domain = cd.condorcet_domain(trs)
+                iso_hash = cd.isomorphic_cd_hash(domain)
+                iso_hashes.append(iso_hash)
+            with open(result_path+f"{file_id}.pkl", "wb") as fr:
+                pickle.dump(iso_hashes, fr)
 
-    os.remove(sub_folder_path+f"{file_id}.processing")
+        os.remove(sub_folder_path+f"{file_id}.processing")
 
-    # except Exception as e:
-    #     print(e)
+    except Exception as e:
+        print(e)
 
     file_id = get_unprocessed_fileid(sub_folder_path)
 
