@@ -36,14 +36,14 @@ while file_id is not None:
 
         with open(sub_folder_path+f"{file_id}.processing", "rb") as f:
             state_score_list = pickle.load(f)
-            iso_hashes = []
+            iso_cds = set()
             for (state, score) in state_score_list:
                 trs = cd.state_to_trs(state)
                 domain = cd.condorcet_domain(trs)
-                iso_hash = cd.isomorphic_cd_hash(domain)
-                iso_hashes.append(iso_hash)
+                iso_cd = cd.isomorphic_cd(domain)
+                iso_cds.add(iso_cd)
             with open(result_path+f"{file_id}.pkl", "wb") as fr:
-                pickle.dump(iso_hashes, fr)
+                pickle.dump(iso_cds, fr)
 
         os.remove(sub_folder_path+f"{file_id}.processing")
 
@@ -55,17 +55,16 @@ while file_id is not None:
 
 if len(os.listdir(sub_folder_path)) == 0:
     # build and save the size counter
-    iso_hashes = []
+    iso_cds = set()
     filenames = os.listdir(result_path)
     for filename in filenames:
         datafile = result_path + filename
         with open(datafile, "rb") as f:
-            iso_hashes.extend(pickle.load(f))
+            iso_cds.update(pickle.load(f))
         os.remove(datafile)
 
-    with open(f"{result_path}/counter.txt", "w") as f:
-        result = Counter(iso_hashes)
-        f.write(str(result))
+    with open(f"{result_path}/{len(iso_cds)}.txt", "w") as f:
+        f.write("")
 
 
 
