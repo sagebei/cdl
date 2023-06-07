@@ -69,7 +69,7 @@ cd = CondorcetDomain(n)
 num_triplets = cd.num_triplets
 
 sub_folder_path = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/"
-file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
+file_id = get_unprocessed_fileid(sub_folder_path)
 while file_id is not None:
     try:
         os.rename(sub_folder_path+f"{file_id}.pkl",
@@ -82,7 +82,7 @@ while file_id is not None:
     except Exception as e:
         print(e)
 
-    file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
+    file_id = get_unprocessed_fileid(sub_folder_path)
 
 
 if len(os.listdir(sub_folder_path)) == 0:

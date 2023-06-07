@@ -27,7 +27,7 @@ class ExhaustiveSearch(Search):
         self.folder_path += folder_name
         sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
 
-        file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
+        file_id = get_unprocessed_fileid(sub_folder_path)
         while file_id is not None:
             os.rename(sub_folder_path+f"{file_id}.pkl",
                       sub_folder_path+f"{file_id}.processing")
@@ -51,7 +51,7 @@ class ExhaustiveSearch(Search):
                                      f"{file_id}.pkl")
             os.remove(sub_folder_path+f"{file_id}.processing")
 
-            file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
+            file_id = get_unprocessed_fileid(sub_folder_path)
 
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",

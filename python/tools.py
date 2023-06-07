@@ -28,14 +28,19 @@ def flip_exceptions(cd, exceptions):
     return flipout
 
 
-def get_unprocessed_fileid(sub_folder_path, n_cores):
+def get_unprocessed_fileid(sub_folder_path, buffer_size=10000):
     filenames = os.listdir(sub_folder_path)
+
+    counter = 0
     unprocessed_ids = []
     for filename in filenames:
         file_id, file_extension = filename.split(".")
-        file_id = int(file_id)
-        if file_id > n_cores and file_extension == "pkl":
+        if file_extension == "pkl":
             unprocessed_ids.append(file_id)
+            counter += 1
+
+        if counter == buffer_size:
+            break
 
     if len(unprocessed_ids) == 0:
         return None
