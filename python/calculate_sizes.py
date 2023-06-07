@@ -68,8 +68,6 @@ n = int(folders[-2])
 cd = CondorcetDomain(n)
 num_triplets = cd.num_triplets
 
-calculate_size(cd, folder_path, f"{core_id}.pkl")
-
 sub_folder_path = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/"
 file_id = get_unprocessed_fileid(sub_folder_path, n_cores)
 while file_id is not None:
