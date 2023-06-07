@@ -17,7 +17,7 @@ bool compare_permutation(const IntList& first, const IntList& second)
     auto iter_first = first.begin();
     auto iter_second = second.begin();
 
-    for (std::size_t i = 0; i < first.size(); i ++)
+    for (; iter_first != first.end(); ++iter_first, ++iter_second)
     {
         Int8 f = *iter_first;
         Int8 s = *iter_second;
@@ -30,8 +30,6 @@ bool compare_permutation(const IntList& first, const IntList& second)
         {
             return false;
         }
-        iter_first = std::next(iter_first, 1);
-        iter_second = std::next(iter_second, 1);
     }
 
     return false;
@@ -45,7 +43,7 @@ bool compare_cds(CD& first_cd, CD& second_cd)
     auto iter_first_cd = first_cd.begin();
     auto iter_second_cd = second_cd.begin();
 
-    for (std::size_t i = 0; i < first_cd.size(); i ++)
+    for (; iter_first_cd != first_cd.end(); ++iter_first_cd, ++iter_second_cd)
     {
         const IntList& first_permutation = *iter_first_cd;
         const IntList& second_permutation = *iter_second_cd;
@@ -53,7 +51,7 @@ bool compare_cds(CD& first_cd, CD& second_cd)
         auto iter_first_elem = first_permutation.begin();
         auto iter_second_elem = second_permutation.begin();
 
-        for (std::size_t j = 0; j < first_permutation.size(); j ++)
+        for (; iter_first_elem != first_permutation.end(); ++iter_first_elem, ++iter_second_elem)
         {
             Int8 f = *iter_first_elem;
             Int8 s = *iter_second_elem;
@@ -66,12 +64,8 @@ bool compare_cds(CD& first_cd, CD& second_cd)
             {
                 return false;
             }
-            iter_first_elem = std::next(iter_first_elem, 1);
-            iter_second_elem = std::next(iter_second_elem, 1);
         }
 
-        iter_first_cd = std::next(iter_first_cd, 1);
-        iter_second_cd = std::next(iter_second_cd, 1);
     }
     return false;
 
