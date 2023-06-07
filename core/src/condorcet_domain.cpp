@@ -495,10 +495,11 @@ std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_c
     return std::make_tuple(all_trs, sizes);
 }
 
-std::size_t CondorcetDomain::hash_cd(CD& cd)
+std::size_t CondorcetDomain::hash_cd(CD& cd, bool sort)
 {
     std::size_t seed = 0;
-    sort_cd(cd);
+    if (sort == true)
+        cd.sort(compare_permutation);
     auto iter = cd.begin();
 
     for (Int32 i =0; i < cd.size(); i ++)
@@ -514,28 +515,6 @@ std::size_t CondorcetDomain::hash_cd(CD& cd)
     return seed;
 }
 
-std::size_t CondorcetDomain::hash_cd_brothers(CDS &cds)
-{
-    std::size_t seed = 0;
-    for (auto& cd: cds)
-    {
-        for (Int32 i =0; i < cd.size(); i ++)
-        {
-            IntList& elem = *std::next(cd.begin(), i);
-            for (Int8 j = 0; j < elem.size(); j++)
-            {
-                seed += (*std::next(elem.begin(), j) * (i + 123) * (j + 678));
-            }
-        }
-    }
-
-    return seed;
-}
-
-void CondorcetDomain::sort_cd(CD& cd)
-{
-    cd.sort(compare_list);
-}
 
 CDS CondorcetDomain::domain_brothers(const CD& cd)
 {
@@ -559,7 +538,7 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
             new_cd.push_back(entry);
         }
 
-        std::size_t seed = hash_cd(new_cd);
+        std::size_t seed = hash_cd(new_cd, true);
         if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
         {
             seeds.push_back(seed);
@@ -571,7 +550,14 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
     return cds;
 }
 
-TRS CondorcetDomain::domain_to_trs(const CD &cd, bool is_sorted)
+std::size_t CondorcetDomain::isomorphic_cd_hash(const CD& cd)
+{
+    CDS cds = domain_brothers(cd);
+    std::sort(cds.begin(), cds.end(), compare_cds);
+    return hash_cd(cds[0], false);
+}
+
+TRS CondorcetDomain::domain_to_trs(const CD &cd)
 {
     std::list<TripletRule> all_trs;
 

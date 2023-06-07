@@ -12,13 +12,12 @@ std::size_t TripletHasher::operator()(const Triplet& arr) const
     return h;
 }
 
-// used to sort a list of list
-bool compare_list(const IntList& first, const IntList& second)
+bool compare_permutation(const IntList& first, const IntList& second)
 {
     auto iter_first = first.begin();
     auto iter_second = second.begin();
 
-    for (Int8 i = 0; i < first.size(); i ++)
+    for (std::size_t i = 0; i < first.size(); i ++)
     {
         Int8 f = *iter_first;
         Int8 s = *iter_second;
@@ -36,6 +35,46 @@ bool compare_list(const IntList& first, const IntList& second)
     }
 
     return false;
+}
+
+bool compare_cds(CD& first_cd, CD& second_cd)
+{
+    first_cd.sort(compare_permutation);
+    second_cd.sort(compare_permutation);
+
+    auto iter_first_cd = first_cd.begin();
+    auto iter_second_cd = second_cd.begin();
+
+    for (std::size_t i = 0; i < first_cd.size(); i ++)
+    {
+        const IntList& first_permutation = *iter_first_cd;
+        const IntList& second_permutation = *iter_second_cd;
+
+        auto iter_first_elem = first_permutation.begin();
+        auto iter_second_elem = second_permutation.begin();
+
+        for (std::size_t j = 0; j < first_permutation.size(); j ++)
+        {
+            Int8 f = *iter_first_elem;
+            Int8 s = *iter_second_elem;
+
+            if (f < s)
+            {
+                return true;
+            }
+            else if (s < f)
+            {
+                return false;
+            }
+            iter_first_elem = std::next(iter_first_elem, 1);
+            iter_second_elem = std::next(iter_second_elem, 1);
+        }
+
+        iter_first_cd = std::next(iter_first_cd, 1);
+        iter_second_cd = std::next(iter_second_cd, 1);
+    }
+    return false;
+
 }
 
 // get the index of a value in a list

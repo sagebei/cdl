@@ -1,25 +1,6 @@
 #pragma once
-
-#include <map>
-#include <unordered_map>
-#include <algorithm>
-#include <random>
-#include <functional>
-#include <numeric>
-#include <utility>
 #include "utils.h"
 
-struct TripletRule
-{
-    Triplet triplet;
-    Int8 rule_id;
-};
-
-typedef std::vector<TripletRule> TRS;
-typedef std::map<Triplet, Int32> TripletIndex;
-
-typedef std::list<IntList> CD;
-typedef std::vector<CD> CDS;
 
 class CondorcetDomain
 {
@@ -88,11 +69,11 @@ public:
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
     // cd brothers
-    std::size_t hash_cd(CD& cd);
-    std::size_t hash_cd_brothers(CDS& cds);
-    void sort_cd(CD& cd);
+    std::size_t hash_cd(CD& cd, bool sort=true);
     CDS domain_brothers(const CD& cd);
-    TRS domain_to_trs(const CD& cd, bool is_sorted);
+    std::size_t isomorphic_cd_hash(const CD& cd);
+
+    TRS domain_to_trs(const CD& cd);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
