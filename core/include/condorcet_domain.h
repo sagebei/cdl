@@ -70,8 +70,10 @@ public:
 
     // cd brothers
     std::size_t hash_cd(CD& cd, bool sort=true);
+    CD inverse_cd(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
     CD isomorphic_cd(const CD& cd);
+    CDS isomorphic_cds(CDS cds);
 
     TRS domain_to_trs(const CD& cd);
 

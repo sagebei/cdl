@@ -29,7 +29,7 @@ typedef std::vector<TripletRule> TRS;
 typedef std::map<Triplet, Int32> TripletIndex;
 
 typedef std::list<IntList> CD;
-typedef std::vector<CD> CDS;
+typedef std::list<CD> CDS;
 
 struct TripletHasher
 {

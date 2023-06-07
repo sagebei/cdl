@@ -515,36 +515,42 @@ std::size_t CondorcetDomain::hash_cd(CD& cd, bool sort)
     return seed;
 }
 
+CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation)
+{
+    CDS cds;
+    std::map<Int8, Int8> dict;
+    CD new_cd;
+    for (Int8 i = 0; i < permutation.size(); i ++)
+        dict[*std::next(permutation.begin(), i)] = (i + 1);
+
+    for (const IntList& e: cd)
+    {
+        IntList entry;
+        for (const Int8& v: e)
+        {
+            entry.push_back(dict[v]);
+        }
+        new_cd.push_back(entry);
+    }
+
+    return new_cd;
+}
+
 
 CDS CondorcetDomain::domain_brothers(const CD& cd)
 {
     CDS cds;
     std::vector<std::size_t> seeds;
 
-    for (const IntList& elem: cd)
+    for (const IntList& permutation : cd)
     {
-        std::map<Int8, Int8> dict;
-        CD new_cd;
-        for (Int8 i = 0; i < elem.size(); i ++)
-            dict[*std::next(elem.begin(), i)] = (i + 1);
-
-        for (const IntList& e: cd)
-        {
-            IntList entry;
-            for (const Int8& v: e)
-            {
-                entry.push_back(dict[v]);
-            }
-            new_cd.push_back(entry);
-        }
-
+        CD new_cd = inverse_cd(cd, permutation);
         std::size_t seed = hash_cd(new_cd, true);
         if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
         {
             seeds.push_back(seed);
             cds.push_back(new_cd);
         }
-
     }
 
     return cds;
@@ -553,8 +559,23 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
 CD CondorcetDomain::isomorphic_cd(const CD& cd)
 {
     CDS cds = domain_brothers(cd);
-    std::sort(cds.begin(), cds.end(), compare_cds);
-    return cds[0];
+    cds.sort(compare_cds);
+    return *cds.begin();
+}
+
+CDS CondorcetDomain::isomorphic_cds(CDS cds)
+{
+    CDS iso_list{};
+    for (const CD& cd : cds)
+    {
+        iso_list.push_back(cd);
+        for (const IntList& permutation : cd)
+        {
+            CD inversed_cd = inverse_cd(cd, permutation);
+            cds.remove(inversed_cd);
+        }
+    }
+    return iso_list;
 }
 
 TRS CondorcetDomain::domain_to_trs(const CD &cd)
