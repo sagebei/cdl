@@ -23,13 +23,9 @@ bool compare_permutation(const IntList& first, const IntList& second)
         Int8 s = *iter_second;
 
         if (f < s)
-        {
             return true;
-        }
         else if (s < f)
-        {
             return false;
-        }
     }
 
     return false;
@@ -57,13 +53,9 @@ bool compare_cds(CD& first_cd, CD& second_cd)
             Int8 s = *iter_second_elem;
 
             if (f < s)
-            {
                 return true;
-            }
             else if (s < f)
-            {
                 return false;
-            }
         }
 
     }
