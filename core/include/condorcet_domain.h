@@ -71,7 +71,7 @@ public:
     // cd brothers
     std::size_t hash_cd(CD& cd, bool sort=true);
     CDS domain_brothers(const CD& cd);
-    std::size_t isomorphic_cd_hash(const CD& cd);
+    CD isomorphic_cd(const CD& cd);
 
     TRS domain_to_trs(const CD& cd);
 

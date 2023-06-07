@@ -550,11 +550,11 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
     return cds;
 }
 
-std::size_t CondorcetDomain::isomorphic_cd_hash(const CD& cd)
+CD CondorcetDomain::isomorphic_cd(const CD& cd)
 {
     CDS cds = domain_brothers(cd);
     std::sort(cds.begin(), cds.end(), compare_cds);
-    return hash_cd(cds[0], false);
+    return cds[0];
 }
 
 TRS CondorcetDomain::domain_to_trs(const CD &cd)
