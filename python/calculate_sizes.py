@@ -48,16 +48,12 @@ def calculate_size(cd, folder_path, filename):
 
 parser = argparse.ArgumentParser(description="get the result",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-folder_path", type=str)
-parser.add_argument("-n_cores", type=int)
-parser.add_argument("-core_id", type=int)
+parser.add_argument("-folder_path", type=str, default="./results/6/14_0_100000_10_10_20_False_1N3_2N3")
 args = parser.parse_args()
 config = vars(args)
 print(config)
 
 folder_path = config['folder_path']
-core_id = config['core_id']
-n_cores = config['n_cores']
 
 folders = folder_path.split("/")
 if folders[-1] == "":
@@ -77,7 +73,6 @@ while file_id is not None:
         calculate_size(cd,
                        folder_path,
                        f"{file_id}.processing")
-        os.remove(sub_folder_path+f"{file_id}.processing")
 
     except Exception as e:
         print(e)
