@@ -3,12 +3,11 @@ import argparse
 from tools import get_unprocessed_fileid
 import pickle
 import os
-from collections import Counter
 
 
 parser = argparse.ArgumentParser(description="find the isomorphic CDs",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-folder_path", type=str, default="./results/6/14_0_100000_10_10_20_False_1N3_2N3")
+parser.add_argument("-folder_path", type=str, default="./results/7/14_0_100000_10_10_35_False_1N3_2N3")
 args = parser.parse_args()
 config = vars(args)
 print(config)

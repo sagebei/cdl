@@ -15,7 +15,7 @@ typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripletTupleIndex;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = "2.2.1";
+    m.attr("__version__") = "2.2.2";
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -107,7 +107,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_states_any_ordering", &CondorcetDomain::subset_states_any_ordering, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
 
-            .def("inverse_cd", &CondorcetDomain::inverse_cd, py::arg("cd"), py::arg("permutation"), py::arg("sort")=true)
+            .def("inverse_cd", &CondorcetDomain::inverse_cd, py::arg("cd"), py::arg("permutation"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
             .def("isomorphic_cd", &CondorcetDomain::isomorphic_cd, py::arg("cd"))
             .def("isomorphic_cds", &CondorcetDomain::isomorphic_cds, py::arg("cds"))

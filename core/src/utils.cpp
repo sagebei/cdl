@@ -33,9 +33,6 @@ bool compare_permutations(const IntList& first, const IntList& second)
 
 bool compare_cds(CD& first_cd, CD& second_cd)
 {
-    first_cd.sort(compare_permutations);
-    second_cd.sort(compare_permutations);
-
     auto iter_first_cd = first_cd.begin();
     auto iter_second_cd = second_cd.begin();
 

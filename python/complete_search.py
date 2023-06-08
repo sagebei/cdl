@@ -55,12 +55,12 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="complete search for the first n triplet",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=6)
+parser.add_argument("-n", type=int, default=7)
 parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3"])
 parser.add_argument("-cutoff", type=int, default=14)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-top_n", type=int, default=100000)
-parser.add_argument("-n_complete", type=int, default=20)
+parser.add_argument("-n_complete", type=int, default=35)
 parser.add_argument("-n_cores", type=int, default=10)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
