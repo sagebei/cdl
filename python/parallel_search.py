@@ -17,12 +17,10 @@ class ExhaustiveSearch(Search):
                       threshold=0,
                       top_n=1000,
                       n_complete=5,
-                      n_cores=16,
                       n_chunks=1000,
-                      shuffle=False,
-                      core_id=1):
+                      shuffle=False):
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
 
         self.folder_path += folder_name
         sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
@@ -66,10 +64,8 @@ parser.add_argument("-cutoff", type=int)
 parser.add_argument("-threshold", type=float)
 parser.add_argument("-top_n", type=int)
 parser.add_argument("-n_complete", type=int)
-parser.add_argument("-n_cores", type=int)
 parser.add_argument("-n_chunks", type=int)
 parser.add_argument("-shuffle", type=bool)
-parser.add_argument("-core_id", type=int)
 parser.add_argument("-lib_path", type=str)
 parser.add_argument("-result_path", type=str)
 args = parser.parse_args()
@@ -82,10 +78,8 @@ es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
                  top_n=config['top_n'],
                  n_complete=config['n_complete'],
-                 n_cores=config['n_cores'],
                  n_chunks=config['n_chunks'],
-                 shuffle=config['shuffle'],
-                 core_id=config['core_id'])
+                 shuffle=config['shuffle'])
 
 
 # python parallel_search.py -n 6 -cutoff 16 -threshold 0 -top_n 1000 -rules "2N3" "2N1"  -triplet_id 6 -core_id 2

@@ -19,13 +19,12 @@ class ExhaustiveSearch(Search):
                       threshold=0,
                       top_n=1000,
                       n_complete=20,
-                      n_cores=10,
                       n_chunks=1000,
                       shuffle=False):
 
         num_assigned = len(self.cd.assigned_triplets(trs))
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_cores}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
         self.folder_path += folder_name
 
         trs_score_list = self.expand_trs(trs)
