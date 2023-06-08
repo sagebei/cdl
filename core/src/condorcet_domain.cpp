@@ -499,7 +499,7 @@ std::size_t CondorcetDomain::hash_cd(CD& cd, bool sort)
 {
     std::size_t seed = 0;
     if (sort == true)
-        cd.sort(compare_permutation);
+        cd.sort(compare_permutations);
     auto iter = cd.begin();
 
     for (Int32 i =0; i < cd.size(); i ++)
@@ -515,7 +515,7 @@ std::size_t CondorcetDomain::hash_cd(CD& cd, bool sort)
     return seed;
 }
 
-CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation)
+CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation, bool sort)
 {
     CDS cds;
     std::map<Int8, Int8> dict;
@@ -533,6 +533,7 @@ CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation)
         new_cd.push_back(entry);
     }
 
+    new_cd.sort(compare_permutations);
     return new_cd;
 }
 
@@ -565,16 +566,22 @@ CD CondorcetDomain::isomorphic_cd(const CD& cd)
 
 CDS CondorcetDomain::isomorphic_cds(CDS cds)
 {
+    CDS sorted_cds{};
+    for (CD& cd : cds)
+        cd.sort(compare_permutations);
+
     CDS iso_list{};
-    for (const CD& cd : cds)
+    while (cds.size() > 0)
     {
+        CD cd = cds.front();
         iso_list.push_back(cd);
         for (const IntList& permutation : cd)
         {
-            CD inversed_cd = inverse_cd(cd, permutation);
-            cds.remove(inversed_cd);
+            CD inversed_cd = inverse_cd(cd, permutation, true);
+            cds.remove(cd);
         }
     }
+
     return iso_list;
 }
 

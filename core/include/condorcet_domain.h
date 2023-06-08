@@ -70,7 +70,7 @@ public:
 
     // cd brothers
     std::size_t hash_cd(CD& cd, bool sort=true);
-    CD inverse_cd(const CD& cd, const IntList& permutation);
+    CD inverse_cd(const CD& cd, const IntList& permutation, bool sort=true);
     CDS domain_brothers(const CD& cd);
     CD isomorphic_cd(const CD& cd);
     CDS isomorphic_cds(CDS cds);
