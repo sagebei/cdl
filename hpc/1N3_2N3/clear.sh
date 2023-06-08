@@ -1,3 +1,3 @@
-rm complete.o* sizes.o* parallel.o*
+rm complete.o* sizes.o* parallel.o* iso.o*
 
 git pull
