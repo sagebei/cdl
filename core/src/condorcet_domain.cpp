@@ -561,7 +561,7 @@ CD CondorcetDomain::isomorphic_cd(const CD& cd)
 {
     CDS cds = domain_brothers(cd);
     cds.sort(compare_cds);
-    return *cds.begin();
+    return cds.front();
 }
 
 CDS CondorcetDomain::isomorphic_cds(CDS cds)
