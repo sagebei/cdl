@@ -60,7 +60,6 @@ parser.add_argument("-cutoff", type=int, default=14)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-top_n", type=int, default=100000)
 parser.add_argument("-n_complete", type=int, default=35)
-parser.add_argument("-n_cores", type=int, default=10)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="..")
@@ -86,7 +85,6 @@ es.static_search(trs,
                  threshold=config['threshold'],
                  top_n=config['top_n'],
                  n_complete=config['n_complete'],
-                 n_cores=config['n_cores'],
                  n_chunks=config['n_chunks'],
                  shuffle=config['shuffle'])
 
