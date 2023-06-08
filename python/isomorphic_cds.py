@@ -41,7 +41,7 @@ while file_id is not None:
                 trs = cd.state_to_trs(state)
                 domain = cd.condorcet_domain(trs)
                 iso_cd = cd.isomorphic_cd(domain)
-                iso_cds.add(iso_cd)
+                iso_cds.add(str(iso_cd))
             with open(result_path+f"{file_id}.pkl", "wb") as fr:
                 pickle.dump(iso_cds, fr)
 

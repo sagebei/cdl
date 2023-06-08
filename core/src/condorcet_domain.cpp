@@ -545,8 +545,8 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
 
     for (const IntList& permutation : cd)
     {
-        CD new_cd = inverse_cd(cd, permutation);
-        std::size_t seed = hash_cd(new_cd, true);
+        CD new_cd = inverse_cd(cd, permutation, true);    // new_cd has been sorted
+        std::size_t seed = hash_cd(new_cd, false);
         if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
         {
             seeds.push_back(seed);
@@ -560,7 +560,6 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
 CD CondorcetDomain::isomorphic_cd(const CD& cd)
 {
     CDS cds = domain_brothers(cd);
-    cds.sort(compare_cds);
     return cds.front();
 }
 
