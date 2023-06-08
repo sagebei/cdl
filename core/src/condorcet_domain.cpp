@@ -574,6 +574,7 @@ CDS CondorcetDomain::isomorphic_cds(CDS cds)
     while (cds.size() > 0)
     {
         CD cd = cds.front();
+        cds.pop_front();
         iso_list.push_back(cd);
         for (const IntList& permutation : cd)
         {
