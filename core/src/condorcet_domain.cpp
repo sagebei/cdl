@@ -578,7 +578,7 @@ CDS CondorcetDomain::isomorphic_cds(CDS cds)
         for (const IntList& permutation : cd)
         {
             CD inversed_cd = inverse_cd(cd, permutation, true);
-            cds.remove(cd);
+            cds.remove(inversed_cd);
         }
     }
 
