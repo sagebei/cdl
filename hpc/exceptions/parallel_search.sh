@@ -17,7 +17,7 @@ python ~/cdl/python/parallel_search.py -n 11  \
                                        -cutoff 16  \
                                        -threshold 0.5  \
                                        -top_n 1000000  \
-                                       -n_complete 200 \
+                                       -n_complete 155 \
                                        -n_chunks 10000 \
                                        -shuffle 1 \
                                        -rules "2N3" "2N1" "1N3" "3N1" \
