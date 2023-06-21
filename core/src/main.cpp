@@ -3,21 +3,21 @@
 
 int main()
 {
-    ForbiddenPermutation fb(10);
-    TLS tls = fb.init_tls();
+    ForbiddenPermutation fp(10);
+    TLS tls = fp.init_tls();
     std::vector<std::string> l1{"213", "231"};
     std::vector<std::string> l2{"132", "312"};
-    TLS mew_trs = fb.init_tls();
+    TLS mew_trs = fp.init_tls();
     for (auto& tl : tls)
     {
         if (tl.triplet[1] % 2 == 0)
-            mew_trs = fb.assign_laws(mew_trs, tl.triplet, l1); // 2N1
+            mew_trs = fp.assign_laws(mew_trs, tl.triplet, l1); // 2N1
         else
-            mew_trs = fb.assign_laws(mew_trs, tl.triplet, l2); // 2N3
+            mew_trs = fp.assign_laws(mew_trs, tl.triplet, l2); // 2N3
     }
 
 
-    std::cout << fb.size(mew_trs) << std::endl;
+    std::cout << fp.size(mew_trs) << std::endl;
 //    CondorcetDomain cd(13);
 //    std::cout << cd.n << std::endl;
 //    TRS trs = cd.init_by_scheme(Fishburn_scheme);
