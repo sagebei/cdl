@@ -3,7 +3,7 @@
 
 int main()
 {
-    CondorcetDomain cd(10);
+    CondorcetDomain cd(13);
 //    std::cout << cd.n << std::endl;
     TRS trs = cd.init_by_scheme(Fishburn_scheme);
     std::cout << cd.size(trs) << std::endl;

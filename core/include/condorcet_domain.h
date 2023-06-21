@@ -9,7 +9,7 @@ private:
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
     bool check_permutation(const IntList& permutation, const TRS& trs);
-    void expand_permutation(IntList permutation, const TRS& trs, int alternative, int& cd_size);
+    void expand_permutation(IntList& permutation, const TRS& trs, int alternative, int& cd_size);
     void filter_trs_list(std::list<TripletRule>& trs, const IntList& elem);
     TRS fetch_trs(const TRS& trs, Int8 i);
 

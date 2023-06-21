@@ -144,7 +144,7 @@ bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& t
     return true;
 }
 
-void CondorcetDomain::expand_permutation(IntList permutation, const TRS& trs, int alternative, int& cd_size)
+void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, int alternative, int& cd_size)
 {
     auto iter = permutation.begin();
     for (Int8 i = 0; i <= permutation.size(); i ++)
