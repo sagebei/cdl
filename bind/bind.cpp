@@ -16,7 +16,7 @@ typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripletTupleIndex;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = "2.2.3";
+    m.attr("__version__") = "2.2.4";
 
     py::class_<TripletRule>(m, "TripletRule")
             .def(py::init<>())
@@ -157,6 +157,28 @@ PYBIND11_MODULE(cdl, m) {
                         return cd;
                     }
             ));
+
+    py::class_<TripletLaws>(m, "TripletLaws")
+        .def(py::init<>())
+        .def_readwrite("triplet", &TripletLaws::triplet)
+        .def_readwrite("laws", &TripletLaws::laws)
+        .def(py::pickle(
+                [](const TripletLaws& tl)
+                {
+                    return py::make_tuple(tl.triplet, tl.laws);
+                },
+                [](py::tuple t)
+                {
+                    if (t.size() != 2)
+                        throw std::runtime_error("Invalid state for TripletLaws object!");
+
+                    TripletLaws tl{};
+                    tl.triplet = t[0].cast<Triplet>();
+                    tl.laws = t[1].cast<std::vector<std::string>>();
+
+                    return tl;
+                }
+        ));
 
     py::class_<ForbiddenPermutation>(m, "ForbiddenPermutation")
         .def(py::init<Int8>(), py::arg("n"))
