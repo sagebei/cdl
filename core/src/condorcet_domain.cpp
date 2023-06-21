@@ -144,7 +144,7 @@ bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& t
     return true;
 }
 
-void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, int alternative, int& cd_size)
+void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size)
 {
     auto iter = permutation.begin();
     for (Int8 i = 0; i <= permutation.size(); i ++)
@@ -428,7 +428,7 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
 std::size_t CondorcetDomain::size(const TRS& trs)
 {
     CD init_permutations = {{1, 2}, {2, 1}};
-    int cd_size{};
+    std::size_t cd_size{};
     for (IntList& permutation : init_permutations)
     {
         expand_permutation(permutation, trs, 3, cd_size);
