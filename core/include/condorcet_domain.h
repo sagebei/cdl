@@ -8,6 +8,8 @@ private:
     void sort_trs(TRS& trs);
     void filter_cd(const TripletRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
+    bool check_permutation(const IntList& permutation, const TRS& trs);
+    void expand_permutation(IntList permutation, const TRS& trs, int alternative, int& cd_size);
     void filter_trs_list(std::list<TripletRule>& trs, const IntList& elem);
     TRS fetch_trs(const TRS& trs, Int8 i);
 
@@ -57,8 +59,8 @@ public:
     TRS uplift_trs(const TRS& large, const TRS& small, const std::vector<Int8>& subset);
 
     // manipulating CDs
-    CD condorcet_domain(const TRS& trs);
-    std::size_t size(const TRS& trs);
+    CD condorcet_domain(const TRS& trs);  // Width-First
+    std::size_t size(const TRS& trs);     // Depth-First
 
     // subset functions
     void init_subset(Int8 sub_n);

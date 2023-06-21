@@ -4,7 +4,7 @@ CondorcetDomain::CondorcetDomain(Int8 n)
 {
     this->n = n;
 
-    for (Int8 i = 1; i <=n; i ++)
+    for (Int8 i = 1; i <= n; i ++)
         m_triplet_elems.push_back(i);
 
     for (Int8 i = 1; i <= n-2; i++)
@@ -97,17 +97,69 @@ void CondorcetDomain::expand_cd(CD& cd, Int8& value)
     CD updated_cd;
     for (auto& elem: cd)
     {
-        auto iter_elem = elem.begin();
+        auto iter = elem.begin();
         for (Int8 i = 0; i <= elem.size(); i ++)
         {
-            iter_elem = elem.insert(iter_elem, value);
-            IntList updated_elem(elem);
-            updated_cd.push_back(updated_elem);
-            iter_elem = elem.erase(iter_elem);
-            iter_elem ++;
+            iter = elem.insert(iter, value);
+            updated_cd.push_back(elem);
+            iter = elem.erase(iter);
+            iter ++;
         }
     }
     cd = updated_cd;
+}
+
+bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& trs)
+{
+    for (const TripletRule& tr : trs)
+    {
+        const Int8& first = tr.triplet[0], second = tr.triplet[1], third = tr.triplet[2];
+        const Int8& rule_id = tr.rule_id;
+
+        if (rule_id != 0)
+        {
+            int first_index = get_index(permutation, first);
+            if (first_index == -1)
+                continue;
+
+            int second_index = get_index(permutation, second);
+            if (second_index == -1)
+                continue;
+
+            int third_index = get_index(permutation, third);
+            if (third_index == -1)
+                continue;
+
+            if ((rule_id == 1 && first_index > second_index && first_index > third_index) ||  // 1N3
+                (rule_id == 2 && third_index < first_index && third_index < second_index) ||  // 3N1
+                (rule_id == 3 && second_index > first_index && second_index > third_index) ||  // 2N3
+                (rule_id == 4 && second_index < first_index && second_index < third_index) ||  // 2N1
+                (rule_id == 5 && ((first_index > second_index && first_index < third_index)
+                                  || (first_index > third_index && first_index < second_index))) ||  // 1N2
+                (rule_id == 6 && ((third_index > first_index && third_index < second_index)
+                                  || (third_index > second_index && third_index < first_index))))    // 3N2
+                return false;
+        }
+    }
+    return true;
+}
+
+void CondorcetDomain::expand_permutation(IntList permutation, const TRS& trs, int alternative, int& cd_size)
+{
+    auto iter = permutation.begin();
+    for (Int8 i = 0; i <= permutation.size(); i ++)
+    {
+        iter = permutation.insert(iter, alternative);
+        if (check_permutation(permutation, trs))
+        {
+            if (alternative == n)
+                cd_size ++;
+            else
+                expand_permutation(permutation, trs, alternative+1, cd_size);
+        }
+        iter = permutation.erase(iter);
+        iter ++;
+    }
 }
 
 TRS CondorcetDomain::fetch_trs(const TRS& trs, Int8 i)
@@ -365,9 +417,9 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
     for (Int8 i = 3; i <= n; i++) {
         expand_cd(cd, i);
         TRS fetched_trs = fetch_trs(trs, i);
-        for (const TripletRule& tr: fetched_trs) {
+        for (const TripletRule& tr: fetched_trs)
             filter_cd(tr, cd);
-        }
+
     }
 
     return cd;
@@ -375,7 +427,13 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
 
 std::size_t CondorcetDomain::size(const TRS& trs)
 {
-    return condorcet_domain(trs).size();
+    CD init_permutations = {{1, 2}, {2, 1}};
+    int cd_size{};
+    for (IntList& permutation : init_permutations)
+    {
+        expand_permutation(permutation, trs, 3, cd_size);
+    }
+    return cd_size;
 }
 
 void CondorcetDomain::init_subset(Int8 sub_n)

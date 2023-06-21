@@ -14,7 +14,7 @@
 #include <utility>
 
 
-typedef std::uint8_t Int8;
+typedef std::uint_fast16_t Int8;
 typedef std::uint32_t Int32;
 typedef std::list<Int8> IntList;
 typedef std::array<Int8, 3> Triplet;

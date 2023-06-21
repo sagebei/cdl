@@ -3,14 +3,17 @@
 
 int main()
 {
-    CondorcetDomain cd(6);
+    CondorcetDomain cd(10);
+//    std::cout << cd.n << std::endl;
     TRS trs = cd.init_by_scheme(Fishburn_scheme);
-    CD domain = cd.condorcet_domain(trs);
-    CDS domains{};
-    domains.push_back(domain);
-    domains.push_back(domain);
-
-    CDS new_cds = cd.isomorphic_cds(domains);
+    std::cout << cd.size(trs) << std::endl;
+    std::cout << cd.condorcet_domain(trs).size() << std::endl;
+//    CD domain = cd.condorcet_domain(trs);
+//    CDS domains{};
+//    domains.push_back(domain);
+//    domains.push_back(domain);
+//
+//    CDS new_cds = cd.isomorphic_cds(domains);
     return 0;
 }
 
