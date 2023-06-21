@@ -8,6 +8,7 @@ add_subdirectory(pybind11)
 pybind11_add_module(cdl
                     bind.cpp
         ../core/src/condorcet_domain.cpp
+        ../core/src/forbidden_permutation.cpp
         ../core/src/wrapper.cpp
         ../core/src/utils.cpp) # define the python module
 

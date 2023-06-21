@@ -5,6 +5,7 @@
 #include <pybind11/functional.h>
 
 #include "condorcet_domain.h"
+#include "forbidden_permutation.h"
 #include "wrapper.h"
 #include "utils.h"
 
@@ -156,6 +157,41 @@ PYBIND11_MODULE(cdl, m) {
                         return cd;
                     }
             ));
+
+    py::class_<ForbiddenPermutation>(m, "ForbiddenPermutation")
+        .def(py::init<Int8>(), py::arg("n"))
+        .def_readonly("n", &ForbiddenPermutation::n)
+
+        .def("init_tls", &ForbiddenPermutation::init_tls)
+        .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("triplet"), py::arg("laws"))
+        .def("size", &ForbiddenPermutation::size, py::arg("tls"))
+        .def(py::pickle(
+                [](const ForbiddenPermutation& fb)
+                {
+                    TripletTupleIndex tti{};
+                    for (auto const& [key, val] : fb.m_triplet_index)
+                    {
+                        tti[std::make_tuple(key[0], key[1], key[2])] = val;
+                    }
+                    return py::make_tuple(fb.n, tti);
+                },
+                [](py::tuple t)
+                {
+                    if (t.size() != 2)
+                        throw std::runtime_error("Invalid state for ForbiddenPermutation object!");
+
+                    ForbiddenPermutation fb(t[0].cast<Int8>());
+
+                    TripletIndex ti{};
+                    for (auto const& [key, val] : t[1].cast<TripletTupleIndex>())
+                    {
+                        Triplet triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
+                        ti[triple] = val;
+                    }
+                    fb.m_triplet_index = ti;
+                    return fb;
+                }
+        ));
 
     // print function
     m.def("print_trs", [](TRS trs) {
