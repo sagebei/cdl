@@ -1,11 +1,26 @@
 #include "condorcet_domain.h"
-#include "wrapper.h"
+#include "forbidden_permutation.h"
 
 int main()
 {
-    CondorcetDomain cd(13);
+    ForbiddenPermutation fb(10);
+    TLS tls = fb.init_tls();
+    std::vector<std::string> l1{"213", "231"};
+    std::vector<std::string> l2{"132", "312"};
+    TLS mew_trs = fb.init_tls();
+    for (auto& tl : tls)
+    {
+        if (tl.triplet[1] % 2 == 0)
+            mew_trs = fb.assign_laws(mew_trs, tl.triplet, l1); // 2N1
+        else
+            mew_trs = fb.assign_laws(mew_trs, tl.triplet, l2); // 2N3
+    }
+
+
+    std::cout << fb.size(mew_trs) << std::endl;
+//    CondorcetDomain cd(13);
 //    std::cout << cd.n << std::endl;
-    TRS trs = cd.init_by_scheme(Fishburn_scheme);
+//    TRS trs = cd.init_by_scheme(Fishburn_scheme);
 //    std::cout << cd.size(trs) << std::endl;
 //    std::cout << cd.condorcet_domain(trs).size() << std::endl;
 //    CD domain = cd.condorcet_domain(trs);

@@ -24,4 +24,11 @@ public:
     ForbiddenPermutation(Int8 n);
     void build_triplet_index(const TLS& tls);
     TLS init_tls();
+    TLS assign_laws(TLS tls, const Triplet& triplet, const std::vector<std::string> laws);
+
+    bool check_permutation(const IntList& permutation, const TLS& tls);
+    void expand_permutation(IntList& permutation, const TLS& tls, Int8 alternative, std::size_t& domain_size);
+
+    CD domain(const TLS& tls);  // Width-First
+    std::size_t size(const TLS& tls);     // Depth-First
 };
