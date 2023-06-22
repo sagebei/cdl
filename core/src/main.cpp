@@ -3,7 +3,7 @@
 
 int main()
 {
-    ForbiddenPermutation fp(10);
+    ForbiddenPermutation fp(4);
     TLS tls = fp.init_tls();
     std::vector<std::string> l1{"213", "231"};
     std::vector<std::string> l2{"132", "312"};
@@ -18,6 +18,7 @@ int main()
 
 
     std::cout << fp.size(mew_trs) << std::endl;
+    std::cout << fp.domain(mew_trs).size() << std::endl;
 //    CondorcetDomain cd(13);
 //    std::cout << cd.n << std::endl;
 //    TRS trs = cd.init_by_scheme(Fishburn_scheme);

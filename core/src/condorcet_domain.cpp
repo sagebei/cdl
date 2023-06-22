@@ -419,7 +419,6 @@ CD CondorcetDomain::condorcet_domain(const TRS& trs)
         TRS fetched_trs = fetch_trs(trs, i);
         for (const TripletRule& tr: fetched_trs)
             filter_cd(tr, cd);
-
     }
 
     return cd;
