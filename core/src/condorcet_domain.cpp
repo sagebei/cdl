@@ -205,7 +205,7 @@ TRS CondorcetDomain::init_random(bool is_sorted)
     return trs;
 }
 
-TRS CondorcetDomain::init_trs(const std::string& rule)
+TRS CondorcetDomain::init_trs()
 {
     TRS trs;
     for (Int8 i = 1; i < n+1; i ++)
@@ -216,11 +216,53 @@ TRS CondorcetDomain::init_trs(const std::string& rule)
             {
                 if (i < j && j < k)
                 {
-                    TripletRule tr;
+                    TripletRule tr{};
                     tr.triplet = {i, j, k};
-                    tr.rule_id = m_rule_id.at(rule);
+                    tr.rule_id = 0;
                     trs.push_back(tr);
                 }
+            }
+        }
+    }
+
+    build_triplet_index(trs);
+    return trs;
+}
+
+TRS CondorcetDomain::init_trs_lex()
+{
+    TRS trs;
+    for (Int8 i = 1; i <= n-2; i ++)
+    {
+        for (Int8 j = i+1; j <= n-1; j ++)
+        {
+            for (Int8 k = j+1; k <= n; k ++)
+            {
+                TripletRule tr{};
+                tr.triplet = {i, j, k};
+                tr.rule_id = 0;
+                trs.push_back(tr);
+            }
+        }
+    }
+
+    build_triplet_index(trs);
+    return trs;
+}
+
+TRS CondorcetDomain::init_trs_colex()
+{
+    TRS trs;
+    for (Int8 k = 3; k <= n; k ++)
+    {
+        for (Int8 j = 2; j < k; j ++)
+        {
+            for (Int8 i = 1; i < j;  i++)
+            {
+                TripletRule tr{};
+                tr.triplet = {i, j, k};
+                tr.rule_id = 0;
+                trs.push_back(tr);
             }
         }
     }
