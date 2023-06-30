@@ -271,7 +271,7 @@ TRS CondorcetDomain::init_trs_colex()
     return trs;
 }
 
-TRS CondorcetDomain::init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun)
+TRS CondorcetDomain::init_trs_by_scheme(const std::function<std::string(Triplet)>& scheme_fun)
 {
     TRS trs;
     for (Int8 i = 1; i < n+1; i ++)

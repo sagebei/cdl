@@ -42,7 +42,7 @@ public:
     TRS init_trs();
     TRS init_trs_lex();
     TRS init_trs_colex();
-    TRS init_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
+    TRS init_trs_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
 
     TRS clear_trs(TRS trs);
     TRS shuffle_trs(TRS trs, int seed=0);
