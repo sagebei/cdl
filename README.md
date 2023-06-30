@@ -98,6 +98,10 @@ for bro in bros:
 Please cite our paper that introduced CDL library if you use it in a scientific publication. 
 
 
+## List of publications using CDL
+
+- Zhou, Bei, and Søren Riis. "New Record-Breaking Condorcet Domains on 10 and 11 Alternatives." arXiv preprint arXiv:2303.06524 (2023).
+
 ## Our Team
 CDL is developed and maintained by Bei Zhou and Dr Soren Riis 
 in Theory Group and Game AI group at Queen Mary University of London. 
