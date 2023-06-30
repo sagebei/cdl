@@ -26,6 +26,7 @@ public:
     ForbiddenPermutation(Int8 n);
     void build_triplet_index(const TLS& tls);
     TLS init_tls();
+    TLS init_tls_by_scheme(const std::function<std::vector<std::string>(Triplet)>& scheme_fun);
     TLS assign_laws(TLS tls, const Triplet& triplet, const std::vector<std::string> laws);
     TLS assign_laws_by_index(TLS tls, Int32 index, const std::vector<std::string> laws);
 

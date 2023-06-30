@@ -97,6 +97,30 @@ TLS ForbiddenPermutation::init_tls()
     return tls;
 }
 
+TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<std::vector<std::string>(Triplet)>& scheme_fun)
+{
+    TLS tls;
+    for (Int8 i = 1; i < n+1; i ++)
+    {
+        for (Int8 k = 1; k < n+1; k ++)
+        {
+            for (Int8 j = 1; j < n+1; j ++)
+            {
+                if (i < j && j < k)
+                {
+                    TripletLaws tl;
+                    tl.triplet = {i, j, k};
+                    tl.laws = scheme_fun(tl.triplet);
+                    tls.push_back(tl);
+                }
+            }
+        }
+    }
+
+    build_triplet_index(tls);
+    return tls;
+}
+
 TLS ForbiddenPermutation::assign_laws(TLS tls, const Triplet& triplet, const std::vector<std::string> laws)
 {
     Int32 index = m_triplet_index[triplet];

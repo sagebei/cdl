@@ -189,6 +189,7 @@ PYBIND11_MODULE(cdl, m) {
         .def_readonly("laws", &ForbiddenPermutation::m_laws)
 
         .def("init_tls", &ForbiddenPermutation::init_tls)
+        .def("init_tls_by_scheme", &ForbiddenPermutation::init_tls_by_scheme)
         .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("triplet"), py::arg("laws"))
         .def("assign_laws_by_index", &ForbiddenPermutation::assign_laws_by_index, py::arg("tls"), py::arg("index"), py::arg("laws"))
         .def("domain", &ForbiddenPermutation::domain, py::arg("tls"))
