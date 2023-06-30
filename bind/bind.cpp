@@ -100,7 +100,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
 
-            .def("condorcet_domain", &CondorcetDomain::condorcet_domain, py::arg("trs"))  // manipulating CDs
+            .def("domain", &CondorcetDomain::domain, py::arg("trs"))  // manipulating CDs
             .def("size", &CondorcetDomain::size, py::arg("trs"))
 
             .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)
@@ -112,8 +112,8 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("inverse_cd", &CondorcetDomain::inverse_cd, py::arg("cd"), py::arg("permutation"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
-            .def("isomorphic_cd", &CondorcetDomain::isomorphic_cd, py::arg("cd"))
-            .def("isomorphic_cds", &CondorcetDomain::isomorphic_cds, py::arg("cds"))
+            .def("isomorphic_hash", &CondorcetDomain::isomorphic_hash, py::arg("cd"))
+            .def("non_isomorphic_cds", &CondorcetDomain::non_isomorphic_cds, py::arg("cds"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)

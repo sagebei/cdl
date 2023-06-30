@@ -385,7 +385,7 @@ std::vector<std::size_t> CondorcetDomain::evaluate_rules_on_triplet(const TRS& t
     for (const std::string& rule: m_rules)
     {
         TRS new_trs = assign_rule(trs, triplet, rule);
-        std::size_t s = condorcet_domain(new_trs).size();
+        std::size_t s = size(new_trs);
         sizes.push_back(s);
     }
     return sizes;
@@ -453,7 +453,7 @@ TRS CondorcetDomain::state_to_trs(const std::vector<Int8>& state)
     return trs;
 }
 
-CD CondorcetDomain::condorcet_domain(const TRS& trs)
+CD CondorcetDomain::domain(const TRS& trs)
 {
     CD cd = {{1, 2}, {2, 1}};
     for (Int8 i = 3; i <= n; i++) {
@@ -585,7 +585,7 @@ std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_c
     std::vector<TRS> trs_list = subset_trs_list(trs);
     for (const TRS& sub_trs : trs_list)
     {
-        std::size_t sub_size = sub_cd.condorcet_domain(sub_trs).size();
+        std::size_t sub_size = sub_cd.size(sub_trs);
 
         sizes.push_back(sub_size);
         all_trs.push_back(sub_trs);
@@ -653,14 +653,14 @@ CDS CondorcetDomain::domain_brothers(const CD& cd)
     return cds;  // Each cd inside cds is sorted; but cds is not sorted.
 }
 
-CD CondorcetDomain::isomorphic_cd(const CD& cd)
+CD CondorcetDomain::isomorphic_hash(const CD& cd)
 {
     CDS cds = domain_brothers(cd);
     cds.sort(compare_cds);
     return cds.front();   // This cd is sorted.
 }
 
-CDS CondorcetDomain::isomorphic_cds(CDS cds)
+CDS CondorcetDomain::non_isomorphic_cds(CDS cds)
 {
     CDS sorted_cds{};
     for (CD& cd : cds)

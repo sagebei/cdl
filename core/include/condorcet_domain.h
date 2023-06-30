@@ -61,7 +61,7 @@ public:
     TRS uplift_trs(const TRS& large, const TRS& small, const std::vector<Int8>& subset);
 
     // manipulating CDs
-    CD condorcet_domain(const TRS& trs);  // Width-First
+    CD domain(const TRS& trs);  // Width-First
     std::size_t size(const TRS& trs);     // Depth-First
 
     // subset functions
@@ -76,8 +76,8 @@ public:
     std::size_t hash_cd(const CD& cd);
     CD inverse_cd(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
-    CD isomorphic_cd(const CD& cd);
-    CDS isomorphic_cds(CDS cds);
+    CD isomorphic_hash(const CD& cd);
+    CDS non_isomorphic_cds(CDS cds);
 
     TRS domain_to_trs(const CD& cd);
 

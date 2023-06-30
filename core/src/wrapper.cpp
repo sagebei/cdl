@@ -45,7 +45,7 @@ std::vector<std::size_t> TRSWrapper::evaluate_rules_on_triplet(const TRS& trs, c
     for (const std::string& rule: allowed_rules[triplet])
     {
         TRS new_trs = cd.assign_rule(trs, triplet, rule);
-        std::size_t s = cd.condorcet_domain(new_trs).size();
+        std::size_t s = cd.size(new_trs);
         sizes.push_back(s);
     }
     return sizes;
