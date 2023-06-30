@@ -173,7 +173,7 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, Int8 i)
     return fetched_trs;
 }
 
-TRS CondorcetDomain::init_random(bool is_sorted)
+TRS CondorcetDomain::init_trs_random(bool is_sorted)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -660,7 +660,7 @@ CD CondorcetDomain::isomorphic_hash(const CD& cd)
     return cds.front();   // This cd is sorted.
 }
 
-CDS CondorcetDomain::non_isomorphic_cds(CDS cds)
+CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
 {
     CDS sorted_cds{};
     for (CD& cd : cds)

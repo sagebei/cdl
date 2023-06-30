@@ -38,7 +38,7 @@ public:
 
     // creating and manipulating TRS
     void build_triplet_index(const TRS& trs);
-    TRS init_random(bool is_sorted=false);
+    TRS init_trs_random(bool is_sorted=false);
     TRS init_trs();
     TRS init_trs_lex();
     TRS init_trs_colex();
@@ -77,7 +77,7 @@ public:
     CD inverse_cd(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
     CD isomorphic_hash(const CD& cd);
-    CDS non_isomorphic_cds(CDS cds);
+    CDS non_isomorphic_domains(CDS cds);
 
     TRS domain_to_trs(const CD& cd);
 

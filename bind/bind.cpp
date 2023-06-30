@@ -78,7 +78,7 @@ PYBIND11_MODULE(cdl, m) {
 
             // creating and manipulating TRS
             .def("build_triplet_index", &CondorcetDomain::build_triplet_index, py::arg("trs"))
-            .def("init_random", &CondorcetDomain::init_random, py::arg("is_sorted")=false)
+            .def("init_trs_random", &CondorcetDomain::init_trs_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs)
             .def("init_trs_lex", &CondorcetDomain::init_trs_lex)
             .def("init_trs_colex", &CondorcetDomain::init_trs_colex)
@@ -113,7 +113,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("inverse_cd", &CondorcetDomain::inverse_cd, py::arg("cd"), py::arg("permutation"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
             .def("isomorphic_hash", &CondorcetDomain::isomorphic_hash, py::arg("cd"))
-            .def("non_isomorphic_cds", &CondorcetDomain::non_isomorphic_cds, py::arg("cds"))
+            .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
