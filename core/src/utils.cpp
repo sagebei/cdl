@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 
-std::size_t TripletHasher::operator()(const Triplet& arr) const
+std::size_t TripleHasher::operator()(const Triple& arr) const
 {
     std::size_t h = 0;
 
@@ -130,9 +130,9 @@ int benchmark_size(int n)
     }
 }
 
-std::string Fishburn_scheme(const Triplet& triplet)
+std::string Fishburn_scheme(const Triple& triple)
 {
-    if ((triplet[1] % 2) == 0)
+    if ((triple[1] % 2) == 0)
         return "2N1";
     else
         return "2N3";

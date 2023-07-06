@@ -10,10 +10,10 @@ int main()
 //    TLS mew_trs = fp.init_tls();
 //    for (auto& tl : tls)
 //    {
-//        if (tl.triplet[1] % 2 == 0)
-//            mew_trs = fp.assign_laws(mew_trs, tl.triplet, l1); // 2N1
+//        if (tl.triple[1] % 2 == 0)
+//            mew_trs = fp.assign_laws(mew_trs, tl.triple, l1); // 2N1
 //        else
-//            mew_trs = fp.assign_laws(mew_trs, tl.triplet, l2); // 2N3
+//            mew_trs = fp.assign_laws(mew_trs, tl.triple, l2); // 2N3
 //    }
 //
 //
@@ -22,17 +22,17 @@ int main()
     CondorcetDomain cd(6);
     auto trs = cd.init_trs_colex();
     for (const auto& tr : trs)
-        std::cout << tr.triplet[0] << tr.triplet[1] << tr.triplet[2] << std::endl;
-//    std::cout << cd.n << std::endl;
-//    TRS trs = cd.init_by_scheme(Fishburn_scheme);
-//    std::cout << cd.size(trs) << std::endl;
-//    std::cout << cd.condorcet_domain(trs).size() << std::endl;
-//    CD domain = cd.condorcet_domain(trs);
-//    CDS domains{};
-//    domains.push_back(domain);
-//    domains.push_back(domain);
-//
-//    CDS new_cds = cd.isomorphic_cds(domains);
+        std::cout << tr.triple[0] << tr.triple[1] << tr.triple[2] << std::endl;
+    std::cout << cd.n << std::endl;
+//    TRS trs = cd.init_trs_by_scheme(Fishburn_scheme);
+    std::cout << cd.size(trs) << std::endl;
+    std::cout << cd.domain(trs).size() << std::endl;
+    CD domain = cd.domain(trs);
+    CDS domains{};
+    domains.push_back(domain);
+    domains.push_back(domain);
+
+    CDS new_cds = cd.non_isomorphic_domains(domains);
     return 0;
 }
 

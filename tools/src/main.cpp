@@ -18,7 +18,7 @@ int main()
 //    DATABASE db = load_database("../bind/full_trs_size.map");
 //    std::vector<int> state = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
     std::cout << ds.fetch_value({1, 1, 1, 1, 1, 1, 1, 1, 1, 1}) << std::endl;
-//    for (int i = 0; i < cd.num_triplets; i++)
+//    for (int i = 0; i < cd.num_triples; i++)
 //    {
 //        TRS trs = cd.init_by_scheme(rs);
 //        trs = cd.assign_by_index(trs, i, "");

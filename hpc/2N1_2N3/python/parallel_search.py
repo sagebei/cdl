@@ -23,7 +23,7 @@ class ExhaustiveSearch(Search):
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{n_complete}_{shuffle}_" + f"_".join(self.rules)
 
         self.folder_path += folder_name
-        sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triplets}/"
+        sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triples}/"
 
         file_id = get_unprocessed_fileid(sub_folder_path)
         while file_id is not None:
@@ -31,10 +31,10 @@ class ExhaustiveSearch(Search):
                 os.rename(sub_folder_path+f"{file_id}.pkl",
                           sub_folder_path+f"{file_id}.processing")
 
-                trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triplets}",
+                trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triples}",
                                                           f"{file_id}.processing")
 
-                for n_iter in range(n_complete+1, self.cd.num_triplets+1):
+                for n_iter in range(n_complete+1, self.cd.num_triples+1):
                     next_trs_score_list = []
 
                     for trs, _ in trs_score_list:
@@ -46,7 +46,7 @@ class ExhaustiveSearch(Search):
                     trs_score_list = next_trs_score_list[-top_n:]
 
                 self.save_trs_score_list(trs_score_list,
-                                         f"{self.cd.num_triplets}_{self.cd.num_triplets}",
+                                         f"{self.cd.num_triples}_{self.cd.num_triples}",
                                          f"{file_id}.pkl")
                 os.remove(sub_folder_path+f"{file_id}.processing")
 
@@ -82,6 +82,6 @@ es.static_search(cutoff=config['cutoff'],
                  shuffle=config['shuffle'])
 
 
-# python parallel_search.py -n 6 -cutoff 16 -threshold 0 -top_n 1000 -rules "2N3" "2N1"  -triplet_id 6 -core_id 2
+# python parallel_search.py -n 6 -cutoff 16 -threshold 0 -top_n 1000 -rules "2N3" "2N1"  -triple_id 6 -core_id 2
 
 

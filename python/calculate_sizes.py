@@ -11,7 +11,7 @@ from collections import OrderedDict
 def calculate_size(cd, folder_path, filename):
     trs_score_size_list = []
     sizes = []
-    data_file = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/{filename}"
+    data_file = f"{folder_path}/{cd.num_triples}_{cd.num_triples}/{filename}"
     with open(data_file, "rb") as f:
         state_score_list = pickle.load(f)
         for state, score in state_score_list:
@@ -62,9 +62,9 @@ folder_path = "/".join(folders)
 
 n = int(folders[-2])
 cd = CondorcetDomain(n)
-num_triplets = cd.num_triplets
+num_triples = cd.num_triples
 
-sub_folder_path = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/"
+sub_folder_path = f"{folder_path}/{cd.num_triples}_{cd.num_triples}/"
 file_id = get_unprocessed_fileid(sub_folder_path)
 while file_id is not None:
     try:
@@ -96,9 +96,9 @@ if len(os.listdir(sub_folder_path)) == 0:
 
     # remove unused folders
     shutil.rmtree(f"{folder_path}/sizes/")
-    for i in range(num_triplets + 1):
+    for i in range(num_triples + 1):
         try:
-            shutil.rmtree(folder_path + f"/{i}_{num_triplets}")
+            shutil.rmtree(folder_path + f"/{i}_{num_triples}")
         except FileNotFoundError:
             pass
 

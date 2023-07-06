@@ -9,14 +9,14 @@ ForbiddenPermutation::ForbiddenPermutation(Int8 n)
         for (Int8 j = i + 1; j <= n - 1; j++)
         {
             for (Int8 k = j + 1; k <= n; k++)
-                m_num_triplets += 1;
+                m_num_triples += 1;
         }
     }
 }
 
-void ForbiddenPermutation::filter_domain(const TripletLaws& tl, CD& domain)
+void ForbiddenPermutation::filter_domain(const TripleLaws& tl, CD& domain)
 {
-    const Int8& first = tl.triplet[0], second = tl.triplet[1], third = tl.triplet[2];
+    const Int8& first = tl.triple[0], second = tl.triple[1], third = tl.triple[2];
 
     domain.remove_if([&](const IntList& permutation) {
         for (const std::string& law: tl.laws)
@@ -58,18 +58,18 @@ TLS ForbiddenPermutation::fetch_tls(const TLS& tls, Int8 i)
     TLS fetched_tls;
     for (const auto& tl: tls)
     {
-        if (tl.triplet[2] == i)
+        if (tl.triple[2] == i)
             fetched_tls.push_back(tl);
     }
     return fetched_tls;
 }
 
-void ForbiddenPermutation::build_triplet_index(const TLS& tls)
+void ForbiddenPermutation::build_triple_index(const TLS& tls)
 {
     for (Int32 i = 0; i < tls.size(); i ++)
     {
-        Triplet triplet = tls[i].triplet;
-        m_triplet_index[triplet] = i;
+        Triple triple = tls[i].triple;
+        m_triple_index[triple] = i;
     }
 }
 
@@ -84,8 +84,8 @@ TLS ForbiddenPermutation::init_tls()
             {
                 if (i < j && j < k)
                 {
-                    TripletLaws tl{};
-                    tl.triplet = {i, j, k};
+                    TripleLaws tl{};
+                    tl.triple = {i, j, k};
                     tl.laws = {};
                     tls.push_back(tl);
                 }
@@ -93,11 +93,11 @@ TLS ForbiddenPermutation::init_tls()
         }
     }
 
-    build_triplet_index(tls);
+    build_triple_index(tls);
     return tls;
 }
 
-TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<std::vector<std::string>(Triplet)>& scheme_fun)
+TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<std::vector<std::string>(Triple)>& scheme_fun)
 {
     TLS tls;
     for (Int8 i = 1; i < n+1; i ++)
@@ -108,22 +108,22 @@ TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<std::vector<std
             {
                 if (i < j && j < k)
                 {
-                    TripletLaws tl;
-                    tl.triplet = {i, j, k};
-                    tl.laws = scheme_fun(tl.triplet);
+                    TripleLaws tl;
+                    tl.triple = {i, j, k};
+                    tl.laws = scheme_fun(tl.triple);
                     tls.push_back(tl);
                 }
             }
         }
     }
 
-    build_triplet_index(tls);
+    build_triple_index(tls);
     return tls;
 }
 
-TLS ForbiddenPermutation::assign_laws(TLS tls, const Triplet& triplet, const std::vector<std::string> laws)
+TLS ForbiddenPermutation::assign_laws(TLS tls, const Triple& triple, const std::vector<std::string> laws)
 {
-    Int32 index = m_triplet_index[triplet];
+    Int32 index = m_triple_index[triple];
     tls[index].laws = laws;
     return tls;
 }
@@ -140,7 +140,7 @@ CD ForbiddenPermutation::domain(const TLS& tls)
     for (Int8 i = 3; i <= n; i++) {
         expand_domain(domain, i);
         TLS fetched_tls = fetch_tls(tls, i);
-        for (const TripletLaws& tl: fetched_tls)
+        for (const TripleLaws& tl: fetched_tls)
             filter_domain(tl, domain);
     }
 
@@ -150,9 +150,9 @@ CD ForbiddenPermutation::domain(const TLS& tls)
 
 bool ForbiddenPermutation::check_permutation(const IntList& permutation, const TLS& tls)
 {
-    for (const TripletLaws& tl : tls)
+    for (const TripleLaws& tl : tls)
     {
-        const Int8 &first = tl.triplet[0], second = tl.triplet[1], third = tl.triplet[2];
+        const Int8 &first = tl.triple[0], second = tl.triple[1], third = tl.triple[2];
 
         for (const std::string& law: tl.laws)
         {

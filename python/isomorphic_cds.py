@@ -26,7 +26,7 @@ folder_path = "/".join(folders)
 n = int(folders[-2])
 cd = CondorcetDomain(n)
 
-sub_folder_path = f"{folder_path}/{cd.num_triplets}_{cd.num_triplets}/"
+sub_folder_path = f"{folder_path}/{cd.num_triples}_{cd.num_triples}/"
 file_id = get_unprocessed_fileid(sub_folder_path)
 while file_id is not None:
     try:

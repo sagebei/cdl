@@ -61,10 +61,10 @@ class Search:
                    cutoff=16,
                    threshold=0):
 
-        triplet = self.cd.unassigned_triplets(trs)[0]
+        triple = self.cd.unassigned_triples(trs)[0]
         trs_score_list = []
         for rule in self.rules:
-            trs = self.cd.assign_rule(trs, triplet, rule)
+            trs = self.cd.assign_rule(trs, triple, rule)
             score = self.sf.score_function(trs, cutoff, threshold)
             if score > -1:
                 trs_score_list.append((trs, score))
@@ -105,8 +105,8 @@ class Search:
 
         sizes = []
         trs_score_size_list = []
-        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
-            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triples}_{self.cd.num_triples}/'):
+            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triples}_{self.cd.num_triples}", filename)
             for trs, score in trs_score_list:
                 size = self.cd.size(trs)
                 sizes.append(size)
@@ -123,8 +123,8 @@ class Search:
     def save_result_as_dict(self):
         score_states_dict = defaultdict(list)
 
-        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triplets}_{self.cd.num_triplets}/'):
-            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triplets}_{self.cd.num_triplets}", filename)
+        for filename in os.listdir(f'{self.folder_path}/{self.cd.num_triples}_{self.cd.num_triples}/'):
+            trs_score_list = self.load_trs_score_list(f"{self.cd.num_triples}_{self.cd.num_triples}", filename)
             for trs, score in trs_score_list:
                 score_states_dict[score].append(self.cd.trs_to_state(trs))
 

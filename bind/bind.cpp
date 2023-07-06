@@ -11,29 +11,29 @@
 
 namespace py = pybind11;
 
-typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripletTupleIndex;
+typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripleTupleIndex;
 
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
     m.attr("__version__") = "2.2.4";
 
-    py::class_<TripletRule>(m, "TripletRule")
+    py::class_<TripleRule>(m, "TripleRule")
             .def(py::init<>())
-            .def_readwrite("triplet", &TripletRule::triplet)
-            .def_readwrite("rule_id", &TripletRule::rule_id)
+            .def_readwrite("triple", &TripleRule::triple)
+            .def_readwrite("rule_id", &TripleRule::rule_id)
             .def(py::pickle(
-                    [](const TripletRule& tr)
+                    [](const TripleRule& tr)
                     {
-                        return py::make_tuple(tr.triplet, tr.rule_id);
+                        return py::make_tuple(tr.triple, tr.rule_id);
                     },
                     [](py::tuple t)
                     {
                         if (t.size() != 2)
-                            throw std::runtime_error("Invalid state for TripletRule object!");
+                            throw std::runtime_error("Invalid state for tripleRule object!");
 
-                        TripletRule tr{};
-                        tr.triplet = t[0].cast<Triplet>();
+                        TripleRule tr{};
+                        tr.triple = t[0].cast<Triple>();
                         tr.rule_id = t[1].cast<int>();
 
                         return tr;
@@ -43,10 +43,10 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<TRSWrapper>(m, "TRSWrapper")
             .def(py::init<CondorcetDomain>(), py::arg("cd"))
             .def_readonly("allowed_rules", &TRSWrapper::allowed_rules)
-            .def("change_allowed_rules", &TRSWrapper::change_allowed_rules, py::arg("triplets"), py::arg("rules"))
+            .def("change_allowed_rules", &TRSWrapper::change_allowed_rules, py::arg("triples"), py::arg("rules"))
             .def("remove_rules", &TRSWrapper::remove_rules, py::arg("trs"), py::arg("contains"))
-            .def("next_unassigned_triplet", &TRSWrapper::next_unassigned_triplet, py::arg("trs"))
-            .def("dynamic_triplet_ordering", &TRSWrapper::dynamic_triplet_ordering, py::arg("trs"))
+            .def("next_unassigned_triple", &TRSWrapper::next_unassigned_triple, py::arg("trs"))
+            .def("dynamic_triple_ordering", &TRSWrapper::dynamic_triple_ordering, py::arg("trs"))
             .def(py::pickle(
                     [](const TRSWrapper& wrapper)
                     {
@@ -68,16 +68,16 @@ PYBIND11_MODULE(cdl, m) {
             .def_readonly("n", &CondorcetDomain::n)
             .def_readonly("rules", &CondorcetDomain::m_rules)   // member variables
             .def_readonly("rule_id", &CondorcetDomain::m_rule_id)
-            .def_readonly("num_triplets", &CondorcetDomain::m_num_triplets)
-            .def_readonly("triplet_elems", &CondorcetDomain::m_triplet_elems)
-            .def_readonly("triplet_index", &CondorcetDomain::m_triplet_index)
+            .def_readonly("num_triples", &CondorcetDomain::m_num_triples)
+            .def_readonly("triple_elems", &CondorcetDomain::m_triple_elems)
+            .def_readonly("triple_index", &CondorcetDomain::m_triple_index)
             .def_readonly("sub_n", &CondorcetDomain::m_sub_n)
             .def_readonly("subset_size", &CondorcetDomain::m_subset_size)
             .def_readonly("subsets", &CondorcetDomain::m_subsets)
             .def_readonly("subset_dicts", &CondorcetDomain::m_subset_dicts)
 
             // creating and manipulating TRS
-            .def("build_triplet_index", &CondorcetDomain::build_triplet_index, py::arg("trs"))
+            .def("build_triple_index", &CondorcetDomain::build_triple_index, py::arg("trs"))
             .def("init_trs_random", &CondorcetDomain::init_trs_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs)
             .def("init_trs_lex", &CondorcetDomain::init_trs_lex)
@@ -88,14 +88,14 @@ PYBIND11_MODULE(cdl, m) {
             .def("shuffle_trs", &CondorcetDomain::shuffle_trs, py::arg("trs"), py::arg("seed")=0)
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("from"), py::arg("to"))
 
-            .def("assign_id", &CondorcetDomain::assign_id, py::arg("trs"), py::arg("triplet"), py::arg("rule_id"))
-            .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("triplet"), py::arg("rule"))
+            .def("assign_id", &CondorcetDomain::assign_id, py::arg("trs"), py::arg("triple"), py::arg("rule_id"))
+            .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("triple"), py::arg("rule"))
             .def("assign_id_by_index", &CondorcetDomain::assign_id_by_index, py::arg("trs"), py::arg("index"), py::arg("rule_id"))
             .def("assign_rule_by_index", &CondorcetDomain::assign_rule_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
-            .def("unassigned_triplets", &CondorcetDomain::unassigned_triplets, py::arg("trs"))
-            .def("assigned_triplets", &CondorcetDomain::assigned_triplets, py::arg("trs"))
-            .def("evaluate_rules_on_triplet", &CondorcetDomain::evaluate_rules_on_triplet, py::arg("trs"), py::arg("triplet"))
-            .def("dynamic_triplet_ordering", &CondorcetDomain::dynamic_triplet_ordering, py::arg("trs"))
+            .def("unassigned_triples", &CondorcetDomain::unassigned_triples, py::arg("trs"))
+            .def("assigned_triples", &CondorcetDomain::assigned_triples, py::arg("trs"))
+            .def("evaluate_rules_on_triple", &CondorcetDomain::evaluate_rules_on_triple, py::arg("trs"), py::arg("triple"))
+            .def("dynamic_triple_ordering", &CondorcetDomain::dynamic_triple_ordering, py::arg("trs"))
             .def("uplift_trs", &CondorcetDomain::uplift_trs, py::arg("large"), py::arg("small"), py::arg("subset"))
             .def("trs_to_state", &CondorcetDomain::trs_to_state, py::arg("trs"))
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("state"))
@@ -118,16 +118,16 @@ PYBIND11_MODULE(cdl, m) {
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {
-                        TripletTupleIndex tti{};
-                        for (auto const& [key, val] : cd.m_triplet_index)
+                        TripleTupleIndex tti{};
+                        for (auto const& [key, val] : cd.m_triple_index)
                         {
                             tti[std::make_tuple(key[0], key[1], key[2])] = val;
                         }
                         return py::make_tuple(cd.n,
                                               cd.m_rules,
                                               cd.m_rule_id,
-                                              cd.m_num_triplets,
-                                              cd.m_triplet_elems,
+                                              cd.m_num_triples,
+                                              cd.m_triple_elems,
                                               tti,
                                               cd.m_sub_n,
                                               cd.m_subset_size,
@@ -142,15 +142,15 @@ PYBIND11_MODULE(cdl, m) {
                         CondorcetDomain cd(t[0].cast<Int8>());
                         cd.m_rules = t[1].cast<std::array<std::string, 6>>();
                         cd.m_rule_id = t[2].cast<std::map<std::string, Int8>>();
-                        cd.m_num_triplets = t[3].cast<Int32>();
-                        cd.m_triplet_elems = t[4].cast<std::vector<Int8>>();
-                        TripletIndex ti{};
-                        for (auto const& [key, val] : t[5].cast<TripletTupleIndex>())
+                        cd.m_num_triples = t[3].cast<Int32>();
+                        cd.m_triple_elems = t[4].cast<std::vector<Int8>>();
+                        TripleIndex ti{};
+                        for (auto const& [key, val] : t[5].cast<TripleTupleIndex>())
                         {
-                            Triplet triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
+                            Triple triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
                             ti[triple] = val;
                         }
-                        cd.m_triplet_index = ti;
+                        cd.m_triple_index = ti;
                         cd.m_sub_n = t[6].cast<Int8>();
                         cd.m_subset_size = t[7].cast<Int32>();
                         cd.m_subsets = t[8].cast<std::vector<std::vector<Int8>>>();
@@ -160,22 +160,22 @@ PYBIND11_MODULE(cdl, m) {
                     }
             ));
 
-    py::class_<TripletLaws>(m, "TripletLaws")
+    py::class_<TripleLaws>(m, "TripleLaws")
         .def(py::init<>())
-        .def_readwrite("triplet", &TripletLaws::triplet)
-        .def_readwrite("laws", &TripletLaws::laws)
+        .def_readwrite("triple", &TripleLaws::triple)
+        .def_readwrite("laws", &TripleLaws::laws)
         .def(py::pickle(
-                [](const TripletLaws& tl)
+                [](const TripleLaws& tl)
                 {
-                    return py::make_tuple(tl.triplet, tl.laws);
+                    return py::make_tuple(tl.triple, tl.laws);
                 },
                 [](py::tuple t)
                 {
                     if (t.size() != 2)
-                        throw std::runtime_error("Invalid state for TripletLaws object!");
+                        throw std::runtime_error("Invalid state for tripleLaws object!");
 
-                    TripletLaws tl{};
-                    tl.triplet = t[0].cast<Triplet>();
+                    TripleLaws tl{};
+                    tl.triple = t[0].cast<Triple>();
                     tl.laws = t[1].cast<std::vector<std::string>>();
 
                     return tl;
@@ -185,12 +185,12 @@ PYBIND11_MODULE(cdl, m) {
     py::class_<ForbiddenPermutation>(m, "ForbiddenPermutation")
         .def(py::init<Int8>(), py::arg("n"))
         .def_readonly("n", &ForbiddenPermutation::n)
-        .def_readonly("triplet_index", &ForbiddenPermutation::m_triplet_index)
+        .def_readonly("triple_index", &ForbiddenPermutation::m_triple_index)
         .def_readonly("laws", &ForbiddenPermutation::m_laws)
 
         .def("init_tls", &ForbiddenPermutation::init_tls)
         .def("init_tls_by_scheme", &ForbiddenPermutation::init_tls_by_scheme)
-        .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("triplet"), py::arg("laws"))
+        .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("triple"), py::arg("laws"))
         .def("assign_laws_by_index", &ForbiddenPermutation::assign_laws_by_index, py::arg("tls"), py::arg("index"), py::arg("laws"))
         .def("domain", &ForbiddenPermutation::domain, py::arg("tls"))
         .def("size", &ForbiddenPermutation::size, py::arg("tls"))
@@ -198,8 +198,8 @@ PYBIND11_MODULE(cdl, m) {
         .def(py::pickle(
                 [](const ForbiddenPermutation& fp)
                 {
-                    TripletTupleIndex tti{};
-                    for (auto const& [key, val] : fp.m_triplet_index)
+                    TripleTupleIndex tti{};
+                    for (auto const& [key, val] : fp.m_triple_index)
                     {
                         tti[std::make_tuple(key[0], key[1], key[2])] = val;
                     }
@@ -212,13 +212,13 @@ PYBIND11_MODULE(cdl, m) {
 
                     ForbiddenPermutation fp(t[0].cast<Int8>());
 
-                    TripletIndex ti{};
-                    for (auto const& [key, val] : t[1].cast<TripletTupleIndex>())
+                    TripleIndex ti{};
+                    for (auto const& [key, val] : t[1].cast<TripleTupleIndex>())
                     {
-                        Triplet triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
+                        Triple triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
                         ti[triple] = val;
                     }
-                    fp.m_triplet_index = ti;
+                    fp.m_triple_index = ti;
 
                     fp.m_laws = t[2].cast<std::array<std::string, 5>>();
                     return fp;
@@ -236,6 +236,6 @@ PYBIND11_MODULE(cdl, m) {
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
 
-    m.def("Fishburn_scheme", &Fishburn_scheme, py::arg("triplet"));
+    m.def("Fishburn_scheme", &Fishburn_scheme, py::arg("triple"));
 
 }

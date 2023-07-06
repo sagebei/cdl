@@ -6,17 +6,17 @@ import os
 def init_rules(cd, trs, low_exceptions, high_exceptions):
     middle = np.array(low_exceptions).max()
     for tr in trs:
-        i, j, k = tr.triplet
+        i, j, k = tr.triple
         if j <= middle < k:
             if (i, j) in low_exceptions:
-                trs = cd.assign_rule(trs, tr.triplet, "1N3")
+                trs = cd.assign_rule(trs, tr.triple, "1N3")
             else:
-                trs = cd.assign_rule(trs, tr.triplet, "3N1")
+                trs = cd.assign_rule(trs, tr.triple, "3N1")
         if i <= middle < j:
             if (j, k) in high_exceptions:
-                trs = cd.assign_rule(trs, tr.triplet, "3N1")
+                trs = cd.assign_rule(trs, tr.triple, "3N1")
             else:
-                trs = cd.assign_rule(trs, tr.triplet, "1N3")
+                trs = cd.assign_rule(trs, tr.triple, "1N3")
 
     return trs
 

@@ -6,11 +6,11 @@ class CondorcetDomain
 {
 private:
     void sort_trs(TRS& trs);
-    void filter_cd(const TripletRule& tr, CD& cd);
+    void filter_cd(const TripleRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
     bool check_permutation(const IntList& permutation, const TRS& trs);
     void expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size);
-    void filter_trs_list(std::list<TripletRule>& trs, const IntList& elem);
+    void filter_trs_list(std::list<TripleRule>& trs, const IntList& elem);
     TRS fetch_trs(const TRS& trs, Int8 i);
 
 public:
@@ -24,9 +24,9 @@ public:
                                          {m_rules[4], 5},
                                          {m_rules[5], 6}};
 
-    Int32 m_num_triplets{};
-    std::vector<Int8> m_triplet_elems{};
-    TripletIndex m_triplet_index{};
+    Int32 m_num_triples{};
+    std::vector<Int8> m_triple_elems{};
+    TripleIndex m_triple_index{};
 
     // member variable for constructing subsets
     Int8 m_sub_n{};
@@ -37,25 +37,25 @@ public:
     CondorcetDomain(Int8 n=8);
 
     // creating and manipulating TRS
-    void build_triplet_index(const TRS& trs);
+    void build_triple_index(const TRS& trs);
     TRS init_trs_random(bool is_sorted=false);
     TRS init_trs();
     TRS init_trs_lex();
     TRS init_trs_colex();
-    TRS init_trs_by_scheme(const std::function<std::string(Triplet)>& scheme_fun);
+    TRS init_trs_by_scheme(const std::function<std::string(Triple)>& scheme_fun);
 
     TRS clear_trs(TRS trs);
     TRS shuffle_trs(TRS trs, int seed=0);
     TRS transfer_trs(const TRS& from, TRS to);
 
-    TRS assign_id(TRS trs, const Triplet& triplet, const Int8 rule_id);
-    TRS assign_rule(TRS trs, const Triplet& triplet, const std::string& rule);
+    TRS assign_id(TRS trs, const Triple& triple, const Int8 rule_id);
+    TRS assign_rule(TRS trs, const Triple& triple, const std::string& rule);
     TRS assign_id_by_index(TRS trs, Int32 index, const Int8 rule_id);
     TRS assign_rule_by_index(TRS trs, Int32 index, const std::string& rule);
-    std::vector<Triplet> unassigned_triplets(const TRS& trs);
-    std::vector<Triplet> assigned_triplets(const TRS& trs);
-    std::vector<std::size_t> evaluate_rules_on_triplet(const TRS& trs, const Triplet& triplet);
-    Triplet dynamic_triplet_ordering(const TRS& trs);
+    std::vector<Triple> unassigned_triples(const TRS& trs);
+    std::vector<Triple> assigned_triples(const TRS& trs);
+    std::vector<std::size_t> evaluate_rules_on_triple(const TRS& trs, const Triple& triple);
+    Triple dynamic_triple_ordering(const TRS& trs);
     std::vector<Int8> trs_to_state(const TRS& trs);
     TRS state_to_trs(const std::vector<Int8>& state);
     TRS uplift_trs(const TRS& large, const TRS& small, const std::vector<Int8>& subset);

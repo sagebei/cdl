@@ -6,10 +6,10 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
 Condorcet Domain Library (CDL) provides all the functionalities pertaining to 
-creating and manipulating triplet-rules and condorcet domains (CD), including
-- assign rule to the triplets by rule scheme
-- fast and efficient construction of a CD given a set of triplet-rules
-- Closing operation: given a CD, find its corresponding triplet-rules
+creating and manipulating triple-rules and condorcet domains (CD), including
+- assign rule to the triples by rule scheme
+- fast and efficient construction of a CD given a set of triple-rules
+- Closing operation: given a CD, find its corresponding triple-rules
 - Hash a set of brother CDs such that all the CDs in it have the same hash number. 
 - Calculate the size of any the subset CDs.
 - Supported 4 rules: `1N3`, `3N1`, `2N3`, and `2N1`. Non-supposed rules are treated as not-assigned.
@@ -20,7 +20,7 @@ installed and used globally, enabling users to seamlessly integrate with tools w
 
 Directory structure 
 - bind: export all the functionality to a python module and provide the bash script install it. 
-- core: the key functionality for manipulating triplet-rules and condorcet domains.
+- core: the key functionality for manipulating triple-rules and condorcet domains.
 - tools: 
 
 Brief introduction to the Condorcet Domain.

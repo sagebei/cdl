@@ -22,7 +22,7 @@ class ExhaustiveSearch(Search):
                       n_chunks=1000,
                       shuffle=False):
 
-        num_assigned = len(self.cd.assigned_triplets(trs))
+        num_assigned = len(self.cd.assigned_triples(trs))
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
         self.folder_path += folder_name
@@ -48,11 +48,11 @@ class ExhaustiveSearch(Search):
                                               min(n_chunks, len(trs_score_list)))
         for i, t in enumerate(split_trs_score_list):
             self.save_trs_score_list(trs_list=t.tolist(),
-                                     sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triplets}",
+                                     sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triples}",
                                      filename=f"{i+1}.pkl")
 
 
-parser = argparse.ArgumentParser(description="complete search for the first n triplet",
+parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int, default=7)
 parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3"])
