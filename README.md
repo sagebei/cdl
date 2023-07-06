@@ -5,22 +5,26 @@
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
-Condorcet Domain Library (CDL) provides all the functionalities pertaining to 
-creating and manipulating triple-rules and condorcet domains (CD), including
-- assign rule to the triples by rule scheme
-- fast and efficient construction of a CD given a set of triple-rules
-- Closing operation: given a CD, find its corresponding triple-rules
-- Hash a set of brother CDs such that all the CDs in it have the same hash number. 
+Condorcet Domain Library (CDL) is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
+installed and used globally, enabling users to seamlessly integrate with tools writen in Python.  (CDL)
+provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation domains, including
+- triple ordering, and rule initialization and assignment
+- Domain construction and size calculation
+- Subset Functions
+- Hashing and identifying non-isomorphic CDs
+- Native support for any forbidden permutation domains
 - Calculate the size of any the subset CDs.
-- Supported 4 rules: `1N3`, `3N1`, `2N3`, and `2N1`. Non-supposed rules are treated as not-assigned.
+- Supported 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
 - etc.
 
-CDL is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
-installed and used globally, enabling users to seamlessly integrate with tools writen in Python.
+CDL supports all major operation systems, like Windows, Linux and MacOS. User can install it as a python module using 
+the provided bash scripts. 
 
-Directory structure 
+Directory structure:
+- algorithms: 
 - bind: export all the functionality to a python module and provide the bash script install it. 
 - core: the key functionality for manipulating triple-rules and condorcet domains.
+- python: 
 - tools: 
 
 Brief introduction to the Condorcet Domain.
@@ -58,26 +62,33 @@ int main()
 ## Get started with Python
 ### For more examples, see [CDL python tutorial](https://github.com/sagebei/cdl/blob/main/bind/Get%20Started%20with%20CDL.ipynb)
 ```python
-from cdl import CondorcetDomain, RuleScheme
+from cdl import *
 
-cd = CondorcetDomain(n=5)
-rs = RuleScheme()
-rs.add([2, 3], "3N1")
-rs.add([4], "1N3")
+def alternating_scheme(triplet):  # build the alternating scheme 
+   i, j, k = triplet
+   if j % 2 == 0:
+      return "2N1"
+   else:
+      return "2N3"
 
-trs = cd.initialize_by_scheme(rs)
-domain = cd.condorcet_domain(trs)
-print("Domain size: ", len(domain))
-cd.print_cd(domain)
+cd = CondorcetDomain(n=8)  # initialize the Condorcet domain object
+# initialize the trs with the predefined alternating scheme 
+trs = cd.init_trs_by_scheme(alternating_scheme)
+domain = cd.domain(trs)  # construct the Condorcet domain
+size = cd.size(trs)  # calculate the size of the resulting Condorcet domain (222)
+assert len(domain) == size  # True
 
-bros = cd.cd_brothers(domain)  # bros include domain itself
-for bro in bros:
-   cd.print_cd(bro)
+# change the rule assigned to the triplet [2, 3, 4] from "2N3" to "3N1"
+trs = cd.assign_rule(trs, [2, 3, 4], "3N1")
+size = cd.size(trs) # the size of the new domain is 210.
 
-# brother cds have the same hash value
-for bro in bros:
-   cds = cd.cd_brothers(bro)
-   print('Bros Hash: ', cd.hash_cd_brothers(cds))
+cd.init_subset(sub_n=6)
+substates = cd.subset_states(trs) # get a list of 28 subset states in 6 alternatives
+
+# build a list of domains
+domains = [cd.domain(cd.init_trs_random()) for _ in range(100)]
+# filter out the isomorphic domains
+non_isomorphic_cds = cd.non_isomorphic_domains(domains)  
 ```
 
 ## Installation for Python Program
