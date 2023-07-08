@@ -60,7 +60,7 @@ int main()
 ```
 
 ## Get started with Python
-### For more examples, see [CDL python tutorial](https://github.com/sagebei/cdl/blob/main/bind/Get%20Started%20with%20CDL.ipynb)
+### working with Condorcet domains
 ```python
 from cdl import *
 
@@ -89,6 +89,22 @@ substates = cd.subset_states(trs) # get a list of 28 subset states in 6 alternat
 domains = [cd.domain(cd.init_trs_random()) for _ in range(100)]
 # filter out the isomorphic domains
 non_isomorphic_cds = cd.non_isomorphic_domains(domains)  
+```
+### working with Forbidden Permutations
+```python
+# recreate the alternating scheme by forbidden permutations
+def alternating_scheme(triple):  
+    i, j, k = triple
+    if j % 2 == 0:
+        return ["213", "231"]
+    else:
+        return ["132", "312"]
+
+fp = ForbiddenPermutation(n=8)  # initialize the Forbidden Permutation object
+tls = fp.init_tls_by_scheme(alternating_scheme)
+domain = fp.domain(tls)
+size = fp.size(tls)  # 222
+assert len(domain) == size
 ```
 
 ## Installation for Python Program
