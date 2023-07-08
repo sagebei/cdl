@@ -123,12 +123,26 @@ int main()
     return 0;
 }
 
-
 ```
 ### working with Forbidden permutations
 ```c++
+#include "forbidden_permutation.h"
 
+std::vector<std::string> alternating_scheme(const Triple& triple)
+{
+    if ((triple[1] % 2) == 0)
+        return {"213", "231"};
+    else
+        return {"132", "312"};
+}
 
+int main()
+{
+    ForbiddenPermutation fp(8);
+    TLS tls = fp.init_tls_by_scheme(alternating_scheme);
+    std::cout << (fp.size(tls) == fp.domain(tls).size()) << std::endl;
+    return 0;
+}
 ```
 
 ## Cite
