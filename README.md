@@ -34,31 +34,6 @@ Brief introduction to the Condorcet Domain.
         style="width:350px;">
 </p>
 
-## Get started with C++
-```c++
-#include "condorcet_domain.h"
-
-int main()
-{
-    CondorcetDomain cd(5);
-    RuleScheme rs;
-    rs.add({2, 3}, "3N1");
-    rs.add({4}, "1N3");
-
-    TRS trs = cd.initialize_by_scheme(rs);
-    CD domain = cd.condorcet_domain(trs);
-    cd.print_cd(domain);
-    
-    CDS bros = cd.cd_brothers(domain);
-    for (const CD& bro: bros)
-    {
-        cd.print_cd(bro);
-    }
-    
-    return 0;
-}
-```
-
 ## Get started with Python
 ### working with Condorcet domains
 ```python
@@ -120,6 +95,41 @@ assert len(domain) == size
    or `source install.sh ~\PyCharmProjects\venv` to install it in a virtual environment
    created in the PycharmProjects directory.) 
 
+## Get started with C++
+### working with Condorcet domains
+```c++
+#include "condorcet_domain.h"
+
+std::string alternating_scheme(const Triple& triple)
+{
+    if ((triple[1] % 2) == 0)
+        return "2N1";
+    else
+        return "2N3";
+}
+
+int main()
+{
+    CondorcetDomain cd(6);
+    auto trs = cd.init_trs_by_scheme(alternating_scheme);
+    std::cout << (cd.size(trs) == cd.domain(trs).size()) << std::endl;
+
+    CD domain = cd.domain(trs);
+    CDS domains{};
+    domains.push_back(domain);
+    domains.push_back(domain);
+
+    CDS new_cds = cd.non_isomorphic_domains(domains);
+    return 0;
+}
+
+
+```
+### working with Forbidden permutations
+```c++
+
+
+```
 
 ## Cite
 Please cite our paper that introduced CDL library if you use it in a scientific publication. 
