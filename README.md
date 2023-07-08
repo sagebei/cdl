@@ -97,8 +97,9 @@ assert len(domain) == size
 
 ### Install CDL for Windows
 1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not
-2. Open a Git Bash terminal
-3. Run `source windows_install.sh \path\to\your\virtural_environment`
+2. Open a Git Bash terminal, and change working directory to `cdl/bind`
+3. Run `source windows_install.sh \path\to\your\virtural_environment`. For example, 
+   `source windows_install.sh /D/Anaconda3/Lib/site-packages/`
 
 ## Get started with C++
 ### working with Condorcet domains
