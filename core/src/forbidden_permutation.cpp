@@ -57,7 +57,7 @@ TLS ForbiddenPermutation::fetch_tls(const TLS& tls, Int8 i)
     TLS fetched_tls;
     for (const auto& tl: tls)
     {
-        if (tl.tuple[2] == i)
+        if (tl.tuple.back() == i)
             fetched_tls.push_back(tl);
     }
     return fetched_tls;
@@ -128,7 +128,8 @@ TLS ForbiddenPermutation::assign_laws_by_index(TLS tls, Int32 index, const Laws 
 CD ForbiddenPermutation::domain(const TLS& tls)
 {
     CD domain = {{1, 2}, {2, 1}};
-    for (Int8 i = 3; i <= n; i++) {
+    for (Int8 i = 3; i <= n; i++)
+    {
         expand_domain(domain, i);
         TLS fetched_tls = fetch_tls(tls, i);
         for (const TupleLaws& tl: fetched_tls)

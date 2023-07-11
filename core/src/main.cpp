@@ -23,24 +23,45 @@
 //    return 0;
 //}
 
-#include "forbidden_permutation.h"
+//#include "forbidden_permutation.h"
+//
+//Laws alternating_scheme(const Tuple& tuple)
+//{
+//    if ((tuple[1] % 2) == 0)
+//        return {{2, 1, 3}, {2, 3, 1}};
+//    else
+//        return {{1, 3, 2}, {3, 1, 2}};
+//}
+//
+//int main()
+//{
+//    ForbiddenPermutation fp(12, 3); // n=12, k=3
+//    TLS tls = fp.init_tls_by_scheme(alternating_scheme);
+//
+//    std::cout << fp.domain(tls).size() << std::endl;
+//    std::cout << fp.size(tls) << std::endl;
+//    print_tls(tls);
+//
+//    return 0;
+//}
 
-Laws alternating_scheme(const Tuple& tuple)
-{
-    if ((tuple[1] % 2) == 0)
-        return {{2, 1, 3}, {2, 3, 1}};
-    else
-        return {{1, 3, 2}, {3, 1, 2}};
-}
+#include "forbidden_permutation.h"
 
 int main()
 {
-    ForbiddenPermutation fp(12, 3); // n=12, k=3
-    TLS tls = fp.init_tls_by_scheme(alternating_scheme);
+    for (int n = 4; n < 13; n ++)
+    {
+        ForbiddenPermutation fp(n, 4); // n=12, k=3
+        TLS tls = fp.init_tls();
 
-    std::cout << fp.domain(tls).size() << std::endl;
-    std::cout << fp.size(tls) << std::endl;
-    print_tls(tls);
+        for (int i = 0; i < tls.size(); i ++)
+        {
+            tls = fp.assign_laws_by_index(tls, i, {{1, 3, 4, 2}});
+        }
+
+        std::cout << fp.domain(tls).size() << std::endl;
+        std::cout << fp.size(tls) << std::endl;
+    }
 
     return 0;
 }
