@@ -35,7 +35,7 @@ Laws alternating_scheme(const Tuple& tuple)
 
 int main()
 {
-    ForbiddenPermutation fp(12, 3);
+    ForbiddenPermutation fp(12, 3); // n=12, k=3
     TLS tls = fp.init_tls_by_scheme(alternating_scheme);
 
     std::cout << fp.domain(tls).size() << std::endl;
