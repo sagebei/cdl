@@ -1,35 +1,34 @@
 #include "forbidden_permutation.h"
 
-ForbiddenPermutation::ForbiddenPermutation(Int8 n)
+ForbiddenPermutation::ForbiddenPermutation(Int8 n, Int8 k)
 {
     this->n = n;
+    this->k = k;
 
-    for (Int8 i = 1; i <= n-2; i++)
-    {
-        for (Int8 j = i + 1; j <= n - 1; j++)
-        {
-            for (Int8 k = j + 1; k <= n; k++)
-                m_num_triples += 1;
-        }
-    }
+    std::vector<Int8> alternatives(n);
+    std::iota(alternatives.begin(), alternatives.end(), 1);
+    m_alternatives = alternatives;
+
+    m_num_tuples = combinations(m_alternatives, k).size();
 }
 
-void ForbiddenPermutation::filter_domain(const TripleLaws& tl, CD& domain)
+void ForbiddenPermutation::filter_domain(const TupleLaws& tl, CD& domain)
 {
-    const Int8& first = tl.triple[0], second = tl.triple[1], third = tl.triple[2];
-
     domain.remove_if([&](const IntList& permutation) {
-        for (const std::string& law: tl.laws)
+        std::vector<Int8> indices{};
+        for (const Int8& t : tl.tuple)
         {
-            int first_index = get_index(permutation, first);
-            int second_index = get_index(permutation, second);
-            int third_index = get_index(permutation, third);
+            int index = get_index(permutation, t);
+            indices.push_back(index);
+        }
 
-            if ((law == "132" && first_index > third_index && third_index > second_index)  ||
-                (law == "213" && second_index > first_index && first_index > third_index)  ||
-                (law == "231" && second_index > third_index && third_index > first_index)  ||
-                (law == "312" && third_index > first_index && first_index > second_index)  ||
-                (law == "321" && third_index > second_index && second_index > first_index))
+        for (const std::vector<Int8>& law: tl.laws)
+        {
+            std::vector<bool> is_obey{};
+            for (int i = 0; i < law.size()-1; i ++)
+                is_obey.push_back(indices[law[i]-1] < indices[law[i+1]-1]);
+
+            if (std::accumulate(is_obey.begin(), is_obey.end(), 0) == is_obey.size())
                 return true;
         }
         return false;
@@ -58,77 +57,69 @@ TLS ForbiddenPermutation::fetch_tls(const TLS& tls, Int8 i)
     TLS fetched_tls;
     for (const auto& tl: tls)
     {
-        if (tl.triple[2] == i)
+        if (tl.tuple[2] == i)
             fetched_tls.push_back(tl);
     }
     return fetched_tls;
 }
 
-void ForbiddenPermutation::build_triple_index(const TLS& tls)
+void ForbiddenPermutation::build_tuple_index(const TLS& tls)
 {
     for (Int32 i = 0; i < tls.size(); i ++)
     {
-        Triple triple = tls[i].triple;
-        m_triple_index[triple] = i;
+        Tuple tuple = tls[i].tuple;
+        m_tuple_index[tuple] = i;
     }
 }
 
 TLS ForbiddenPermutation::init_tls()
 {
     TLS tls;
-    for (Int8 i = 1; i < n+1; i ++)
+
+    std::vector<std::vector<Int8>> subsets = combinations(m_alternatives, k);
+    std::reverse(subsets.begin(), subsets.end());
+
+    for (std::vector<Int8>& subset : subsets)
     {
-        for (Int8 k = 1; k < n+1; k ++)
-        {
-            for (Int8 j = 1; j < n+1; j ++)
-            {
-                if (i < j && j < k)
-                {
-                    TripleLaws tl{};
-                    tl.triple = {i, j, k};
-                    tl.laws = {};
-                    tls.push_back(tl);
-                }
-            }
-        }
+        TupleLaws tl{};
+        tl.tuple = subset;
+        tl.laws = {};
+        tls.push_back(tl);
     }
 
-    build_triple_index(tls);
+    build_tuple_index(tls);
     return tls;
 }
 
-TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<std::vector<std::string>(Triple)>& scheme_fun)
+TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<Laws(Tuple)>& scheme_fun)
 {
-    TLS tls;
-    for (Int8 i = 1; i < n+1; i ++)
+    TLS tls{};
+
+    std::vector<Int8> alternatives(n);
+    std::iota(alternatives.begin(), alternatives.end(), 1);
+    std::vector<std::vector<Int8>> subsets = combinations(alternatives, k);
+    std::reverse(subsets.begin(), subsets.end());
+
+    for (std::vector<Int8>& subset : subsets)
     {
-        for (Int8 k = 1; k < n+1; k ++)
-        {
-            for (Int8 j = 1; j < n+1; j ++)
-            {
-                if (i < j && j < k)
-                {
-                    TripleLaws tl;
-                    tl.triple = {i, j, k};
-                    tl.laws = scheme_fun(tl.triple);
-                    tls.push_back(tl);
-                }
-            }
-        }
+        TupleLaws tl{};
+        tl.tuple = subset;
+        tl.laws = scheme_fun(tl.tuple);
+        tls.push_back(tl);
     }
 
-    build_triple_index(tls);
+    build_tuple_index(tls);
     return tls;
 }
 
-TLS ForbiddenPermutation::assign_laws(TLS tls, const Triple& triple, const std::vector<std::string> laws)
+TLS ForbiddenPermutation::assign_laws(TLS tls, const Tuple& tuple, const Laws laws)
 {
-    Int32 index = m_triple_index[triple];
+    Int32 index = m_tuple_index[tuple];
     tls[index].laws = laws;
     return tls;
 }
 
-TLS ForbiddenPermutation::assign_laws_by_index(TLS tls, Int32 index, const std::vector<std::string> laws)
+TLS ForbiddenPermutation::assign_laws_by_index(TLS tls, Int32 index, const Laws laws)
 {
     tls[index].laws = laws;
     return tls;
@@ -140,7 +131,7 @@ CD ForbiddenPermutation::domain(const TLS& tls)
     for (Int8 i = 3; i <= n; i++) {
         expand_domain(domain, i);
         TLS fetched_tls = fetch_tls(tls, i);
-        for (const TripleLaws& tl: fetched_tls)
+        for (const TupleLaws& tl: fetched_tls)
             filter_domain(tl, domain);
     }
 
@@ -150,31 +141,34 @@ CD ForbiddenPermutation::domain(const TLS& tls)
 
 bool ForbiddenPermutation::check_permutation(const IntList& permutation, const TLS& tls)
 {
-    for (const TripleLaws& tl : tls)
+    for (const TupleLaws& tl : tls)
     {
-        const Int8 &first = tl.triple[0], second = tl.triple[1], third = tl.triple[2];
+        bool skip = false;
+        std::vector<Int8> indices{};
 
-        for (const std::string& law: tl.laws)
+        for (const Int8& t : tl.tuple)
         {
-            int first_index = get_index(permutation, first);
-            if (first_index == -1)
-                continue;
-
-            int second_index = get_index(permutation, second);
-            if (second_index == -1)
-                continue;
-
-            int third_index = get_index(permutation, third);
-            if (third_index == -1)
-                continue;
-
-            if ((law == "132" && first_index > third_index && third_index > second_index)  ||
-                (law == "213" && second_index > first_index && first_index > third_index)  ||
-                (law == "231" && second_index > third_index && third_index > first_index)  ||
-                (law == "312" && third_index > first_index && first_index > second_index)  ||
-                (law == "321" && third_index > second_index && second_index > first_index))
-                return false;
+            int index = get_index(permutation, t);
+            if (index == -1)
+            {
+                skip = true;
+                break;
+            }
+            indices.push_back(index);
         }
+        if (skip)
+            continue;
+
+        for (const std::vector<Int8>& law: tl.laws)
+        {
+            std::vector<bool> is_obey{};
+            for (int i = 0; i < law.size()-1; i ++)
+                is_obey.push_back(indices[law[i]-1] < indices[law[i+1]-1]);
+
+            if (std::accumulate(is_obey.begin(), is_obey.end(), 0) == is_obey.size())
+                return false;   // does not pass the check
+        }
+
     }
     return true;
 }
@@ -201,7 +195,7 @@ void ForbiddenPermutation::expand_permutation(IntList& permutation, const TLS& t
 std::size_t ForbiddenPermutation::size(const TLS& tls)
 {
     CD init_permutations = {{1, 2}, {2, 1}};
-    std::size_t domain_size{};
+    std::size_t domain_size = 0;
     for (IntList& permutation : init_permutations)
     {
         expand_permutation(permutation, tls, 3, domain_size);
@@ -209,3 +203,19 @@ std::size_t ForbiddenPermutation::size(const TLS& tls)
     return domain_size;
 }
 
+void print_tls(const TLS& tls)
+{
+    for (const TupleLaws& tl : tls)
+    {
+        for (const Int8& t : tl.tuple)
+            std::cout << t;
+        std::cout << " : ";
+        for (const std::vector<Int8>& law : tl.laws)
+        {
+            for (const Int8& l : law)
+                std::cout << l;
+            std::cout << ", ";
+        }
+        std::cout << std::endl;
+    }
+}

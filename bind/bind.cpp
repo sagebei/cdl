@@ -13,10 +13,9 @@ namespace py = pybind11;
 
 typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripleTupleIndex;
 
-
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = "2.2.4";
+    m.attr("__version__") = "2.2.5";
 
     py::class_<TripleRule>(m, "TripleRule")
             .def(py::init<>())
@@ -160,37 +159,49 @@ PYBIND11_MODULE(cdl, m) {
                     }
             ));
 
-    py::class_<TripleLaws>(m, "TripleLaws")
+    m.def("print_trs", [](const TRS& trs) {
+        py::scoped_ostream_redirect stream(
+                std::cout,
+                py::module_::import("sys").attr("stdout")
+        );
+        print_trs(trs);
+    }, py::arg("trs"));
+
+
+    // Forbidden Permutations
+    py::class_<TupleLaws>(m, "TupleLaws")
         .def(py::init<>())
-        .def_readwrite("triple", &TripleLaws::triple)
-        .def_readwrite("laws", &TripleLaws::laws)
+        .def_readwrite("tuple", &TupleLaws::tuple)
+        .def_readwrite("laws", &TupleLaws::laws)
         .def(py::pickle(
-                [](const TripleLaws& tl)
+                [](const TupleLaws& tl)
                 {
-                    return py::make_tuple(tl.triple, tl.laws);
+                    return py::make_tuple(tl.tuple, tl.laws);
                 },
                 [](py::tuple t)
                 {
                     if (t.size() != 2)
                         throw std::runtime_error("Invalid state for tripleLaws object!");
 
-                    TripleLaws tl{};
-                    tl.triple = t[0].cast<Triple>();
-                    tl.laws = t[1].cast<std::vector<std::string>>();
+                    TupleLaws tl{};
+                    tl.tuple = t[0].cast<Tuple>();
+                    tl.laws = t[1].cast<Laws>();
 
                     return tl;
                 }
         ));
 
     py::class_<ForbiddenPermutation>(m, "ForbiddenPermutation")
-        .def(py::init<Int8>(), py::arg("n"))
+        .def(py::init<Int8, Int8>(), py::arg("n"), py::arg("k"))
         .def_readonly("n", &ForbiddenPermutation::n)
-        .def_readonly("triple_index", &ForbiddenPermutation::m_triple_index)
-        .def_readonly("laws", &ForbiddenPermutation::m_laws)
+        .def_readonly("k", &ForbiddenPermutation::k)
+        .def_readonly("num_tuples", &ForbiddenPermutation::m_num_tuples)
+        .def_readonly("alternatives", &ForbiddenPermutation::m_alternatives)
+        .def_readonly("tuple_index", &ForbiddenPermutation::m_tuple_index)
 
         .def("init_tls", &ForbiddenPermutation::init_tls)
         .def("init_tls_by_scheme", &ForbiddenPermutation::init_tls_by_scheme)
-        .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("triple"), py::arg("laws"))
+        .def("assign_laws", &ForbiddenPermutation::assign_laws, py::arg("tls"), py::arg("tuple"), py::arg("laws"))
         .def("assign_laws_by_index", &ForbiddenPermutation::assign_laws_by_index, py::arg("tls"), py::arg("index"), py::arg("laws"))
         .def("domain", &ForbiddenPermutation::domain, py::arg("tls"))
         .def("size", &ForbiddenPermutation::size, py::arg("tls"))
@@ -198,44 +209,31 @@ PYBIND11_MODULE(cdl, m) {
         .def(py::pickle(
                 [](const ForbiddenPermutation& fp)
                 {
-                    TripleTupleIndex tti{};
-                    for (auto const& [key, val] : fp.m_triple_index)
-                    {
-                        tti[std::make_tuple(key[0], key[1], key[2])] = val;
-                    }
-                    return py::make_tuple(fp.n, tti, fp.m_laws);
+                    return py::make_tuple(fp.n, fp.k, fp.m_tuple_index, fp.m_alternatives, fp.m_num_tuples);
                 },
                 [](py::tuple t)
                 {
-                    if (t.size() != 3)
+                    if (t.size() != 5)
                         throw std::runtime_error("Invalid state for ForbiddenPermutation object!");
 
-                    ForbiddenPermutation fp(t[0].cast<Int8>());
-
-                    TripleIndex ti{};
-                    for (auto const& [key, val] : t[1].cast<TripleTupleIndex>())
-                    {
-                        Triple triple = {std::get<0>(key), std::get<1>(key), std::get<2>(key)};
-                        ti[triple] = val;
-                    }
-                    fp.m_triple_index = ti;
-
-                    fp.m_laws = t[2].cast<std::array<std::string, 5>>();
+                    ForbiddenPermutation fp(t[0].cast<Int8>(), t[1].cast<Int8>());
+                    fp.m_tuple_index = t[2].cast<std::map<Tuple, Int32>>();
+                    fp.m_alternatives = t[3].cast<std::vector<Int8>>();
+                    fp.m_num_tuples = t[3].cast<Int8>();
                     return fp;
                 }
         ));
 
     // print function
-    m.def("print_trs", [](TRS trs) {
+    m.def("print_tls", [](const TLS& tls) {
         py::scoped_ostream_redirect stream(
                 std::cout,
                 py::module_::import("sys").attr("stdout")
         );
-        print_trs(trs);
-        }, py::arg("trs"));
+        print_tls(tls);
+        }, py::arg("tls"));
 
     m.def("benchmark_size", &benchmark_size, py::arg("n"));
-
     m.def("Fishburn_scheme", &Fishburn_scheme, py::arg("triple"));
 
 }

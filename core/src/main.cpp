@@ -25,18 +25,23 @@
 
 #include "forbidden_permutation.h"
 
-std::vector<std::string> alternating_scheme(const Triple& triple)
+Laws alternating_scheme(const Tuple& tuple)
 {
-    if ((triple[1] % 2) == 0)
-        return {"213", "231"};
+    if ((tuple[1] % 2) == 0)
+        return {{2, 1, 3}, {2, 3, 1}};
     else
-        return {"132", "312"};
+        return {{1, 3, 2}, {3, 1, 2}};
 }
 
 int main()
 {
-    ForbiddenPermutation fp(8);
+    ForbiddenPermutation fp(12, 3);
     TLS tls = fp.init_tls_by_scheme(alternating_scheme);
-    std::cout << (fp.size(tls) == fp.domain(tls).size()) << std::endl;
+
+    std::cout << fp.domain(tls).size() << std::endl;
+    std::cout << fp.size(tls) << std::endl;
+    print_tls(tls);
+
     return 0;
 }
+
