@@ -112,14 +112,14 @@ TLS ForbiddenPermutation::init_tls_by_scheme(const std::function<Laws(Tuple)>& s
     return tls;
 }
 
-TLS ForbiddenPermutation::assign_laws(TLS tls, const Tuple& tuple, const Laws laws)
+TLS ForbiddenPermutation::assign_laws(TLS tls, const Tuple& tuple, const Laws& laws)
 {
     Int32 index = m_tuple_index[tuple];
     tls[index].laws = laws;
     return tls;
 }
 
-TLS ForbiddenPermutation::assign_laws_by_index(TLS tls, Int32 index, const Laws laws)
+TLS ForbiddenPermutation::assign_laws_by_index(TLS tls, Int32 index, const Laws& laws)
 {
     tls[index].laws = laws;
     return tls;

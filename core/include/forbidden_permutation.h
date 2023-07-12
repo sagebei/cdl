@@ -32,8 +32,8 @@ public:
 
     TLS init_tls();
     TLS init_tls_by_scheme(const std::function<Laws(Tuple)>& scheme_fun);
-    TLS assign_laws(TLS tls, const Tuple& tuple, const Laws laws);
-    TLS assign_laws_by_index(TLS tls, Int32 index, const Laws laws);
+    TLS assign_laws(TLS tls, const Tuple& tuple, const Laws& laws);
+    TLS assign_laws_by_index(TLS tls, Int32 index, const Laws& laws);
 
     bool check_permutation(const IntList& permutation, const TLS& tls);
     void expand_permutation(IntList& permutation, const TLS& tls, Int8 alternative, std::size_t& domain_size);
