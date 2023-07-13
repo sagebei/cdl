@@ -17,7 +17,7 @@ provides a wide range of functionalities pertaining to Condorcet Domains (CD) an
 - Supported 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
 - etc.
 
-CDL supports all major operation systems, like Windows, Linux and MacOS. User can install it as a python module using 
+CDL supports all major operating systems, like Windows, Linux and MacOS. User can install it as a python module using 
 the provided bash scripts. 
 
 Directory structure:
