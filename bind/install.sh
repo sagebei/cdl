@@ -1,7 +1,7 @@
 git pull
 
-module load cmake
-module load gcc/12.1.0
+#module load cmake
+#module load gcc/12.1.0
 
 if [ -d "./build" ]; then
   rm -rf "./build"
