@@ -85,7 +85,8 @@ assert len(domain) == size
 ## Installation for Python Program
 ### Install CDL for Linux or MacOS
 1. Open a terminal and change working directory to the `cdl` folder
-2. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not
+2. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
+   and the cmake module by running `module load gcc cmake` if you are using a server machine. 
 3. Run `source install.sh \path\to\your\virtural_environment` to install 
    the library to an existing virtual environment in which you will import it.
    (This will download `pybind11` libray that is essential to compile the code,
@@ -96,7 +97,8 @@ assert len(domain) == size
    created in the PycharmProjects directory.) 
 
 ### Install CDL for Windows
-1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not
+1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the `gcc`
+   and the `cmake` module by running `module load gcc cmake` if you are using a server machine.
 2. Open a Git Bash terminal, and change working directory to `cdl/bind`
 3. Run `source windows_install.sh \path\to\your\virtural_environment`. For example, 
    `source windows_install.sh /D/Anaconda3/Lib/site-packages/`
