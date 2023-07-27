@@ -73,9 +73,10 @@ public:
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
     // cd brothers
-    std::size_t hash_cd(const CD& cd);
-    CD inverse_cd(const CD& cd, const IntList& permutation);
+    std::size_t hash_domain(const CD& cd);
+    CD inverse_domain(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
+    CDS isomorphic_domains(const CD& cd);
     CD isomorphic_hash(const CD& cd);
     CDS non_isomorphic_domains(CDS cds);
 

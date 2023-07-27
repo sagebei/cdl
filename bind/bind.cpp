@@ -109,8 +109,10 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_states_any_ordering", &CondorcetDomain::subset_states_any_ordering, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
 
-            .def("inverse_cd", &CondorcetDomain::inverse_cd, py::arg("cd"), py::arg("permutation"))
+            .def("hash_domain", &CondorcetDomain::hash_domain, py::arg("cd"))
+            .def("inverse_domain", &CondorcetDomain::inverse_domain, py::arg("cd"), py::arg("permutation"))
             .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
+            .def("isomorphic_domains", &CondorcetDomain::isomorphic_domains, py::arg("cd"))
             .def("isomorphic_hash", &CondorcetDomain::isomorphic_hash, py::arg("cd"))
             .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))

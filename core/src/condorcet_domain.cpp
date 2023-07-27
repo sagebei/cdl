@@ -594,7 +594,7 @@ std::tuple<std::vector<TRS>, std::vector<std::size_t>> CondorcetDomain::subset_c
     return std::make_tuple(all_trs, sizes);
 }
 
-std::size_t CondorcetDomain::hash_cd(const CD& cd)
+std::size_t CondorcetDomain::hash_domain(const CD& cd)
 {
     std::size_t seed = 0;
     auto iter = cd.begin();
@@ -612,7 +612,7 @@ std::size_t CondorcetDomain::hash_cd(const CD& cd)
     return seed;
 }
 
-CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation)
+CD CondorcetDomain::inverse_domain(const CD& cd, const IntList& permutation)
 {
     CDS cds;
     std::map<Int8, Int8> dict;
@@ -637,13 +637,26 @@ CD CondorcetDomain::inverse_cd(const CD& cd, const IntList& permutation)
 CDS CondorcetDomain::domain_brothers(const CD& cd)
 {
     CDS cds;
+
+    for (const IntList& permutation : cd)
+    {
+        CD new_cd = inverse_domain(cd, permutation);
+        new_cd.sort(compare_permutations);
+        cds.push_back(new_cd);
+    }
+    return cds;  // Each cd inside cds is sorted; but cds is not sorted.
+}
+
+CDS CondorcetDomain::isomorphic_domains(const CD& cd)
+{
+    CDS cds;
     std::vector<std::size_t> seeds;
 
     for (const IntList& permutation : cd)
     {
-        CD new_cd = inverse_cd(cd, permutation);
+        CD new_cd = inverse_domain(cd, permutation);
         new_cd.sort(compare_permutations);
-        std::size_t seed = hash_cd(new_cd);
+        std::size_t seed = hash_domain(new_cd);
         if (std::find(seeds.begin(), seeds.end(), seed) == seeds.end())
         {
             seeds.push_back(seed);
@@ -674,7 +687,7 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
         iso_list.push_back(cd);
         for (const IntList& permutation : cd)
         {
-            CD inversed_cd = inverse_cd(cd, permutation);
+            CD inversed_cd = inverse_domain(cd, permutation);
             inversed_cd.sort(compare_permutations);
             cds.remove(inversed_cd);
         }
