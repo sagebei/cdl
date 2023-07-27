@@ -159,8 +159,8 @@ Please cite our paper if you use CDL in a scientific publication.
 
 ## List of publications using CDL
 
-Zhou, Bei, and Søren Riis. "New Record-Breaking Condorcet Domains on 10 and 11 Alternatives." arXiv preprint arXiv:2303.06524 (2023).
-Akello-Egwell, Dolica, et al. "Condorcet Domains of Degree at most Seven." arXiv preprint arXiv:2306.15993 (2023).
+1. Zhou, Bei, and Søren Riis. "New Record-Breaking Condorcet Domains on 10 and 11 Alternatives." arXiv preprint arXiv:2303.06524 (2023).
+2. Akello-Egwell, Dolica, et al. "Condorcet Domains of Degree at most Seven." arXiv preprint arXiv:2306.15993 (2023).
 
 ## Our Team
 CDL is developed and maintained by Bei Zhou and Dr Soren Riis 
