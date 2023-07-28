@@ -633,20 +633,6 @@ CD CondorcetDomain::inverse_domain(const CD& cd, const IntList& permutation)
     return new_cd;
 }
 
-
-CDS CondorcetDomain::domain_brothers(const CD& cd)
-{
-    CDS cds;
-
-    for (const IntList& permutation : cd)
-    {
-        CD new_cd = inverse_domain(cd, permutation);
-        new_cd.sort(compare_permutations);
-        cds.push_back(new_cd);
-    }
-    return cds;  // Each cd inside cds is sorted; but cds is not sorted.
-}
-
 CDS CondorcetDomain::isomorphic_domains(const CD& cd)
 {
     CDS cds;
@@ -668,7 +654,7 @@ CDS CondorcetDomain::isomorphic_domains(const CD& cd)
 
 CD CondorcetDomain::isomorphic_hash(const CD& cd)
 {
-    CDS cds = domain_brothers(cd);
+    CDS cds = isomorphic_domains(cd);
     cds.sort(compare_cds);
     return cds.front();   // This cd is sorted.
 }

@@ -111,7 +111,6 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("hash_domain", &CondorcetDomain::hash_domain, py::arg("cd"))
             .def("inverse_domain", &CondorcetDomain::inverse_domain, py::arg("cd"), py::arg("permutation"))
-            .def("domain_brothers", &CondorcetDomain::domain_brothers, py::arg("cd"))
             .def("isomorphic_domains", &CondorcetDomain::isomorphic_domains, py::arg("cd"))
             .def("isomorphic_hash", &CondorcetDomain::isomorphic_hash, py::arg("cd"))
             .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
