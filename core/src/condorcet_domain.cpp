@@ -682,6 +682,47 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
     return iso_list;
 }
 
+bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std::string> rules)
+{
+    std::vector<Int8> alternatives(triple[2]);
+    std::iota(alternatives.begin(), alternatives.end(), 1);
+
+    do {
+        TRS new_trs = init_trs();
+        std::map<Int8, Int8> perm_dict{};
+        for (Int8 i = 0; i < alternatives.size(); i ++)
+            perm_dict[alternatives[i]] = i + 1;
+
+        TRS old_trs(trs.begin(), trs.begin() + m_triple_index[triple]);
+        for (const TripleRule& tr : old_trs)
+        {
+            Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
+            std::sort(new_triple.begin(), new_triple.end());
+
+            std::string rule = m_rules[tr.rule_id - 1];
+            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[std::stoi(rule)-1]);
+            Int8 index = std::distance(new_triple.begin(), index_pointer);
+            std::string new_rule = std::to_string(index) + rule[1] + rule[2];
+
+            if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
+                goto failed;
+            new_trs = assign_rule(new_trs, new_triple, new_rule);
+        }
+
+        std::vector<Int8> state = trs_to_state(trs);
+        std::vector<Int8> new_state = trs_to_state(new_trs);
+        if (state < new_state)
+            return true;
+        else
+            goto failed;
+
+    }
+    while(std::next_permutation(alternatives.begin(), alternatives.end()));
+    failed:
+    return false;
+}
+
+
 TRS CondorcetDomain::domain_to_trs(const CD &cd)
 {
     std::list<TripleRule> all_trs;

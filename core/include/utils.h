@@ -12,6 +12,7 @@
 #include <functional>
 #include <numeric>
 #include <utility>
+#include <string>
 
 
 typedef std::uint_fast16_t Int8;
@@ -38,7 +39,7 @@ struct TripleHasher
 
 bool compare_permutations(const IntList& first, const IntList& second);
 bool compare_cds(CD& first_cd, CD& second_cd);
-int get_index(const IntList& elem, const Int8& value);
+int get_index(const IntList& permutation, const Int8& value);
 void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int32 index, std::vector<Int8>& set, std::vector<Int8>& current_subset);
 std::vector<std::vector<Int8>> combinations(std::vector<Int8>& set, Int8 sub_n);
 

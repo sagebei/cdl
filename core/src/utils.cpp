@@ -61,18 +61,14 @@ bool compare_cds(CD& first_cd, CD& second_cd)
 }
 
 // get the index of a value in a list
-int get_index(const IntList& elem, const Int8& value)
+int get_index(const IntList& permutation, const Int8& value)
 {
-    auto iter = elem.begin();
-    for (Int8 i = 0; i < elem.size(); i ++)
-    {
-        if (value == *iter)
-        {
-            return i;
-        }
-        iter = std::next(iter, 1);
-    }
-    return -1;
+    const auto value_index_iter = std::find(permutation.begin(), permutation.end(), value);
+    if (value_index_iter != permutation.end())
+        return std::distance(permutation.begin(), value_index_iter);
+    else
+        return -1;
+
 }
 
 void get_subset(std::vector<std::vector<Int8>>& subsets, Int8 n, Int8 sub_n, Int32 index, std::vector<Int8>& set, std::vector<Int8>& current_subset)
