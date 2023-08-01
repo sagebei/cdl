@@ -687,7 +687,12 @@ bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std:
     std::vector<Int8> alternatives(triple[2]);
     std::iota(alternatives.begin(), alternatives.end(), 1);
 
+
     do {
+        for(const auto a : alternatives)
+            std::cout << a;
+        std::cout << std::endl;
+
         TRS new_trs = init_trs();
         std::map<Int8, Int8> perm_dict{};
         for (Int8 i = 0; i < alternatives.size(); i ++)
@@ -699,26 +704,37 @@ bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std:
             Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
             std::sort(new_triple.begin(), new_triple.end());
 
+            for(const auto a : new_triple)
+                std::cout << a;
+            std::cout << std::endl;
+
             std::string rule = m_rules[tr.rule_id - 1];
+
+            std::cout << rule << std::endl;
+
             auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[std::stoi(rule)-1]);
             Int8 index = std::distance(new_triple.begin(), index_pointer);
             std::string new_rule = std::to_string(index) + rule[1] + rule[2];
 
+            std::cout << new_rule << std::endl;
+
             if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
-                goto failed;
+                goto _next_permutation;
             new_trs = assign_rule(new_trs, new_triple, new_rule);
         }
+        _next_permutation:
+        continue;
 
         std::vector<Int8> state = trs_to_state(trs);
         std::vector<Int8> new_state = trs_to_state(new_trs);
         if (state < new_state)
             return true;
         else
-            goto failed;
+            goto _failed;
 
     }
     while(std::next_permutation(alternatives.begin(), alternatives.end()));
-    failed:
+    _failed:
     return false;
 }
 
