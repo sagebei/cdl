@@ -43,7 +43,8 @@ class ExhaustiveSearch(Search):
 
                     trs_score_list.clear()
                     next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
-                    trs_score_list = next_trs_score_list[-top_n:]
+                    if top_n != -1:
+                        trs_score_list = next_trs_score_list[-top_n:]
 
                 self.save_trs_score_list(trs_score_list,
                                          f"{self.cd.num_triples}_{self.cd.num_triples}",
