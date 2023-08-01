@@ -17,7 +17,6 @@ python ~/cdl/python/complete_search.py -n $1  \
                                        -threshold 0  \
                                        -top_n -1  \
                                        -n_complete $2 \
-                                       -n_cores 1000  \
                                        -n_chunks 1000000 \
                                        -shuffle 1 \
                                        -rules "2N1" "2N3" \

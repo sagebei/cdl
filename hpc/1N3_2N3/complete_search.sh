@@ -15,7 +15,7 @@ source ~/venv/bin/activate
 python ~/cdl/python/complete_search.py -n  $1 \
                                        -cutoff 14  \
                                        -threshold 0  \
-                                       -top_n 10000000000  \
+                                       -top_n -1  \
                                        -n_complete 30 \
                                        -n_chunks 10000 \
                                        -shuffle 1 \
