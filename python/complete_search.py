@@ -22,6 +22,9 @@ class ExhaustiveSearch(Search):
                       n_chunks=1000,
                       shuffle=False):
 
+        if n_complete == -1:
+            n_complete = cd.num_triples
+
         num_assigned = len(self.cd.assigned_triples(trs))
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
