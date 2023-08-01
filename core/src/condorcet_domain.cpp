@@ -684,57 +684,57 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
 
 bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std::string> rules)
 {
+//    Int8 largest_alternatives{};
+//    for (auto iter=trs.begin(); iter <= trs.begin() + m_triple_index[triple]; iter++)
+//    {
+//        if (largest_alternatives < iter->triple[2])
+//            largest_alternatives = iter->triple[2];
+//    }
     std::vector<Int8> alternatives(triple[2]);
     std::iota(alternatives.begin(), alternatives.end(), 1);
 
-
     do {
-        for(const auto a : alternatives)
-            std::cout << a;
-        std::cout << std::endl;
 
-        TRS new_trs = init_trs();
+        TRS new_trs = init_trs_colex();
         std::map<Int8, Int8> perm_dict{};
         for (Int8 i = 0; i < alternatives.size(); i ++)
             perm_dict[alternatives[i]] = i + 1;
 
-        TRS old_trs(trs.begin(), trs.begin() + m_triple_index[triple]);
+        TRS old_trs(trs.begin(), trs.begin() + m_triple_index[triple] + 1);
+        bool go_to_next = false;
         for (const TripleRule& tr : old_trs)
         {
             Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
+
             std::sort(new_triple.begin(), new_triple.end());
-
-            for(const auto a : new_triple)
-                std::cout << a;
-            std::cout << std::endl;
-
             std::string rule = m_rules[tr.rule_id - 1];
 
-            std::cout << rule << std::endl;
 
-            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[std::stoi(rule)-1]);
-            Int8 index = std::distance(new_triple.begin(), index_pointer);
+            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[std::stoi(rule)-1]]);
+            Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
             std::string new_rule = std::to_string(index) + rule[1] + rule[2];
 
-            std::cout << new_rule << std::endl;
-
             if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
-                goto _next_permutation;
+            {
+                go_to_next = true;
+                break;
+            }
             new_trs = assign_rule(new_trs, new_triple, new_rule);
         }
-        _next_permutation:
-        continue;
 
-        std::vector<Int8> state = trs_to_state(trs);
-        std::vector<Int8> new_state = trs_to_state(new_trs);
-        if (state < new_state)
-            return true;
+        if (go_to_next == false)
+        {
+            std::vector<Int8> state = trs_to_state(trs);
+            std::vector<Int8> new_state = trs_to_state(new_trs);
+            if (state < new_state)
+                return true;
+        }
         else
-            goto _failed;
+            go_to_next = false;
 
     }
     while(std::next_permutation(alternatives.begin(), alternatives.end()));
-    _failed:
+
     return false;
 }
 
