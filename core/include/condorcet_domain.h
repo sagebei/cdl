@@ -5,7 +5,6 @@
 class CondorcetDomain
 {
 private:
-    void sort_trs(TRS& trs);
     void filter_cd(const TripleRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
     bool check_permutation(const IntList& permutation, const TRS& trs);
@@ -38,6 +37,7 @@ public:
 
     // creating and manipulating TRS
     void build_triple_index(const TRS& trs);
+    TRS sort_trs(TRS trs);
     TRS init_trs_random(bool is_sorted=false);
     TRS init_trs();
     TRS init_trs_lex();

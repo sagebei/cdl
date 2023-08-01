@@ -77,6 +77,7 @@ PYBIND11_MODULE(cdl, m) {
 
             // creating and manipulating TRS
             .def("build_triple_index", &CondorcetDomain::build_triple_index, py::arg("trs"))
+            .def("sort_trs", &CondorcetDomain::sort_trs, py::arg("trs"))
             .def("init_trs_random", &CondorcetDomain::init_trs_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs)
             .def("init_trs_lex", &CondorcetDomain::init_trs_lex)

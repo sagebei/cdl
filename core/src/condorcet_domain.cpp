@@ -17,31 +17,6 @@ CondorcetDomain::CondorcetDomain(Int8 n)
     }
 }
 
-void CondorcetDomain::sort_trs(TRS& trs)
-{
-    auto start = trs.begin();
-    auto end = trs.end();
-
-    TRS sorted_trs;
-    while(true)
-    {
-        sorted_trs.push_back(*start);
-        start++;
-        if(start == end) break;
-
-        end--;
-        sorted_trs.push_back(*end);
-        if(start == end) break;
-    }
-    trs = sorted_trs;
-}
-
-void CondorcetDomain::build_triple_index(const TRS& trs)
-{
-    for (Int32 i = 0; i < trs.size(); i ++)
-        m_triple_index[trs[i].triple] = i;
-}
-
 void CondorcetDomain::filter_cd(const TripleRule& tr, CD& cd)
 {
     const Int8& first = tr.triple[0], second = tr.triple[1], third = tr.triple[2];
@@ -173,6 +148,34 @@ TRS CondorcetDomain::fetch_trs(const TRS& trs, Int8 i)
     return fetched_trs;
 }
 
+void CondorcetDomain::build_triple_index(const TRS& trs)
+{
+    for (Int32 i = 0; i < trs.size(); i ++)
+        m_triple_index[trs[i].triple] = i;
+}
+
+TRS CondorcetDomain::sort_trs(TRS trs)
+{
+    auto start = trs.begin();
+    auto end = trs.end();
+
+    TRS sorted_trs;
+    while(true)
+    {
+        sorted_trs.push_back(*start);
+        start++;
+        if(start == end) break;
+
+        end--;
+        sorted_trs.push_back(*end);
+        if(start == end) break;
+    }
+    trs = sorted_trs;
+
+    build_triple_index(trs);
+    return trs;
+}
+
 TRS CondorcetDomain::init_trs_random(bool is_sorted)
 {
     std::random_device rd;
@@ -198,9 +201,7 @@ TRS CondorcetDomain::init_trs_random(bool is_sorted)
     }
 
     if (is_sorted)
-        sort_trs(trs);
-
-    build_triple_index(trs);
+        trs = sort_trs(trs);
 
     return trs;
 }
@@ -257,7 +258,7 @@ TRS CondorcetDomain::init_trs_colex()
     {
         for (Int8 j = 2; j < k; j ++)
         {
-            for (Int8 i = 1; i < j;  i++)
+            for (Int8 i = 1; i < j; i++)
             {
                 TripleRule tr{};
                 tr.triple = {i, j, k};
@@ -684,18 +685,18 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
 
 bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std::string> rules)
 {
-//    Int8 largest_alternatives{};
-//    for (auto iter=trs.begin(); iter <= trs.begin() + m_triple_index[triple]; iter++)
-//    {
-//        if (largest_alternatives < iter->triple[2])
-//            largest_alternatives = iter->triple[2];
-//    }
-    std::vector<Int8> alternatives(triple[2]);
+    Int8 largest_alternatives{};
+    for (auto iter=trs.begin(); iter <= trs.begin() + m_triple_index[triple]; iter++)
+    {
+        if (largest_alternatives < iter->triple[2])
+            largest_alternatives = iter->triple[2];
+    }
+    std::vector<Int8> alternatives(largest_alternatives);
     std::iota(alternatives.begin(), alternatives.end(), 1);
 
     do {
+        TRS new_trs = init_trs(); // sort_trs(init_trs());
 
-        TRS new_trs = init_trs_colex();
         std::map<Int8, Int8> perm_dict{};
         for (Int8 i = 0; i < alternatives.size(); i ++)
             perm_dict[alternatives[i]] = i + 1;
@@ -708,7 +709,6 @@ bool CondorcetDomain::is_trs_isomorphic(TRS trs, Triple triple, std::vector<std:
 
             std::sort(new_triple.begin(), new_triple.end());
             std::string rule = m_rules[tr.rule_id - 1];
-
 
             auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[std::stoi(rule)-1]]);
             Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
