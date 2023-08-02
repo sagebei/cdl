@@ -1,4 +1,4 @@
-# Prioritised Restricted Search Implementation
+# Prioritised Restricted Search Algorithms Implementation
 
 ## Introduction
 Prioritised Research Search is a fast algorithm that has discovered new record-breaking 
@@ -9,7 +9,7 @@ We recommend using the `Prioritised_Restriction_Search.ipynb` under `notebooks` 
 in parallel on many CPU cores via array jobs. 
 
 
-## Running PRS using array jobs
+## Running PRS on array jobs
 We provide an example to apply the PRS algorthm to search for the maximum 
 width Condorcet domains for 8 alternatives that are build from 4 rules (`2N1`, `2N3`, `1N2`, `3N2`) by 
 running it on multiple CPU cores. `TRS` denotes a list of triples with rule assigned. 
