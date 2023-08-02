@@ -24,7 +24,7 @@ python cdl/python/complete_search.py -n 8 \
                                      -top_n -1  \
                                      -n_complete 20 \
                                      -n_chunks 100 \
-                                     -shuffle 1 \
+                                     -shuffle "" \
                                      -rules "1N3" "3N1" "2N3" "2N1" \
                                      -lib_path "/data/home/acw554/cdl" \
                                      -result_path "/data/scratch/acw554/search_4_rules"
@@ -38,15 +38,15 @@ python cdl/python/parallel_search.py -n 8  \
                                      -top_n -1  \
                                      -n_complete 20 \
                                      -n_chunks 100 \
-                                     -shuffle 1 \
+                                     -shuffle "" \
                                      -rules "1N3" "3N1" "2N3" "2N1" \
                                      -lib_path "/data/home/acw554/cdl" \
-                                     -result_path "/data/scratch/acw554/search_4_rules" \
+                                     -result_path "/data/scratch/acw554/search_4_rules" 
 ```
 
 4. Calculate the resulting Condorcet domain sizes
 ```console
-python cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/search_4_rules/
+python cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/search_4_rules/6/16_0_-1_100_56_False_1N3_3N1_2N3_2N1
 ```
 
 If you have issue running these commands, please feel free to raise an issue. 
