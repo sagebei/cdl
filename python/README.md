@@ -33,7 +33,7 @@ python cdl/python/complete_search.py -n 8 \
                                      -n_complete 20 \
                                      -n_chunks 100 \
                                      -shuffle "" \
-                                     -rules "1N3" "3N1" "2N3" "2N1" \
+                                     -rules 2N1 2N3 1N2 3N2 \
                                      -lib_path "/data/home/acw554/cdl" \
                                      -result_path "/data/scratch/acw554/maximum_width"
 ```
@@ -48,7 +48,7 @@ python cdl/python/parallel_search.py -n 8  \
                                      -n_complete 20 \
                                      -n_chunks 100 \
                                      -shuffle "" \
-                                     -rules "1N3" "3N1" "2N3" "2N1" \
+                                     -rules 2N1 2N3 1N2 3N2 \
                                      -lib_path "/data/home/acw554/cdl" \
                                      -result_path "/data/scratch/acw554/maximum_width" 
 ```
@@ -86,7 +86,7 @@ python cdl/python/parallel_search.py -n 8  \
                                      -n_complete 20 \
                                      -n_chunks 100 \
                                      -shuffle "" \
-                                     -rules "1N3" "3N1" "2N3" "2N1" \
+                                     -rules 2N1 2N3 1N2 3N2 \
                                      -lib_path "/data/home/acw554/cdl" \
                                      -result_path "/data/scratch/acw554/maximum_width" 
 
