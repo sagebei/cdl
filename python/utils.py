@@ -15,11 +15,14 @@ class StaticFeature5:
         suited_filename = ""
         num_rules = 6
         for filename in os.listdir(self.database_folder):
-            database_rules = filename.split("_")[2:]
-            if set(rules).issubset(set(database_rules)):
-                if len(database_rules) <= num_rules:
-                    num_rules = len(database_rules)
-                    suited_filename = filename
+            name, extension = filename.split(".")
+            if extension == 'pkl':
+                database_rules = name.split("_")[2:]
+                print(filename, set(database_rules))
+                if set(rules).issubset(set(database_rules)):
+                    if len(database_rules) <= num_rules:
+                        num_rules = len(database_rules)
+                        suited_filename = filename
 
         with open(self.database_folder + suited_filename, "rb") as f:
             self.dataset_5 = pickle.load(f)

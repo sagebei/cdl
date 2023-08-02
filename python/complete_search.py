@@ -1,5 +1,5 @@
 from cdl import *
-from utils import StaticFeature5, Search
+from utils import Search
 from tools import init_rules, flip_exceptions
 import argparse
 import numpy as np
@@ -9,9 +9,6 @@ import random
 class ExhaustiveSearch(Search):
     def __init__(self, cd, rules, lib_path, result_path):
         super().__init__(cd, rules, lib_path, result_path)
-        self.cd = cd
-        self.sf = StaticFeature5(cd, rules=rules, lib_path=lib_path)
-        self.rules = rules
 
     def static_search(self,
                       trs,
@@ -62,12 +59,12 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=7)
-parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3"])
-parser.add_argument("-cutoff", type=int, default=14)
+parser.add_argument("-n", type=int, default=6)
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3", "1N3", "3N1"])
+parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
-parser.add_argument("-top_n", type=int, default=100000)
-parser.add_argument("-n_complete", type=int, default=35)
+parser.add_argument("-top_n", type=int, default=10000)
+parser.add_argument("-n_complete", type=int, default=10)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="..")
