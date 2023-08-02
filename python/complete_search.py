@@ -10,7 +10,7 @@ class ExhaustiveSearch(Search):
     def __init__(self, cd, rules, lib_path, result_path):
         super().__init__(cd, rules, lib_path, result_path)
         self.cd = cd
-        self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
+        self.sf = StaticFeature5(cd, rules=rules, lib_path=lib_path)
         self.rules = rules
 
     def static_search(self,

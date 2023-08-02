@@ -2,17 +2,17 @@ from cdl import *
 import pickle
 from copy import deepcopy
 from itertools import combinations, product
-
+import argparse
 
 class Generator:
-    def __init__(self):
+    def __init__(self, rules):
         self.cd = CondorcetDomain(n=5)
         self.trs = self.cd.init_trs()
         for tr in self.trs:
             self.trs = self.cd.assign_rule(self.trs, tr.triple, "3N1")
         self.triples = [tr.triple for tr in self.trs]
         self.dataset_dict = {}
-        self.rules = ["2N3", "2N1"]
+        self.rules = rules
 
     def generate_full(self):
         trs = deepcopy(self.trs)
@@ -33,7 +33,7 @@ class Generator:
 
                 self.generate_on_trs(trs)
 
-        with open("database_5_2_rules.pkl", "wb") as f:
+        with open(f"database_5_{'_'.join(self.rules)}.pkl", "wb") as f:
             pickle.dump(self.dataset_dict, f)
 
     def generate_on_trs(self, trs):
@@ -61,10 +61,14 @@ class Generator:
             self.dataset_dict[tuple(state)] = largest_size
 
 
-if __name__ == "__main__":
-    from collections import Counter
+parser = argparse.ArgumentParser(description="build database for 5 alternatives",
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3"])
+args = parser.parse_args()
+config = vars(args)
 
-    gen = Generator()
+gen = Generator(rules=config['rules'])
+gen.generate_full()
+gen.generate_all()
 
-    gen.generate_full()
-    gen.generate_all()
+#  python database_5.py -rules 2N1 2N3 1N2 3N2

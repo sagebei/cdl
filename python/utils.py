@@ -6,17 +6,23 @@ from tools import Fishburn_scores
 
 
 class StaticFeature5:
-    def __init__(self, cd, n_rules=4, lib_path="~/cdl"):
+    def __init__(self, cd, rules, lib_path="~/cdl"):
         self.cd = cd
         self.cd.init_trs()
         self.cd.init_subset(5)
-        if n_rules <= 4:
-            with open(f'{lib_path}/python/databases/database_5.pkl', "rb") as f:
-                self.dataset_5 = pickle.load(f)
-        else:
-            with open(f'{lib_path}/python/databases/database_5_six_rules.pkl', "rb") as f:
-                self.dataset_5 = pickle.load(f)
-        self.lib_path = lib_path
+        self.database_folder = f'{lib_path}/python/databases/'
+
+        suited_filename = ""
+        num_rules = 6
+        for filename in os.listdir(self.database_folder):
+            database_rules = filename.split("_")[2:]
+            if set(rules).issubset(set(database_rules)):
+                if len(database_rules) <= num_rules:
+                    num_rules = len(database_rules)
+                    suited_filename = filename
+
+        with open(self.database_folder + suited_filename, "rb") as f:
+            self.dataset_5 = pickle.load(f)
 
     def fetch_feature(self, trs):
         sizes = []
@@ -50,7 +56,7 @@ class StaticFeature5:
 class Search:
     def __init__(self, cd, rules, lib_path, result_path):
         self.cd = cd
-        self.sf = StaticFeature5(cd, n_rules=len(rules), lib_path=lib_path)
+        self.sf = StaticFeature5(cd, rules=rules, lib_path=lib_path)
         self.rules = rules
         self.lib_path = lib_path
         self.result_path = result_path
