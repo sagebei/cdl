@@ -1,3 +1,10 @@
+# Prioritised Restricted Search Implementation
+
+Prioritised Research Search is a fast algorithm that has discovered new record-breaking 
+Condorcet domains, built on top of the CDL library. 
+
+1. We recommend  
+
 ```console
 python complete_search.py -n 8 \
                           -cutoff 16  \
