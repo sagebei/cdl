@@ -1,8 +1,8 @@
 # Prioritised Restricted Search Algorithms Implementation
 
 ## Introduction
-Prioritised Research Search is a fast algorithm that has discovered new record-breaking 
-Condorcet domains, built on top of the CDL library. 
+Prioritised Research Search [Zhou and Riss (2023)](https://arxiv.org/pdf/2303.06524.pdf) is a fast algorithm that has discovered new record-breaking 
+Condorcet domains. We implemented this algorithm using the CDL library 
 
 We recommend using the `Prioritised_Restriction_Search.ipynb` under `notebooks` folder to 
 conduce experiment on small number of alternatives. Please refer to the section below on 
@@ -19,7 +19,7 @@ running it on multiple CPU cores. `TRS` denotes a list of triples with rule assi
 function of the search. The database is saved in the `cdl/python/databases/` folder
 in which the program will look for it automatically. 
 ```console
-python ~/cdl/python/databases/database_5.py 2N1 2N3 1N2 3N2
+python ~/cdl/python/databases/database_5.py -rules 2N1 2N3 1N2 3N2
 ```
 
 2. Start the search: the following configuration starts the search for n=8 with the cutoff value
