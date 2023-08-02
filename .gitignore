@@ -16,6 +16,9 @@ cmake-build-debug/*
 .idea/
 .idea/*
 
+__pycache__
+.DS_Store
+
 results
 results/*
 
