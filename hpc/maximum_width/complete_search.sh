@@ -18,7 +18,7 @@ python ~/cdl/python/complete_search.py -n $1  \
                                        -top_n -1  \
                                        -n_complete $2 \
                                        -n_chunks 100 \
-                                       -shuffle "" \
+                                       -shuffle "." \
                                        -rules "2N1" "2N3" "1N2" "3N2" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/maximum_width"

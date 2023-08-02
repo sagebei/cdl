@@ -33,7 +33,7 @@ python ~/cdl/python/complete_search.py -n 8  \
                                        -top_n -1  \
                                        -n_complete 20 \
                                        -n_chunks 100 \
-                                       -shuffle "" \
+                                       -shuffle "." \
                                        -rules "2N1" "2N3" "1N2" "3N2" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/maximum_width"
@@ -49,7 +49,7 @@ python ~/cdl/python/parallel_search.py -n 8  \
                                        -top_n -1  \
                                        -n_complete 20 \
                                        -n_chunks 100 \
-                                       -shuffle "" \
+                                       -shuffle "." \
                                        -rules "2N1" "2N3" "1N2" "3N2" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/maximum_width"
@@ -59,7 +59,7 @@ python ~/cdl/python/parallel_search.py -n 8  \
 calculate the sizes for the TRS in each bucket. Again, it benefits from array jobs as well.
 The bash script:  [calculate_sizes.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/calculate_sizes.sh)
 ```console
-python ~/cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/maximum_width/8/16_0.0_-1_100_20_False_2N1_2N3_1N2_3N2
+python ~/cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/maximum_width/8/16_0.0_-1_100_20_True_2N1_2N3_1N2_3N2
 ```
 
 If you have issue running these commands, please feel free to raise an issue. 
