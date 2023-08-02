@@ -41,7 +41,7 @@ python ~/cdl/python/complete_search.py -n 8  \
 
 3. Parallelize the search: The following command resumes the search on a single process in a CPU core, processing one buckets
 of `TRS` at a time. The more CPU cores engage in, the fast we get the results. As there are 100 buckets of `TRS`, 
-it is the most efficient to run it on a array of 100 jobs. The bash script: [complete_parallel.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/parallel_search.sh)
+it is the most efficient to run it on a array of 100 jobs. The bash script: [parallel_search.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/parallel_search.sh)
 ```console
 python ~/cdl/python/parallel_search.py -n 8  \
                                        -cutoff 16  \
