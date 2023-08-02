@@ -18,11 +18,10 @@ python ~/cdl/python/parallel_search.py -n $1  \
                                        -threshold 0  \
                                        -top_n -1  \
                                        -n_complete $2 \
-                                       -n_chunks 1000000 \
-                                       -shuffle 1 \
+                                       -n_chunks 100000 \
+                                       -shuffle "" \
                                        -rules "2N1" "2N3" \
                                        -lib_path "/data/home/acw554/cdl" \
-                                       -result_path "/data/scratch/acw554/2N1_2N3" \
-                                       -core_id ${SGE_TASK_ID}
+                                       -result_path "/data/scratch/acw554/2N1_2N3"
 
 
