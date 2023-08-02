@@ -1,7 +1,7 @@
 # Prioritised Restricted Search Algorithms Implementation
 
 ## Introduction
-Prioritised Research Search [Zhou and Riss (2023)](https://arxiv.org/pdf/2303.06524.pdf) is a fast algorithm that has discovered new record-breaking 
+Prioritised Research Search [Zhou and Riis (2023)](https://arxiv.org/pdf/2303.06524.pdf) is a fast algorithm that has discovered new record-breaking 
 Condorcet domains. We implemented this algorithm using the CDL library 
 
 We recommend using the `Prioritised_Restriction_Search.ipynb` under `notebooks` folder to 
