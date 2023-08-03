@@ -62,7 +62,7 @@ The bash script:  [calculate_sizes.sh](https://github.com/sagebei/cdl/blob/main/
 ```console
 python ~/cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/maximum_width/8/16_0.0_-1_100_20_True_2N1_2N3_1N2_3N2
 ```
-It saves a complete list of (trs, its value, its size) in the folder `trs_score_size`, and a summary of the research results
+It saves a complete list of (trs, its value, its size) in the folder `trs_score_size`, and provides a summary of the research results
 in a text file named `counter.txt` whose content is show below. 
 
 ```python
