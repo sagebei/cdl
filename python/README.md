@@ -40,7 +40,7 @@ python ~/cdl/python/complete_search.py -n 8  \
                                        -result_path "/data/scratch/acw554/maximum_width"
 ```
 
-3. Parallelize the search: The following command resumes the search on a single process in a CPU core, processing one buckets
+3. Parallelize the search: The following command resumes the search on a single process in a CPU core, recursively processing each bucket
 of `TRS`s at a time. The more CPU cores engage in, the fast we get the results. As there are 100 buckets of `TRS`s, 
 it is the most efficient to run it on a array of 100 jobs. The bash script: [parallel_search.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/parallel_search.sh)
 ```console
@@ -57,7 +57,7 @@ python ~/cdl/python/parallel_search.py -n 8  \
 ```
 
 4. Calculate the resulting Condorcet domain sizes: the following command starts a process that
-calculate the sizes for the TRS in each bucket. Again, it benefits from array jobs as well.
+calculate the sizes for the TRS in each bucket recursively. Again, it benefits from array jobs as well.
 The bash script:  [calculate_sizes.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/calculate_sizes.sh)
 ```console
 python ~/cdl/python/calculate_sizes.py -folder_path /data/scratch/acw554/maximum_width/8/16_0.0_-1_100_20_True_2N1_2N3_1N2_3N2
