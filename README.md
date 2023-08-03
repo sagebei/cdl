@@ -163,8 +163,8 @@ Please cite our paper if you use CDL in a scientific publication.
 2. Akello-Egwell, Dolica, et al. "Condorcet Domains of Degree at most Seven." arXiv preprint arXiv:2306.15993 (2023).
 
 ## Our Team
-CDL is developed and maintained by Bei Zhou and Dr Soren Riis 
-in Theory Group and Game AI group at Queen Mary University of London. 
+CDL is developed and maintained by Bei Zhou and Dr Soren Riis in the theory group at Queen Mary University of London, and Klas Markstrom
+from University of Umeå.
 
 
 
