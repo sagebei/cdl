@@ -23,8 +23,9 @@ python ~/cdl/python/databases/database_5.py -rules 2N1 2N3 1N2 3N2
 ```
 
 2. Start the search: the following configuration starts the search for n=8 with the cutoff value
-being 16. The threshold is the cutoff on the value from the value function which is not needed here.
-Setting `top_n` to `-1` keeps all the `TRS`s, negating its effect. If it is set, for example, to 10000, then 
+being 16. The threshold is the cutoff on the value from the value function which is not needed here. `top_n` parameter does 
+not have any effect in the complete search. It is just for the logging purpose to set its value here which will
+also be set and used in the parallel search below. setting `top_n` to `-1` keeps all the `TRS`s, negating its effect. If it is set, for example, to 10000, then 
 the 10000 `TRS`s ranking in top 10000 in terms of their value will be kept. The search stops at the 20th triple, as specified by `n_complete` for every `TRS`. When all the survived `TRS`s are collected, they are split them into 100 buckets. The list of `TRS` 
 is shuffled before being split to ensure that the `TRS`s in a buckets are not correlated (similar). The bash script: [complete_search.sh](https://github.com/sagebei/cdl/blob/main/hpc/maximum_width/complete_search.sh)
 ```console
