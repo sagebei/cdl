@@ -13,3 +13,6 @@ module load gcc/12.1.0
 source ~/venv/bin/activate
 
 python ~/cdl/python/databases/database_5.py -rules 2N1 2N3 1N3 3N1 1N2 3N2
+
+
+
