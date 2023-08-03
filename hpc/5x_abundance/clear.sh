@@ -1,3 +1,3 @@
-rm complete.o* sizes.o* parallel.o*
+rm xcomplete.o* xsizes.o* xparallel.o*
 
 git pull
