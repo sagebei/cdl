@@ -15,9 +15,9 @@ source ~/venv/bin/activate
 python ~/cdl/python/complete_search.py -n 8  \
                                        -cutoff 16  \
                                        -threshold 0  \
-                                       -top_n 100000  \
+                                       -top_n 10000  \
                                        -n_complete 15 \
-                                       -n_chunks 10000 \
+                                       -n_chunks 1000 \
                                        -shuffle "." \
                                        -rules "2N1" "2N3" "1N3" "3N1" \
                                        -lib_path "/data/home/acw554/cdl" \
