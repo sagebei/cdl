@@ -37,12 +37,7 @@ class ExhaustiveSearch(Search):
                 next_trs_score_list.extend(trs_value_list)
 
             trs_score_list.clear()
-
-            if top_n == -1:
-                trs_score_list = next_trs_score_list
-            else:
-                next_trs_score_list.sort(key=lambda trs_score: trs_score[1])
-                trs_score_list = next_trs_score_list[-top_n:]
+            trs_score_list = next_trs_score_list
 
         if shuffle:
             random.shuffle(trs_score_list)
