@@ -2,7 +2,7 @@ import pickle
 from collections import Counter
 import os
 from collections import OrderedDict, defaultdict
-from tools import Fishburn_scores
+from cdl import Fishburn_scheme
 
 
 class StaticFeature5:
@@ -27,6 +27,8 @@ class StaticFeature5:
         with open(self.database_folder + suited_filename, "rb") as f:
             self.dataset_5 = pickle.load(f)
 
+        self.base_score = self._score_function(cd.init_trs_by_scheme(Fishburn_scheme), cutoff=16)
+
     def fetch_feature(self, trs):
         sizes = []
         states = self.cd.subset_states(trs)
@@ -35,7 +37,7 @@ class StaticFeature5:
 
         return sizes
 
-    def score_function(self, trs, cutoff=16, threshold=0):
+    def _score_function(self, trs, cutoff=16):
         sizes = self.fetch_feature(trs)
 
         if min(sizes) < cutoff:
@@ -50,9 +52,13 @@ class StaticFeature5:
 
         score = (0 * num_16) + (1 * num_17) + (2 * num_18) + (3 * num_19) + (4 * num_20)
 
-        if score < threshold * Fishburn_scores[self.cd.n]:
-            return -1
+        return score
 
+    def score_function(self, trs, cutoff=16, threshold=0):
+        score = self._score_function(trs, cutoff)
+        if score != -1:
+            if score < self.base_score * threshold:
+                return -1
         return score
 
 
