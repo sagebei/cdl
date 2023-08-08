@@ -3,7 +3,7 @@
 #$ -cwd
 #$ -j y
 #$ -pe smp 1            # Request cores (8 per GPU)
-#$ -l h_vmem=8G         # 11G RAM per core
+#$ -l h_vmem=16G         # 11G RAM per core
 #$ -l h_rt=24:0:0      # Max 1hr runtime (can request up to 240hr)
 #$ -N complete
 
@@ -16,8 +16,8 @@ python ~/cdl/python/complete_search.py -n $1  \
                                        -cutoff 16  \
                                        -threshold 0  \
                                        -top_n -1  \
-                                       -n_complete $2 \
-                                       -n_chunks 100 \
+                                       -n_complete 12 \
+                                       -n_chunks 10000 \
                                        -shuffle "." \
                                        -rules "2N1" "2N3" "1N2" "3N2" \
                                        -lib_path "/data/home/acw554/cdl" \
