@@ -39,7 +39,7 @@ class ExhaustiveSearch(Search):
             trs_score_list.clear()
             trs_score_list = next_trs_score_list
 
-            if n_complete == -1 and top_n != -1:
+            if n_complete == cd.num_triples and top_n != -1:
                 trs_score_list.sort(key=lambda trs_score: trs_score[1])
                 trs_score_list = trs_score_list[-top_n:]
 
@@ -59,11 +59,11 @@ class ExhaustiveSearch(Search):
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int, default=6)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3", "3N1", "1N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
-parser.add_argument("-top_n", type=int, default=10000)
-parser.add_argument("-n_complete", type=int, default=10)
+parser.add_argument("-top_n", type=int, default=1000)
+parser.add_argument("-n_complete", type=int, default=-1)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="..")
