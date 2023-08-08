@@ -16,7 +16,7 @@ source ~/venv/bin/activate
 python ~/cdl/python/complete_search.py -n $1  \
                                        -cutoff 16  \
                                        -threshold 0  \
-                                       -top_n 200000  \
+                                       -top_n 500000  \
                                        -n_complete -1 \
                                        -n_chunks 1000 \
                                        -shuffle "." \
