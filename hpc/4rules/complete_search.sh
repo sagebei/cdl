@@ -13,13 +13,13 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/complete_search.py -n $1  \
-                                       -cutoff 16  \
-                                       -threshold 0  \
-                                       -top_n 200000  \
-                                       -n_complete -1 \
-                                       -n_chunks 1000 \
-                                       -shuffle "." \
-                                       -rules "3N1" "1N3" "2N3" "2N1" \
-                                       -lib_path "/data/home/acw554/cdl" \
-                                       -result_path "/data/scratch/acw554/4rules"
+python ~/cdl/python/PRS/complete_search.py -n $1  \
+                                           -cutoff 16  \
+                                           -threshold 0  \
+                                           -top_n 200000  \
+                                           -n_complete -1 \
+                                           -n_chunks 1000 \
+                                           -shuffle "." \
+                                           -rules "3N1" "1N3" "2N3" "2N1" \
+                                           -lib_path "/data/home/acw554/cdl" \
+                                           -result_path "/data/scratch/acw554/4rules"

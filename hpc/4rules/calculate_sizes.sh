@@ -13,5 +13,5 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/calculate_sizes.py -folder_path $1
+python ~/cdl/python/PRS/calculate_sizes.py -folder_path $1
 
