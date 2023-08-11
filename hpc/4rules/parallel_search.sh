@@ -20,7 +20,7 @@ python ~/cdl/python/parallel_search.py -n 8  \
                                        -n_complete 15 \
                                        -n_chunks 1000 \
                                        -shuffle "." \
-                                       -rules "1N3" "3N1" "2N3" "2N1" \
+                                       -rules "3N1" "1N3" "2N3" "2N1" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/4rules"
 

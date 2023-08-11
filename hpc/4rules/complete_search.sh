@@ -20,6 +20,6 @@ python ~/cdl/python/complete_search.py -n $1  \
                                        -n_complete -1 \
                                        -n_chunks 1000 \
                                        -shuffle "." \
-                                       -rules "1N3" "3N1" "2N3" "2N1" \
+                                       -rules "3N1" "1N3" "2N3" "2N1" \
                                        -lib_path "/data/home/acw554/cdl" \
                                        -result_path "/data/scratch/acw554/4rules"
