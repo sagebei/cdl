@@ -154,14 +154,21 @@ int main()
 ```
 
 ## Cite
-Please cite our paper if you use CDL in a scientific publication. 
+Please cite our paper if you use CDL in a scientific publication.
+```
+@article{zhou2023new,
+   title={New Record-Breaking Condorcet Domains on 10 and 11 Alternatives},
+   author={Zhou, Bei and Riis, S{\o}ren},
+   journal={arXiv preprint arXiv:2303.06524},
+   year={2023}
+}
+```
 
-
-## List of publications using CDL
+## List of publications used CDL
 
 1. Zhou, Bei, and Søren Riis. "New Record-Breaking Condorcet Domains on 10 and 11 Alternatives." arXiv preprint arXiv:2303.06524 (2023).
 2. Akello-Egwell, Dolica, et al. "Condorcet Domains of Degree at most Seven." arXiv preprint arXiv:2306.15993 (2023).
-
+3. Karpov, Alexander, et al. "Set-alternating schemes: A new class of large Condorcet domains." arXiv preprint arXiv:2308.02817 (2023).
 ## Our Team
 CDL is developed and maintained by Bei Zhou and Soren Riis in the theory group at Queen Mary University of London, and Klas Markstrom
 from University of Umeå.
