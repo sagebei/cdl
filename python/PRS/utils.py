@@ -27,7 +27,10 @@ class StaticFeature5:
         with open(self.database_folder + suited_filename, "rb") as f:
             self.dataset_5 = pickle.load(f)
 
-        self.base_score = self._score_function(cd.init_trs_by_scheme(Fishburn_scheme), cutoff=16)
+        if "2N1" in rules and "2N3" in rules:
+            self.base_score = self._score_function(cd.init_trs_by_scheme(Fishburn_scheme), cutoff=16)
+        else:
+            self.base_score = 0
 
     def fetch_feature(self, trs):
         sizes = []

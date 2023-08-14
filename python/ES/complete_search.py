@@ -21,7 +21,7 @@ class ExhaustiveSearch(Search):
 
         if n_complete == -1:
             n_complete = cd.num_triples
-
+        print(self.rules)
         num_assigned = len(self.cd.assigned_triples(trs))
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
@@ -59,7 +59,7 @@ class ExhaustiveSearch(Search):
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int, default=6)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3", "3N1", "1N3"])
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "1N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-top_n", type=int, default=1000)
