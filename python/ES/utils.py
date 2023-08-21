@@ -89,6 +89,22 @@ class Search:
 
         return trs_score_list
 
+    def fill_trs(self,
+                 trs,
+                 rules,
+                 cutoff=16,
+                 threshold=0):
+
+        triples = self.cd.unassigned_triples(trs)
+        score = 0
+        for triple, rule in zip(triples, rules):
+            trs = self.cd.assign_rule(trs, triple, rule)
+            score = self.sf.score_function(trs, cutoff, threshold)
+            if score == -1:
+                return None, -1
+
+        return trs, score
+
     def save_trs_score_list(self,
                             trs_list,
                             sub_folder_name,

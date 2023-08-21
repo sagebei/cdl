@@ -3,31 +3,6 @@ import numpy as np
 import os
 
 
-def init_rules(cd, trs, low_exceptions, high_exceptions):
-    middle = np.array(low_exceptions).max()
-    for tr in trs:
-        i, j, k = tr.triple
-        if j <= middle < k:
-            if (i, j) in low_exceptions:
-                trs = cd.assign_rule(trs, tr.triple, "1N3")
-            else:
-                trs = cd.assign_rule(trs, tr.triple, "3N1")
-        if i <= middle < j:
-            if (j, k) in high_exceptions:
-                trs = cd.assign_rule(trs, tr.triple, "3N1")
-            else:
-                trs = cd.assign_rule(trs, tr.triple, "1N3")
-
-    return trs
-
-
-def flip_exceptions(cd, exceptions):
-    flipout = []
-    for pair in exceptions:
-        flipout.append((cd.n+1-pair[1], cd.n+1-pair[0]))
-    return flipout
-
-
 def get_unprocessed_fileid(sub_folder_path, buffer_size=10000):
     filenames = os.listdir(sub_folder_path)
 

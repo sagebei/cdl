@@ -1,6 +1,5 @@
 from cdl import *
 from utils import Search
-from tools import init_rules, flip_exceptions
 import argparse
 import numpy as np
 import random
@@ -21,7 +20,7 @@ class ExhaustiveSearch(Search):
 
         if n_complete == -1:
             n_complete = cd.num_triples
-        print(self.rules)
+
         num_assigned = len(self.cd.assigned_triples(trs))
 
         folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
@@ -59,11 +58,11 @@ class ExhaustiveSearch(Search):
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int, default=6)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "1N3"])
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-top_n", type=int, default=1000)
-parser.add_argument("-n_complete", type=int, default=-1)
+parser.add_argument("-n_complete", type=int, default=10)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl/")
@@ -75,14 +74,6 @@ print(config)
 cd = CondorcetDomain(n=config['n'])
 es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
 trs = cd.init_trs()
-
-# low_exceptions = [(1,3),(2,4)]
-# high_exceptions = flip_exceptions(cd, low_exceptions)
-# high_exceptions = [(5,7),(6,8)]
-# trs = init_rules(cd,
-#                  trs,
-#                  low_exceptions,
-#                  high_exceptions)
 
 es.static_search(trs,
                  cutoff=config['cutoff'],

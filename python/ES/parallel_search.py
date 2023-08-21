@@ -3,6 +3,7 @@ from cdl import *
 from utils import Search
 from tools import get_unprocessed_fileid
 import argparse
+from itertools import product
 
 
 class ExhaustiveSearch(Search):
@@ -31,21 +32,17 @@ class ExhaustiveSearch(Search):
                 trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triples}",
                                                           f"{file_id}.processing")
 
-                for n_iter in range(n_complete+1, self.cd.num_triples+1):
-                    next_trs_score_list = []
+                full_trs_list = []
+                rules_list = [self.rules for _ in range(len(self.cd.unassigned_triples(trs_score_list[0][0])))]
+                for trs, _ in trs_score_list:
+                    rules_iter = product(*rules_list)
+                    for rules in rules_iter:
+                        full_trs, score = self.fill_trs(trs, rules, cutoff, threshold)
+                        if full_trs is None:
+                            continue
+                        full_trs_list.append((full_trs, score))
 
-                    for trs, _ in trs_score_list:
-                        trs_value_list = self.expand_trs(trs, cutoff, threshold)
-                        next_trs_score_list.extend(trs_value_list)
-
-                    trs_score_list.clear()
-                    trs_score_list = next_trs_score_list
-
-                    if top_n != -1:
-                        trs_score_list.sort(key=lambda trs_score: trs_score[1])
-                        trs_score_list = trs_score_list[-top_n:]
-
-                self.save_trs_score_list(trs_score_list,
+                self.save_trs_score_list(full_trs_list,
                                          f"{self.cd.num_triples}_{self.cd.num_triples}",
                                          f"{file_id}.pkl")
                 os.remove(sub_folder_path+f"{file_id}.processing")
@@ -59,7 +56,7 @@ class ExhaustiveSearch(Search):
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-n", type=int, default=6)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3", "3N1", "1N3"])
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-top_n", type=int, default=1000)
