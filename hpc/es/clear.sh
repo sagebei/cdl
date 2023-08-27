@@ -1,3 +1,3 @@
-rm xcomplete.o* xsizes.o* xparallel.o*
+rm mwc.o* mwp.o* mws.o*
 
 git pull

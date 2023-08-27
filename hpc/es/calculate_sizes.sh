@@ -6,7 +6,7 @@
 #$ -j y
 #$ -l h_rt=24:0:0
 #$ -t 1-100
-#$ -N xsizes
+#$ -N mws
 
 module load python/3.8.5
 module load gcc/12.1.0
