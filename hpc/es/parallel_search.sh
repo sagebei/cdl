@@ -16,9 +16,9 @@ source ~/venv/bin/activate
 python ~/cdl/python/ES/parallel_search.py -n $1  \
                                            -cutoff 16  \
                                            -threshold 0  \
-                                           -n_complete 20 \
+                                           -n_complete 30 \
                                            -n_chunks 100 \
-                                           -chunk_size=100 \
+                                           -chunk_size=10000 \
                                            -shuffle "." \
                                            -rules "2N1" "2N3" \
                                            -lib_path "/data/home/acw554/cdl" \

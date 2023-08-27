@@ -15,7 +15,7 @@ source ~/venv/bin/activate
 python ~/cdl/python/ES/complete_search.py -n $1  \
                                            -cutoff 16  \
                                            -threshold 0  \
-                                           -n_complete 20 \
+                                           -n_complete 30 \
                                            -n_chunks 100 \
                                            -shuffle "." \
                                            -rules "2N1" "2N3" \
