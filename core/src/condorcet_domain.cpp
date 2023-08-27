@@ -358,6 +358,17 @@ TRS CondorcetDomain::assign_rule_by_index(TRS trs, Int32 index, const std::strin
     return trs;
 }
 
+Triple CondorcetDomain::next_unassigned_triple(const TRS& trs)
+{
+    for (const TripleRule& tr: trs)
+    {
+        if (tr.rule_id == 0)
+            return tr.triple;
+    }
+
+    return {0, 0, 0};
+}
+
 std::vector<Triple> CondorcetDomain::unassigned_triples(const TRS& trs)
 {
     std::vector<Triple> unassigned{};

@@ -79,7 +79,7 @@ class Search:
                    cutoff=16,
                    threshold=0):
 
-        triple = self.cd.unassigned_triples(trs)[0]
+        triple = self.cd.next_unassigned_triple(trs)
         trs_score_list = []
         for rule in self.rules:
             trs = self.cd.assign_rule(trs, triple, rule)

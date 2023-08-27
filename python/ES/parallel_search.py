@@ -18,8 +18,8 @@ class ExhaustiveSearch(Search):
                  chunk_size=10,
                  file_id=0):
 
-        triples = self.cd.unassigned_triples(trs)
-        if len(triples) == 0:
+        triple = self.cd.next_unassigned_triple(trs)
+        if triple == [0, 0, 0]:
             score = self.sf.score_function(trs, cutoff, threshold)
             if score > -1:
                 full_trs_score_list.append((trs, score))
@@ -31,7 +31,7 @@ class ExhaustiveSearch(Search):
                     self.chunk_id += 1
         else:
             for rule in self.rules:
-                new_trs = self.cd.assign_rule(trs, triples[0], rule)
+                new_trs = self.cd.assign_rule(trs, triple, rule)
                 score = self.sf.score_function(new_trs, cutoff, threshold)
 
                 if score == -1:

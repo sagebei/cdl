@@ -52,6 +52,7 @@ public:
     TRS assign_rule(TRS trs, const Triple& triple, const std::string& rule);
     TRS assign_id_by_index(TRS trs, Int32 index, const Int8 rule_id);
     TRS assign_rule_by_index(TRS trs, Int32 index, const std::string& rule);
+    Triple next_unassigned_triple(const TRS& trs);
     std::vector<Triple> unassigned_triples(const TRS& trs);
     std::vector<Triple> assigned_triples(const TRS& trs);
     std::vector<std::size_t> evaluate_rules_on_triple(const TRS& trs, const Triple& triple);
