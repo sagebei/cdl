@@ -13,7 +13,6 @@ class ExhaustiveSearch(Search):
                       trs,
                       cutoff=16,
                       threshold=0,
-                      top_n=1000,
                       n_complete=20,
                       n_chunks=1000,
                       shuffle=False):
@@ -23,7 +22,7 @@ class ExhaustiveSearch(Search):
 
         num_assigned = len(self.cd.assigned_triples(trs))
 
-        folder_name = f"{cutoff}_{threshold}_{top_n}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
+        folder_name = f"{cutoff}_{threshold}_{n_chunks}_{num_assigned+n_complete}_{shuffle}_" + f"_".join(self.rules)
         self.folder_path += folder_name
 
         trs_score_list = self.expand_trs(trs)
@@ -37,10 +36,6 @@ class ExhaustiveSearch(Search):
 
             trs_score_list.clear()
             trs_score_list = next_trs_score_list
-
-            if n_complete == cd.num_triples and top_n != -1:
-                trs_score_list.sort(key=lambda trs_score: trs_score[1])
-                trs_score_list = trs_score_list[-top_n:]
 
         if shuffle:
             random.shuffle(trs_score_list)
@@ -56,15 +51,14 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=6)
+parser.add_argument("-n", type=int, default=7)
 parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
-parser.add_argument("-top_n", type=int, default=1000)
-parser.add_argument("-n_complete", type=int, default=10)
+parser.add_argument("-n_complete", type=int, default=-1)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
-parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl/")
+parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl")
 parser.add_argument("-result_path", type=str, default="./results")
 args = parser.parse_args()
 config = vars(args)
@@ -77,7 +71,6 @@ trs = cd.init_trs()
 es.static_search(trs,
                  cutoff=config['cutoff'],
                  threshold=config['threshold'],
-                 top_n=config['top_n'],
                  n_complete=config['n_complete'],
                  n_chunks=config['n_chunks'],
                  shuffle=config['shuffle'])
