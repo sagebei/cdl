@@ -18,7 +18,7 @@ python ~/cdl/python/ES/parallel_search.py -n $1  \
                                            -threshold 0  \
                                            -n_complete 60 \
                                            -n_chunks 10000 \
-                                           -chunk_size=10000 \
+                                           -chunk_size=1000 \
                                            -shuffle "." \
                                            -rules "2N1" "2N3" \
                                            -lib_path "/data/home/acw554/cdl" \
