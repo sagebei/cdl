@@ -3,6 +3,8 @@ from cdl import *
 from utils import Search
 from tools import get_unprocessed_fileid
 import argparse
+import sys
+sys.setrecursionlimit(5000)
 
 
 class ExhaustiveSearch(Search):
