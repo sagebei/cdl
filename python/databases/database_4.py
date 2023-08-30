@@ -63,7 +63,7 @@ class Generator:
 
 parser = argparse.ArgumentParser(description="build database for 5 alternatives",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3", "2N1", "3N1"])
+parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "3N1", "1N2", "3N2", "2N1", "2N3"])
 args = parser.parse_args()
 config = vars(args)
 

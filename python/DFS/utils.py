@@ -22,8 +22,8 @@ class StaticFeature5:
                 database_sub_n = int(names[1])
 
                 if database_sub_n == 5:
-                    print(filename, set(database_rules))
                     if set(rules).issubset(set(database_rules)):
+                        print(filename, set(database_rules))
                         if len(database_rules) <= num_rules:
                             num_rules = len(database_rules)
                             suited_filename = filename
