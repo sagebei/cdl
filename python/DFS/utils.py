@@ -17,12 +17,16 @@ class StaticFeature5:
         for filename in os.listdir(self.database_folder):
             name, extension = filename.split(".")
             if extension == 'pkl':
-                database_rules = name.split("_")[2:]
-                print(filename, set(database_rules))
-                if set(rules).issubset(set(database_rules)):
-                    if len(database_rules) <= num_rules:
-                        num_rules = len(database_rules)
-                        suited_filename = filename
+                names = name.split("_")
+                database_rules = names[2:]
+                database_sub_n = int(names[1])
+
+                if database_sub_n == 5:
+                    print(filename, set(database_rules))
+                    if set(rules).issubset(set(database_rules)):
+                        if len(database_rules) <= num_rules:
+                            num_rules = len(database_rules)
+                            suited_filename = filename
         print("database", self.database_folder + suited_filename)
         with open(self.database_folder + suited_filename, "rb") as f:
             self.dataset_5 = pickle.load(f)
