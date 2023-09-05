@@ -61,8 +61,9 @@ class ExhaustiveSearch(Search):
                     full_trs_score_list.clear()
                     self.chunk_id += 1
 
-                if time.time() - self.start_time > self.per_trs_time_limit:
-                    self.split_trs(trs, file_id)
+            if (time.time() - self.start_time) > self.per_trs_time_limit:
+                self.split_trs(trs, file_id)
+
         else:
             for rule in self.triple_rule_dict[tuple(triple)]:
                 new_trs = self.cd.assign_rule(trs, triple, rule)
