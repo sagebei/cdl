@@ -63,6 +63,7 @@ class ExhaustiveSearch(Search):
 
             if (time.time() - self.start_time) > self.per_trs_time_limit:
                 self.split_trs(trs, file_id)
+                self.start_time = time.time()
 
         else:
             for rule in self.triple_rule_dict[tuple(triple)]:
@@ -142,7 +143,7 @@ parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl")
 parser.add_argument("-result_path", type=str, default="./results")
-parser.add_argument("-per_trs_time_limit", type=float, default=0.2)
+parser.add_argument("-per_trs_time_limit", type=float, default=2/600)
 parser.add_argument("-chunk_size", type=int, default=10)
 args = parser.parse_args()
 config = vars(args)
