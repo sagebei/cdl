@@ -9,7 +9,6 @@ def get_unprocessed_fileid(sub_folder_path, buffer_size=10000):
     unprocessed_ids = []
     for filename in filenames:
         file_id, file_extension = filename.split(".")
-        file_id = file_id.split("_")[0]
         if file_extension == "pkl":
             unprocessed_ids.append(file_id)
             counter += 1
