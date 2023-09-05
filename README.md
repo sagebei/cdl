@@ -8,23 +8,24 @@
 Condorcet Domain Library (CDL) is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
 installed and used globally, enabling users to seamlessly integrate with tools writen in Python.  (CDL)
 provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation domains, including
-- triple ordering, and rule initialization and assignment
+- Ordering k-tuples, and rule initialization and assignment
 - Domain construction and size calculation
 - Subset Functions
-- Hashing and identifying non-isomorphic CDs
-- Native support for any forbidden permutation domains
-- Calculate the size of any the subset CDs.
+- Hashing and identifying non-isomorphic domains
+- Native support for general forbidden permutation domains
+- Calculate the size of any subset domains.
 - Supported 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
 - etc.
 
-CDL supports all major operating systems, like Windows, Linux and MacOS. User can install it as a python module using 
+CDL supports all major operating systems, including Windows, Linux and MacOS. Users can install it as a python module using 
 the provided bash scripts. 
 
 Directory structure:
-- algorithms: 
-- bind: export all the functionality to a python module and provide the bash script install it. 
-- core: the key functionality for manipulating triple-rules and condorcet domains.
-- python: 
+- algorithms: for testing and benchmarking many learning algorithms, like genetic algorithms, reinforcement learning 
+algorithms, and local search algorithms, etc.
+- bind: export all the C++ classes and functions to a python module and provide the bash script install it. 
+- core: the key functionality for manipulating tuple-rules and performing domain-related operations.
+- python: provide depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
 - tools: 
 
 Brief introduction to the Condorcet Domain.
@@ -35,7 +36,7 @@ Brief introduction to the Condorcet Domain.
 </p>
 
 ## Get started with Python
-### working with Condorcet domains
+### Working with Condorcet domains
 ```python
 from cdl import *
 
@@ -65,7 +66,7 @@ domains = [cd.domain(cd.init_trs_random()) for _ in range(100)]
 # filter out the isomorphic domains
 non_isomorphic_cds = cd.non_isomorphic_domains(domains)  
 ```
-### working with Forbidden Permutations
+### Working with Forbidden Permutations
 ```python
 # recreate the alternating scheme by forbidden permutations
 def alternating_scheme(triple):  
@@ -80,6 +81,20 @@ tls = fp.init_tls_by_scheme(alternating_scheme)
 domain = fp.domain(tls)
 size = fp.size(tls)  # 222
 assert len(domain) == size
+```
+
+
+```python
+from cdl import ForbiddenPermutation
+
+for n in range(5, 11):
+    # initialize the ForbiddenPermutation object for 5-tuples
+    fp = ForbiddenPermutation(n, 5) 
+    tls = fp.init_tls()
+    for tl in tls:
+        # assign all the 5-tuples with the law [2, 5, 3, 1, 4]
+        tls = fp.assign_laws(tls, tl.tuple, [[2, 5, 3, 1, 4]])
+    print(fp.size(tls))
 ```
 
 ## Installation for Python Program
@@ -104,7 +119,7 @@ assert len(domain) == size
    `source windows_install.sh /D/Anaconda3/Lib/site-packages/`
 
 ## Get started with C++
-### working with Condorcet domains
+### Working with Condorcet domains
 ```c++
 #include "condorcet_domain.h"
 
@@ -132,7 +147,7 @@ int main()
 }
 
 ```
-### working with Forbidden permutations
+### Working with Forbidden permutations
 ```c++
 #include "forbidden_permutation.h"
 
