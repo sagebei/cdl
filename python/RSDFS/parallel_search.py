@@ -24,7 +24,7 @@ class ExhaustiveSearch(Search):
             self.triple_rule_dict[tuple(tr.triple)] = self.rules
 
     def split_trs(self, trs, file_id):
-        for tr in trs:
+        for cut_triple_idx, tr in enumerate(trs):
             cur_rule = cd.rules[tr.rule_id-1]
             if cur_rule != self.rules[-1]:
                 cur_triple = tuple(tr.triple)
@@ -34,6 +34,9 @@ class ExhaustiveSearch(Search):
 
                 for next_rule in self.rules[cur_rule_index+1:]:
                     new_trs = self.cd.assign_rule(trs, cur_triple, next_rule)
+                    for i in range(cut_triple_idx+1, len(trs)):
+                        new_trs = self.cd.assign_id_by_index(new_trs, i, 0)
+
                     self.save_trs_score_list([(new_trs, 0)],
                                              f"{self.n_complete}_{self.cd.num_triples}",
                                              f"{file_id}_{self.chunk_id}_{self.split_id}.pkl")
@@ -98,6 +101,7 @@ class ExhaustiveSearch(Search):
 
         while True:
             file_id = get_unprocessed_fileid(sub_folder_path)
+            print(file_id)
             if file_id is not None:
                 try:
                     os.rename(sub_folder_path+f"{file_id}.pkl",
@@ -111,6 +115,7 @@ class ExhaustiveSearch(Search):
                     for trs, _ in trs_score_list:
                         self.start_time = time.time()
                         self.set_triple_rule_dict(trs)
+
                         self.fill_trs(trs,
                                       cutoff,
                                       threshold,
@@ -134,27 +139,29 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=9)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
+parser.add_argument("-n", type=int, default=6)
+parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3", "1N3", "3N1"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-n_complete", type=int, default=5)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
-parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl")
+parser.add_argument("-lib_path", type=str, default="E:/cdl")
 parser.add_argument("-result_path", type=str, default="./results")
 parser.add_argument("-per_trs_time_limit", type=float, default=2/600)
-parser.add_argument("-chunk_size", type=int, default=10)
+parser.add_argument("-chunk_size", type=int, default=1)
 args = parser.parse_args()
 config = vars(args)
 print(config)
 
 cd = CondorcetDomain(n=config['n'])
 es = ExhaustiveSearch(cd, rules=config['rules'], lib_path=config['lib_path'], result_path=config['result_path'])
-# trs = cd.init_trs()
-# trs = cd.assign_rule(trs, [1, 2, 3], "2N1")
-# es.split_trs(trs, 0, 0)
 
+# trs = cd.init_trs()
+# trs = cd.assign_rule(trs, [1, 2, 3], "3N1")
+# trs = cd.assign_rule(trs, [1, 2, 4], "2N3")
+# trs = cd.assign_rule(trs, [1, 3, 4], "2N3")
+# es.split_trs(trs, 1)
 
 es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
