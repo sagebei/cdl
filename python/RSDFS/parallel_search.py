@@ -25,9 +25,10 @@ class ExhaustiveSearch(Search):
 
     def split_trs(self, trs, file_id):
         for cut_triple_idx, tr in enumerate(trs):
+            cur_triple = tuple(tr.triple)
             cur_rule = cd.rules[tr.rule_id-1]
-            if cur_rule != self.rules[-1]:
-                cur_triple = tuple(tr.triple)
+
+            if cur_rule != self.rules[-1] and len(self.triple_rule_dict[cur_triple]) != 1:
                 cur_rule_index = self.rules.index(cur_rule)
 
                 self.triple_rule_dict[cur_triple] = [cur_rule]
@@ -43,6 +44,7 @@ class ExhaustiveSearch(Search):
                     self.split_id += 1
 
                 break
+
 
     def fill_trs(self,
                  trs,
