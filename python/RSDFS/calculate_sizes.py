@@ -7,6 +7,7 @@ from collections import Counter
 import shutil
 from collections import OrderedDict
 
+# python .\calculate_sizes.py -folder_path E:/cdl/python/RSDFS/results/9/16_0_10_5_False_2N1_2N3
 
 def calculate_size(cd, folder_path, filename):
     trs_score_size_list = []
