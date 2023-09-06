@@ -18,7 +18,7 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -threshold 0  \
                                              -n_complete $2 \
                                              -n_chunks 100 \
-                                             -per_trs_time_limit 5 \
+                                             -per_trs_time_limit 0.5
                                              -chunk_size=1000 \
                                              -shuffle "." \
                                              -rules "1N3" "2N3" \
