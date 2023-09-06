@@ -3,6 +3,7 @@ from utils import Search
 import argparse
 import numpy as np
 import random
+import platform
 
 
 class ExhaustiveSearch(Search):
@@ -51,14 +52,14 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=9)
+parser.add_argument("-n", type=int, default=10)
 parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
-parser.add_argument("-n_complete", type=int, default=5)
+parser.add_argument("-n_complete", type=int, default=-1)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
-parser.add_argument("-lib_path", type=str, default="E:/cdl")
+parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl" if platform.system() == 'Darwin' else "E:/cdl")  #
 parser.add_argument("-result_path", type=str, default="./results")
 args = parser.parse_args()
 config = vars(args)
