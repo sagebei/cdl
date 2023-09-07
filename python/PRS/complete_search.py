@@ -46,14 +46,16 @@ class ExhaustiveSearch(Search):
         if shuffle:
             random.shuffle(trs_score_list)
 
-        # trs_score_list.sort(key=lambda trs_score: trs_score[1])
-        print(len(trs_score_list))
-        split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object),
-                                              min(n_chunks, len(trs_score_list)))
-        for i, t in enumerate(split_trs_score_list):
-            self.save_trs_score_list(trs_list=t.tolist(),
-                                     sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triples}",
-                                     filename=f"{i+1}.pkl")
+        if len(trs_score_list) > 0:
+            print(len(trs_score_list))
+            split_trs_score_list = np.array_split(np.array(trs_score_list, dtype=object),
+                                                  min(n_chunks, len(trs_score_list)))
+            for i, t in enumerate(split_trs_score_list):
+                self.save_trs_score_list(trs_list=t.tolist(),
+                                         sub_folder_name=f"{num_assigned+n_complete}_{self.cd.num_triples}",
+                                         filename=f"{i+1}.pkl")
+        else:
+            print("No such domains")
 
 
 parser = argparse.ArgumentParser(description="complete search for the first n triple",
