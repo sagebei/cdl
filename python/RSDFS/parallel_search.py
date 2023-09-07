@@ -48,7 +48,7 @@ class ExhaustiveSearch(Search):
 
                     self.save_trs_score_list([(new_trs, 0)],
                                              f"{self.n_complete}_{self.cd.num_triples}",
-                                             f"{file_id}_{self.chunk_id}_{self.split_id}.pkl")
+                                             f"{file_id}_{self.split_id}.pkl")
                     self.split_id += 1
 
                 break
@@ -125,6 +125,7 @@ class ExhaustiveSearch(Search):
 
                     full_trs_score_list = []
                     self.chunk_id = 1
+                    self.split_id = 1
                     for trs, _ in trs_score_list:
                         self.start_time = time.time()
                         self.set_triple_dict(trs)
