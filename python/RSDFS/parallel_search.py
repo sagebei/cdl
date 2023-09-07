@@ -30,7 +30,11 @@ class ExhaustiveSearch(Search):
     def split_trs(self, trs, from_triple_idx, file_id):
         for cur_triple_idx in range(from_triple_idx, len(trs)):
             cur_triple = tuple(trs[cur_triple_idx].triple)
-            cur_rule = cd.rules[trs[cur_triple_idx].rule_id-1]
+            cur_rule_id = trs[cur_triple_idx].rule_id
+            if cur_rule_id == 0:
+                cur_rule = cd.rules[0]
+            else:
+                cur_rule = cd.rules[cur_rule_id-1]
 
             if cur_rule != self.rules[-1] and len(self.triple_rule_dict[cur_triple]) != 1:
                 cur_rule_index = self.rules.index(cur_rule)
@@ -60,6 +64,9 @@ class ExhaustiveSearch(Search):
                  chunk_size=10,
                  file_id=0):
 
+        if (time.time() - self.start_time) > self.per_trs_time_limit:
+            self.split_trs(trs, from_triple_idx, file_id)
+
         triple = self.cd.next_unassigned_triple(trs)
         if triple == [0, 0, 0]:
             score = self.sf.score_function(trs, cutoff, threshold)
@@ -71,9 +78,6 @@ class ExhaustiveSearch(Search):
                                              f"{file_id}_{self.chunk_id}.pkl")
                     full_trs_score_list.clear()
                     self.chunk_id += 1
-
-            if (time.time() - self.start_time) > self.per_trs_time_limit:
-                self.split_trs(trs, from_triple_idx, file_id)
 
         else:
             for rule in self.rules:
@@ -150,7 +154,7 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=10)
+parser.add_argument("-n", type=int, default=9)
 parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
@@ -159,7 +163,7 @@ parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl" if platform.system() == 'Darwin' else "E:/cdl")
 parser.add_argument("-result_path", type=str, default="./results")
-parser.add_argument("-per_trs_time_limit", type=float, default=0.2)
+parser.add_argument("-per_trs_time_limit", type=float, default=0.02)
 parser.add_argument("-chunk_size", type=int, default=1000)
 args = parser.parse_args()
 config = vars(args)
