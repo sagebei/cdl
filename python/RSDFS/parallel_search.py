@@ -125,8 +125,8 @@ class ExhaustiveSearch(Search):
 
                     full_trs_score_list = []
                     self.chunk_id = 1
-                    self.split_id = 1
                     for trs, _ in trs_score_list:
+                        self.split_id = 1
                         self.start_time = time.time()
                         self.set_triple_dict(trs)
                         from_triple_idx = self.triple_index[tuple(self.cd.next_unassigned_triple(trs))]
