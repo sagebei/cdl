@@ -114,7 +114,7 @@ class ExhaustiveSearch(Search):
 
         while True:
             file_id = get_unprocessed_fileid(sub_folder_path)
-            print(file_id)
+
             if file_id is not None:
                 try:
                     os.rename(sub_folder_path+f"{file_id}.pkl",
