@@ -18,7 +18,7 @@ class ExhaustiveSearch(Search):
         self.chunk_id = 1
         self.split_id = 1
         self.triple_rule_dict = {}
-        self.triple_index = {}
+        self.triple_index = {(0, 0, 0): -1}
         self.start_time = time.time()
         self.per_trs_time_limit = 0
 
