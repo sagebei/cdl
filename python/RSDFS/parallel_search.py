@@ -177,21 +177,6 @@ es = ExhaustiveSearch(cd,
                       lib_path=config['lib_path'],
                       result_path=config['result_path'])
 
-# trs = cd.init_trs_random()
-# for tr in trs:
-#     trs = cd.assign_rule(trs, tr.triple, random.choice(es.rules))
-#
-# es.set_triple_rule_dict(trs)
-# es.triple_rule_dict[(1, 2, 3)] = ["2N3"]
-#
-# trs = cd.assign_rule(trs, [1, 2, 3], "2N3")
-# trs = cd.assign_rule(trs, [1, 2, 4], "2N3")
-#
-# print_trs(trs)
-#
-# es.split_trs(trs, 1)
-# print(es.triple_rule_dict)
-
 es.static_search(cutoff=config['cutoff'],
                  threshold=config['threshold'],
                  n_complete=config['n_complete'],
