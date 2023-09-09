@@ -62,10 +62,11 @@ class ExhaustiveSearch(Search):
                  full_trs_score_list=[],
                  from_triple_idx=5,
                  chunk_size=10,
-                 file_id=0):
+                 file_id=""):
 
-        if (time.time() - self.start_time) > self.per_trs_time_limit:
-            self.split_trs(trs, from_triple_idx, file_id)
+        if len(file_id) < 250:
+            if (time.time() - self.start_time) > self.per_trs_time_limit:
+                self.split_trs(trs, from_triple_idx, file_id)
 
         triple = self.cd.next_unassigned_triple(trs)
         if triple == [0, 0, 0]:
