@@ -32,7 +32,7 @@ class ExhaustiveSearch(Search):
             cur_triple = tuple(trs[cur_triple_idx].triple)
             cur_rule_id = trs[cur_triple_idx].rule_id
             if cur_rule_id == 0:
-                cur_rule = cd.rules[0]
+                cur_rule = self.rules[0]
             else:
                 cur_rule = cd.rules[cur_rule_id-1]
 
