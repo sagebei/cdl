@@ -1,12 +1,12 @@
 import os
-import random
 import platform
 from cdl import *
 from utils import Search
-from tools import get_unprocessed_fileid
+from tools import divide_labor, get_unprocessed_file
 import argparse
 import sys
 import time
+import shutil
 sys.setrecursionlimit(5000)
 
 
@@ -27,7 +27,7 @@ class ExhaustiveSearch(Search):
             self.triple_rule_dict[tuple(tr.triple)] = self.rules
             self.triple_index[tuple(tr.triple)] = idx
 
-    def split_trs(self, trs, from_triple_idx, file_id):
+    def split_trs(self, trs, from_triple_idx, filename):
         for cur_triple_idx in range(from_triple_idx, len(trs)):
             cur_triple = tuple(trs[cur_triple_idx].triple)
             cur_rule_id = trs[cur_triple_idx].rule_id
@@ -43,12 +43,13 @@ class ExhaustiveSearch(Search):
 
                 for next_rule in self.rules[cur_rule_index+1:]:
                     new_trs = self.cd.assign_rule_by_index(trs, cur_triple_idx, next_rule)
-                    for i in range(cur_triple_idx+1, len(trs)):
+                    for i in range(cur_triple_idx + 1, len(trs)):
                         new_trs = self.cd.assign_id_by_index(new_trs, i, 0)
 
                     self.save_trs_score_list([(new_trs, 0)],
-                                             f"{self.n_complete}_{self.cd.num_triples}",
-                                             f"{file_id}_{self.split_id}.pkl")
+                                             "split_trs",
+                                             f"{filename.split('-')[1]}_{self.split_id}.pkl")
+
                     self.split_id += 1
 
                 break
@@ -62,11 +63,11 @@ class ExhaustiveSearch(Search):
                  full_trs_score_list=[],
                  from_triple_idx=5,
                  chunk_size=10,
-                 file_id=""):
+                 filename=""):
 
-        if len(file_id) < 250:
+        if len(filename) < 250:
             if (time.time() - self.start_time) > self.per_trs_time_limit:
-                self.split_trs(trs, from_triple_idx, file_id)
+                self.split_trs(trs, from_triple_idx, filename)
 
         triple = self.cd.next_unassigned_triple(trs)
         if triple == [0, 0, 0]:
@@ -75,8 +76,8 @@ class ExhaustiveSearch(Search):
                 full_trs_score_list.append((trs, score))
                 if len(full_trs_score_list) >= chunk_size:
                     self.save_trs_score_list(full_trs_score_list,
-                                             f"{self.cd.num_triples}_{self.cd.num_triples}",
-                                             f"{file_id}_{self.chunk_id}.pkl")
+                                             f"{self.cd.num_triples}_{self.cd.num_triples}"
+                                             f"{filename.split('-')[1]}_{self.chunk_id}.pkl")
                     full_trs_score_list.clear()
                     self.chunk_id += 1
 
@@ -95,7 +96,7 @@ class ExhaustiveSearch(Search):
                                       full_trs_score_list,
                                       from_triple_idx,
                                       chunk_size,
-                                      file_id)
+                                      filename)
 
     def static_search(self,
                       cutoff=16,
@@ -104,7 +105,10 @@ class ExhaustiveSearch(Search):
                       n_chunks=1000,
                       shuffle=False,
                       per_trs_time_limit=60*60,
-                      chunk_size=100000):
+                      chunk_size=100000,
+                      n_cores=1,
+                      core_id=''):
+
         self.n_complete = n_complete
         self.per_trs_time_limit = per_trs_time_limit * 60
 
@@ -113,50 +117,70 @@ class ExhaustiveSearch(Search):
         self.folder_path += folder_name
         sub_folder_path = f"{self.folder_path}/{n_complete}_{self.cd.num_triples}/"
 
+        flag = f"{self.folder_path}/parallel search"
+        if core_id == 1:
+            divide_labor(sub_folder_path, n_cores)
+            open(flag, "w").close()
+        else:
+            while True:
+                if os.path.isfile(flag):
+                    break
+
+        ################################################################################
         while True:
-            file_id = get_unprocessed_fileid(sub_folder_path)
+            filename = get_unprocessed_file(sub_folder_path, core_id)
 
-            if file_id is not None:
-                try:
-                    os.rename(sub_folder_path+f"{file_id}.pkl",
-                              sub_folder_path+f"{file_id}.processing")
+            if filename is not None:
 
-                    trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triples}",
-                                                              f"{file_id}.processing")
+                os.rename(sub_folder_path + f"{filename}.pkl",
+                          sub_folder_path + f"{filename}.processing")
 
-                    full_trs_score_list = []
-                    self.chunk_id = 1
-                    for trs, _ in trs_score_list:
-                        self.split_id = 1
-                        self.start_time = time.time()
-                        self.set_triple_dict(trs)
-                        from_triple_idx = self.triple_index[tuple(self.cd.next_unassigned_triple(trs))]
+                trs_score_list = self.load_trs_score_list(f"{n_complete}_{self.cd.num_triples}",
+                                                          f"{filename}.processing")
 
-                        self.fill_trs(trs,
-                                      cutoff,
-                                      threshold,
-                                      full_trs_score_list,
-                                      from_triple_idx,
-                                      chunk_size,
-                                      file_id)
+                full_trs_score_list = []
+                self.chunk_id = 1
+                for trs, _ in trs_score_list:
+                    self.split_id = 1
 
-                    if len(full_trs_score_list) > 0:
-                        self.save_trs_score_list(full_trs_score_list,
-                                                 f"{self.cd.num_triples}_{self.cd.num_triples}",
-                                                 f"{file_id}_{0}.pkl")
+                    self.start_time = time.time()
+                    self.set_triple_dict(trs)
+                    from_triple_idx = self.triple_index[tuple(self.cd.next_unassigned_triple(trs))]
 
-                    os.remove(sub_folder_path+f"{file_id}.processing")
+                    self.fill_trs(trs,
+                                  cutoff,
+                                  threshold,
+                                  full_trs_score_list,
+                                  from_triple_idx,
+                                  chunk_size,
+                                  filename)
 
-                except FileNotFoundError as e:
-                    print(e)
+                if len(full_trs_score_list) > 0:
+                    self.save_trs_score_list(full_trs_score_list,
+                                             f"{self.cd.num_triples}_{self.cd.num_triples}",
+                                             f"{filename.split('-')[1]}_{0}.pkl")
 
-            elif len(os.listdir(sub_folder_path)) == 0:
+                os.remove(sub_folder_path+f"{filename}.processing")
+
+            else:
                 break
+        ###############################################################################
+
+        if core_id == 1:
+            while True:
+                if len(os.listdir(sub_folder_path)) == 0:
+
+                    shutil.rmtree(sub_folder_path)
+                    split_folder = f"{self.folder_path}/split_trs"
+                    if os.path.exists(split_folder):
+                        os.rename(split_folder, f"{sub_folder_path}")
+                    os.remove(flag)
+                    break
 
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=11)
+parser.add_argument("-n", type=int, default=9)
 parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
 parser.add_argument("-cutoff", type=int, default=16)
 parser.add_argument("-threshold", type=float, default=0)
@@ -167,6 +191,8 @@ parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl
 parser.add_argument("-result_path", type=str, default="./results")
 parser.add_argument("-per_trs_time_limit", type=float, default=0.02)
 parser.add_argument("-chunk_size", type=int, default=1000)
+parser.add_argument("-n_cores", type=int, default=1)
+parser.add_argument("-core_id", type=int, default=1)
 args = parser.parse_args()
 config = vars(args)
 print(config)
@@ -183,6 +209,8 @@ es.static_search(cutoff=config['cutoff'],
                  n_chunks=config['n_chunks'],
                  shuffle=config['shuffle'],
                  per_trs_time_limit=config['per_trs_time_limit'],
-                 chunk_size=config["chunk_size"])
+                 chunk_size=config["chunk_size"],
+                 n_cores=config["n_cores"],
+                 core_id=config['core_id'])
 
 

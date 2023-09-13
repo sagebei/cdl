@@ -24,6 +24,8 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -rules "1N3" "2N3" \
                                              -lib_path "/data/home/acw554/cdl" \
                                              -result_path "/data/scratch/acw554/1n3_2n3" \
+                                             -n_cores=200 \
+                                             -core_id ${SGE_TASK_ID} \
 
 
 

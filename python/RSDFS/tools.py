@@ -1,5 +1,6 @@
 import random
 import os
+import math
 
 
 def get_unprocessed_fileid(sub_folder_path, buffer_size=10000):
@@ -20,6 +21,27 @@ def get_unprocessed_fileid(sub_folder_path, buffer_size=10000):
         return None
 
     return random.choice(unprocessed_ids)
+
+
+def get_unprocessed_file(sub_folder_path, core_id):
+    filenames = os.listdir(sub_folder_path)
+
+    for filename in filenames:
+        if filename.split("-")[0] == str(core_id):
+            return filename.split(".")[0]
+    return None
+
+
+def divide_labor(sub_folder_path, n_cores):
+    filenames = os.listdir(sub_folder_path)
+    random.shuffle(filenames)
+    core_capacity = math.ceil(len(filenames) / n_cores)
+    core_id = 0
+    for i, filename in enumerate(filenames):
+        if i % core_capacity == 0:
+            core_id += 1
+        os.rename(sub_folder_path + "/" + filename,
+                  sub_folder_path + f"/{core_id}-" + filename)
 
 
 Fishburn_sizes = {
