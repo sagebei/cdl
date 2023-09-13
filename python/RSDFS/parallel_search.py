@@ -140,7 +140,7 @@ class ExhaustiveSearch(Search):
             open(flag, "w").close()
         else:
             while True:
-                if os.path.isfile(flag):
+                if os.path.exists(flag) or not os.path.exists(sub_folder_path):
                     break
 
         ################################################################################
