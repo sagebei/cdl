@@ -23,8 +23,8 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -shuffle "." \
                                              -rules "1N3" "2N3" \
                                              -n_cores=200 \
-                                             -core_id ${SGE_TASK_ID} \
                                              -split_depth 5 \
+                                             -core_id ${SGE_TASK_ID} \
                                              -lib_path "/data/home/acw554/cdl" \
                                              -result_path "/data/scratch/acw554/1n3_2n3" \
 
