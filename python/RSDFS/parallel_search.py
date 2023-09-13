@@ -137,7 +137,6 @@ class ExhaustiveSearch(Search):
         flag = f"{self.folder_path}/parallel search"
         if core_id == 1:
             divide_labor(sub_folder_path, n_cores)
-            os.makedirs(f"{self.folder_path}/split_trs")
             open(flag, "w").close()
         else:
             while True:
