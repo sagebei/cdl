@@ -26,7 +26,7 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -split_depth 5 \
                                              -core_id ${SGE_TASK_ID} \
                                              -lib_path "/data/home/acw554/cdl" \
-                                             -result_path "/data/scratch/acw554/1n3_2n3" \
+                                             -result_path "/data/scratch/acw554/rsdfs" \
 
 
 

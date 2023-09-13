@@ -20,4 +20,4 @@ python ~/cdl/python/RSDFS/complete_search.py -n $1  \
                                              -shuffle "." \
                                              -rules "1N3" "2N3" \
                                              -lib_path "/data/home/acw554/cdl" \
-                                             -result_path "/data/scratch/acw554/1n3_2n3"
+                                             -result_path "/data/scratch/acw554/rsdfs"
