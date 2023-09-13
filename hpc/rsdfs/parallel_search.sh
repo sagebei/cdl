@@ -21,8 +21,8 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -per_trs_time_limit 0.02 \
                                              -chunk_size=1000 \
                                              -shuffle "." \
-                                             -rules "1N3" "2N3" \
-                                             -n_cores=200 \
+                                             -rules "2N1" "2N3" \
+                                             -n_cores=20 \
                                              -split_depth 5 \
                                              -core_id ${SGE_TASK_ID} \
                                              -lib_path "/data/home/acw554/cdl" \

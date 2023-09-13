@@ -18,6 +18,6 @@ python ~/cdl/python/RSDFS/complete_search.py -n $1  \
                                              -n_complete $2 \
                                              -n_chunks 100 \
                                              -shuffle "." \
-                                             -rules "1N3" "2N3" \
+                                             -rules "2N1" "2N3" \
                                              -lib_path "/data/home/acw554/cdl" \
                                              -result_path "/data/scratch/acw554/rsdfs"
