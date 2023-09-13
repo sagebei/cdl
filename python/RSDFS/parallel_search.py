@@ -1,12 +1,12 @@
 import os
 import platform
 from cdl import *
-from utils import Search
-from tools import divide_labor, get_unprocessed_file
+from utils import get_unprocessed_file, divide_labor, Search
 import argparse
 import sys
 import time
 import shutil
+from itertools import product
 sys.setrecursionlimit(5000)
 
 
@@ -21,6 +21,7 @@ class ExhaustiveSearch(Search):
         self.triple_index = {(0, 0, 0): -1}
         self.start_time = time.time()
         self.per_trs_time_limit = 0
+        self.split_depth = 5
 
     def set_triple_dict(self, trs):
         for idx, tr in enumerate(trs):
@@ -43,14 +44,28 @@ class ExhaustiveSearch(Search):
 
                 for next_rule in self.rules[cur_rule_index+1:]:
                     new_trs = self.cd.assign_rule_by_index(trs, cur_triple_idx, next_rule)
+                    if self.cd.next_unassigned_triple(new_trs) == [0, 0, 0]:
+                        self.save_trs_score_list([(new_trs, 0)],
+                                                 "split_trs",
+                                                 f"{filename.split('-')[1]}_{self.split_id}.pkl")
+
                     for i in range(cur_triple_idx + 1, len(trs)):
                         new_trs = self.cd.assign_id_by_index(new_trs, i, 0)
 
-                    self.save_trs_score_list([(new_trs, 0)],
-                                             "split_trs",
-                                             f"{filename.split('-')[1]}_{self.split_id}.pkl")
+                    # further split
+                    unassigned_triples = self.cd.unassigned_triples(new_trs)
+                    depth = min(self.split_depth, len(unassigned_triples))
+                    all_rules = product(*[self.rules for _ in range(depth)])
+                    unassigned_triples = unassigned_triples[:depth]
+                    for rules in all_rules:
+                        for rule, triple in zip(rules, unassigned_triples):
+                            new_trs = self.cd.assign_rule(new_trs, triple, rule)
 
-                    self.split_id += 1
+                        self.save_trs_score_list([(new_trs, 0)],
+                                                 "split_trs",
+                                                 f"{filename.split('-')[1]}_{self.split_id}.pkl")
+
+                        self.split_id += 1
 
                 break
 
@@ -77,7 +92,7 @@ class ExhaustiveSearch(Search):
                 if len(full_trs_score_list) >= chunk_size:
                     self.save_trs_score_list(full_trs_score_list,
                                              f"{self.cd.num_triples}_{self.cd.num_triples}"
-                                             f"{filename.split('-')[1]}_{self.chunk_id}.pkl")
+                                             f"{filename.split('-')[-1]}_{self.chunk_id}.pkl")
                     full_trs_score_list.clear()
                     self.chunk_id += 1
 
@@ -106,9 +121,11 @@ class ExhaustiveSearch(Search):
                       shuffle=False,
                       per_trs_time_limit=60*60,
                       chunk_size=100000,
+                      split_depth=5,
                       n_cores=1,
                       core_id=''):
 
+        self.split_depth = split_depth
         self.n_complete = n_complete
         self.per_trs_time_limit = per_trs_time_limit * 60
 
@@ -156,9 +173,10 @@ class ExhaustiveSearch(Search):
                                   filename)
 
                 if len(full_trs_score_list) > 0:
+                    print(filename)
                     self.save_trs_score_list(full_trs_score_list,
                                              f"{self.cd.num_triples}_{self.cd.num_triples}",
-                                             f"{filename.split('-')[1]}_{0}.pkl")
+                                             f"{filename.split('-')[-1]}_{0}.pkl")
 
                 os.remove(sub_folder_path+f"{filename}.processing")
 
@@ -180,17 +198,18 @@ class ExhaustiveSearch(Search):
 
 parser = argparse.ArgumentParser(description="Run search on a single CPU core",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-n", type=int, default=9)
-parser.add_argument("-rules", nargs="*", type=str, default=["2N1", "2N3"])
-parser.add_argument("-cutoff", type=int, default=16)
+parser.add_argument("-n", type=int, default=7)
+parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "2N3"])
+parser.add_argument("-cutoff", type=int, default=14)
 parser.add_argument("-threshold", type=float, default=0)
 parser.add_argument("-n_complete", type=int, default=5)
 parser.add_argument("-n_chunks", type=int, default=10)
 parser.add_argument("-shuffle", type=bool, default="")
 parser.add_argument("-lib_path", type=str, default="/Users/bei/CLionProjects/cdl" if platform.system() == 'Darwin' else "E:/cdl")
 parser.add_argument("-result_path", type=str, default="./results")
-parser.add_argument("-per_trs_time_limit", type=float, default=0.02)
+parser.add_argument("-per_trs_time_limit", type=float, default=5)
 parser.add_argument("-chunk_size", type=int, default=1000)
+parser.add_argument("-split_depth", type=int, default=5)
 parser.add_argument("-n_cores", type=int, default=1)
 parser.add_argument("-core_id", type=int, default=1)
 args = parser.parse_args()
@@ -210,6 +229,7 @@ es.static_search(cutoff=config['cutoff'],
                  shuffle=config['shuffle'],
                  per_trs_time_limit=config['per_trs_time_limit'],
                  chunk_size=config["chunk_size"],
+                 split_depth=config["split_depth"],
                  n_cores=config["n_cores"],
                  core_id=config['core_id'])
 
