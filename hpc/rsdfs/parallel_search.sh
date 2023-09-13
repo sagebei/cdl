@@ -4,8 +4,8 @@
 #$ -pe smp 1
 #$ -l h_vmem=8G
 #$ -j y
-#$ -l h_rt=24:0:0
-#$ -t 1-100
+#$ -l h_rt=1:0:0
+#$ -t 1-20
 #$ -N rfp
 
 module load python/3.8.5
@@ -18,7 +18,7 @@ python ~/cdl/python/RSDFS/parallel_search.py -n $1  \
                                              -threshold 0  \
                                              -n_complete $2 \
                                              -n_chunks 100 \
-                                             -per_trs_time_limit 0.5 \
+                                             -per_trs_time_limit 0.02 \
                                              -chunk_size=1000 \
                                              -shuffle "." \
                                              -rules "1N3" "2N3" \
