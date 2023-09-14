@@ -184,7 +184,7 @@ class ExhaustiveSearch(Search):
                 break
         ###############################################################################
 
-        if core_id == 1:
+        if core_id == n_cores:
             while True:
                 if len(os.listdir(sub_folder_path)) == 0:
 
