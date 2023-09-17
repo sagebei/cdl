@@ -171,11 +171,11 @@ int main()
 ## Cite
 Please cite our paper if you use CDL in a scientific publication.
 ```
-@article{zhou2023new,
-   title={New Record-Breaking Condorcet Domains on 10 and 11 Alternatives},
-   author={Zhou, Bei and Riis, S{\o}ren},
-   journal={arXiv preprint arXiv:2303.06524},
-   year={2023}
+@article{zhou2023cdl,
+  title={CDL: A fast and flexible library for the study of permutation sets with structural restrictions},
+  author={Zhou, Bei and Markstr{\=o}m, Klas and Riis, S{\o}ren},
+  journal={arXiv preprint arXiv:2309.06306},
+  year={2023}
 }
 ```
 
