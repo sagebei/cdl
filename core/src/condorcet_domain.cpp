@@ -493,7 +493,6 @@ void CondorcetDomain::init_subset(Int8 sub_n)
 {
     m_sub_n = sub_n;
     m_subsets = combinations(m_triple_elems, m_sub_n);
-    m_subset_size = m_subsets.size();
     m_subset_dicts.clear();
 
     for (const std::vector<Int8>& subset: m_subsets)
@@ -527,18 +526,20 @@ std::vector<TRS> CondorcetDomain::subset_trs_list(const TRS& trs)
 {
     std::vector<TRS> trs_list{};
 
-    for (Int32 subset_idx = 0; subset_idx < m_subset_size; subset_idx++)  // for each subset
+    for (Int32 subset_idx = 0; subset_idx < m_subsets.size(); subset_idx++)  // for each subset
     {
+        const std::vector<Int8>& subset = m_subsets[subset_idx];
+        std::map<Int8, Int8> subset_dict = m_subset_dicts[subset_idx];
+
         TRS sub_trs{};
         for (const TripleRule& tr: trs)  // find the triple that is contained in the subset
         {
             const auto& [triple, rule_id] = tr;
-            const std::vector<Int8>& subset = m_subsets[subset_idx];
             if (std::includes(subset.begin(), subset.end(), triple.begin(), triple.end()))
             {
                 TripleRule sub_triple_rule;
                 for (Int8 i = 0; i < 3; i++)
-                    sub_triple_rule.triple[i] = m_subset_dicts[subset_idx][triple[i]];
+                    sub_triple_rule.triple[i] = subset_dict[triple[i]];
                 sub_triple_rule.rule_id = rule_id;
                 sub_trs.push_back(sub_triple_rule);
             }
@@ -547,6 +548,37 @@ std::vector<TRS> CondorcetDomain::subset_trs_list(const TRS& trs)
     }
 
     return trs_list;
+}
+
+CDS CondorcetDomain::subset_domain_list(const CD& cd)
+{
+    CDS subset_cds{};
+
+    for (Int32 subset_idx = 0; subset_idx < m_subsets.size(); subset_idx ++)
+    {
+        const std::vector<Int8>& subset = m_subsets[subset_idx];
+        std::map<Int8, Int8> subset_dict = m_subset_dicts[subset_idx];
+
+        std::set<IntList> subset_cd_set{};
+        for (const IntList& permutation : cd)
+        {
+            IntList sub_permutation{};
+            for (const Int8& p : permutation)
+            {
+                Int8 element = subset_dict[p];
+                if (element != 0)
+                    sub_permutation.push_back(element);
+            }
+
+            subset_cd_set.insert(sub_permutation);
+        }
+
+        CD subset_cd(subset_cd_set.begin(), subset_cd_set.end());
+        subset_cds.push_back(subset_cd);
+    }
+
+
+    return subset_cds;
 }
 
 std::vector<std::vector<Int8>> CondorcetDomain::subset_states(const TRS& trs)

@@ -29,7 +29,6 @@ public:
 
     // member variable for constructing subsets
     Int8 m_sub_n{};
-    Int32 m_subset_size{};
     std::vector<std::vector<Int8>> m_subsets{};
     std::vector<std::map<Int8, Int8>> m_subset_dicts{};
 
@@ -69,6 +68,7 @@ public:
     void init_subset(Int8 sub_n);
     std::vector<int> subset_weights();
     std::vector<TRS> subset_trs_list(const TRS& trs);
+    CDS subset_domain_list(const CD& cd);
     std::vector<std::vector<Int8>> subset_states(const TRS& trs);
     std::vector<std::vector<Int8>> subset_states_any_ordering(const TRS& trs);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
