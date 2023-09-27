@@ -1,3 +1,9 @@
+if [ -z "$1" ]
+  then
+    echo "You need to supply the path to virtual environment in which CDL will be installed, for example, bash install ~/venv"
+    exit 1
+fi
+
 git pull
 
 #module load cmake
