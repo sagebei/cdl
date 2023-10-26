@@ -12,7 +12,7 @@ module load gcc/12.1.0
 
 source ~/venv/bin/activate
 
-python ~/cdl/python/databases/database_5.py -rules 2N3 1N3
+python ~/cdl/python/databases/database_5.py -n $1 -rules $2
 
 
 
