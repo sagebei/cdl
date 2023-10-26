@@ -4,9 +4,10 @@ from copy import deepcopy
 from itertools import combinations, product
 import argparse
 
+
 class Generator:
-    def __init__(self, rules):
-        self.cd = CondorcetDomain(n=4)
+    def __init__(self, n, rules):
+        self.cd = CondorcetDomain(n=n)
         self.trs = self.cd.init_trs()
         for tr in self.trs:
             self.trs = self.cd.assign_rule(self.trs, tr.triple, "3N1")
@@ -33,7 +34,7 @@ class Generator:
 
                 self.generate_on_trs(trs)
 
-        with open(f"database_4_{'_'.join(self.rules)}.pkl", "wb") as f:
+        with open(f"database_{self.cd.n}_{'_'.join(self.rules)}.pkl", "wb") as f:
             pickle.dump(self.dataset_dict, f)
 
     def generate_on_trs(self, trs):
@@ -61,13 +62,14 @@ class Generator:
             self.dataset_dict[tuple(state)] = largest_size
 
 
-parser = argparse.ArgumentParser(description="build database for 5 alternatives",
+parser = argparse.ArgumentParser(description="build database for n alternatives",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "3N1", "1N2", "3N2", "2N1", "2N3"])
+parser.add_argument("-n", type=int, default=3)
+parser.add_argument("-rules", nargs="*", type=str, default=["1N3", "3N1", "2N1", "2N3"])
 args = parser.parse_args()
 config = vars(args)
 
-gen = Generator(rules=config['rules'])
+gen = Generator(n=config['n'], rules=config['rules'])
 gen.generate_full()
 gen.generate_all()
 
