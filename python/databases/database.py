@@ -73,4 +73,4 @@ gen = Generator(n=config['n'], rules=config['rules'])
 gen.generate_full()
 gen.generate_all()
 
-#  python database_5.py -rules 2N1 2N3 1N2 3N2
+# python database.py -n 4 -rules 2N1 2N3 1N2 3N2
