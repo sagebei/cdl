@@ -581,6 +581,35 @@ CDS CondorcetDomain::subset_domain_list(const CD& cd)
     return subset_cds;
 }
 
+CD CondorcetDomain::domain_on_triple(const CD& cd, const Triple& triple)
+{
+    std::set<IntList> subset_domain{};
+
+    for (const IntList& permutation : cd)
+    {
+        std::map<Int8, Int8> idx_alt{};
+        for (const Int8& t : triple)
+        {
+            int idx = get_index(permutation, t);
+            if (idx == -1)
+                break;
+            else
+                idx_alt[idx] = t;
+        }
+
+        if (idx_alt.size() == 3)
+        {
+            IntList sub_perm{};
+            for (const auto &pair: idx_alt)
+                sub_perm.push_back(pair.second);
+            subset_domain.insert(sub_perm);
+        }
+    }
+
+    CD subset_cd(subset_domain.begin(), subset_domain.end());
+    return subset_cd;
+}
+
 std::vector<std::vector<Int8>> CondorcetDomain::subset_states(const TRS& trs)
 {
     std::vector<std::vector<Int8>> sub_states{};

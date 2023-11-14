@@ -68,24 +68,35 @@
 //    return 0;
 //}
 
+//int main()
+//{
+//    CondorcetDomain cd(5);
+//    auto trs = cd.init_trs();
+//    trs = cd.assign_rule_by_index(trs, 0, "1N3");
+//    trs = cd.assign_rule_by_index(trs, 1, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 2, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 3, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 4, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 5, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 6, "2N3");
+//    trs = cd.assign_rule_by_index(trs, 7, "1N3");
+//    trs = cd.assign_rule_by_index(trs, 8, "1N3");
+//    trs = cd.assign_rule_by_index(trs, 9, "1N3");
+//
+//
+//    print_trs(trs);
+//    bool result = cd.is_trs_isomorphic(trs, {1, 3, 5}, {"1N3", "2N3"});
+//    std::cout<< result << std::endl;
+//    return 0;
+//}
+
 int main()
 {
     CondorcetDomain cd(5);
-    auto trs = cd.init_trs();
-    trs = cd.assign_rule_by_index(trs, 0, "1N3");
-    trs = cd.assign_rule_by_index(trs, 1, "2N3");
-    trs = cd.assign_rule_by_index(trs, 2, "2N3");
-    trs = cd.assign_rule_by_index(trs, 3, "2N3");
-    trs = cd.assign_rule_by_index(trs, 4, "2N3");
-    trs = cd.assign_rule_by_index(trs, 5, "2N3");
-    trs = cd.assign_rule_by_index(trs, 6, "2N3");
-    trs = cd.assign_rule_by_index(trs, 7, "1N3");
-    trs = cd.assign_rule_by_index(trs, 8, "1N3");
-    trs = cd.assign_rule_by_index(trs, 9, "1N3");
-
-
-//    print_trs(trs);
-    bool result = cd.is_trs_isomorphic(trs, {1, 3, 5}, {"1N3", "2N3"});
-    std::cout<< result << std::endl;
+    TRS trs = cd.init_trs();
+//    TRS trs = cd.init_trs_by_scheme(Fishburn_scheme);
+    CD domain = cd.domain(trs);
+    CD sub_domain = cd.domain_on_triple(domain, {1, 2, 3});
+    std::cout << sub_domain.size() << std::endl;
     return 0;
 }
