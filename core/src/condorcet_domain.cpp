@@ -349,11 +349,35 @@ TRS CondorcetDomain::assign_id(TRS trs, const Triple& triple, const Int8 rule_id
     return trs;
 }
 
+TRS CondorcetDomain::assign_id_any_ordering(TRS trs, const Triple& triple, const Int8 rule_id)
+{
+    for (TripleRule& tr : trs)
+    {
+        if (tr.triple == triple) {
+            tr.rule_id = rule_id;
+            break;
+        }
+    }
+    return trs;
+}
+
 TRS CondorcetDomain::assign_rule(TRS trs, const Triple& triple, const std::string& rule)
 {
     Int32 index = m_triple_index[triple];
     trs[index].rule_id = m_rule_id.at(rule);
 
+    return trs;
+}
+
+TRS CondorcetDomain::assign_rule_any_ordering(TRS trs, const Triple& triple, const std::string& rule)
+{
+    for (TripleRule& tr : trs)
+    {
+        if (tr.triple == triple) {
+            tr.rule_id = m_rule_id[rule];
+            break;
+        }
+    }
     return trs;
 }
 
@@ -827,11 +851,11 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
         {
             Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
             std::sort(new_triple.begin(), new_triple.end());
-
-            std::string rule = m_rules[tr.rule_id - 1];
             std::string new_rule{};
-            if (!rule.empty())
+
+            if (tr.rule_id != 0)
             {
+                std::string rule = m_rules[tr.rule_id - 1];
                 auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
                 Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
                 new_rule = std::to_string(index) + rule[1] + rule[2];
@@ -842,8 +866,6 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
                     break;
                 }
             }
-            else
-                new_rule = rule;
 
             new_trs = assign_rule(new_trs, new_triple, new_rule);
         }

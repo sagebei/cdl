@@ -89,7 +89,9 @@ PYBIND11_MODULE(cdl, m) {
             .def("transfer_trs", &CondorcetDomain::transfer_trs, py::arg("from"), py::arg("to"))
 
             .def("assign_id", &CondorcetDomain::assign_id, py::arg("trs"), py::arg("triple"), py::arg("rule_id"))
+            .def("assign_id_any_ordering", &CondorcetDomain::assign_id_any_ordering, py::arg("trs"), py::arg("triple"), py::arg("rule_id"))
             .def("assign_rule", &CondorcetDomain::assign_rule, py::arg("trs"), py::arg("triple"), py::arg("rule"))
+            .def("assign_rule_any_ordering", &CondorcetDomain::assign_rule_any_ordering, py::arg("trs"), py::arg("triple"), py::arg("rule"))
             .def("assign_id_by_index", &CondorcetDomain::assign_id_by_index, py::arg("trs"), py::arg("index"), py::arg("rule_id"))
             .def("assign_rule_by_index", &CondorcetDomain::assign_rule_by_index, py::arg("trs"), py::arg("index"), py::arg("rule"))
             .def("next_unassigned_triple", &CondorcetDomain::next_unassigned_triple, py::arg("trs"))

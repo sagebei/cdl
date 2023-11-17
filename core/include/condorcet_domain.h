@@ -49,7 +49,9 @@ public:
     TRS transfer_trs(const TRS& from, TRS to);
 
     TRS assign_id(TRS trs, const Triple& triple, const Int8 rule_id);
+    TRS assign_id_any_ordering(TRS trs, const Triple& triple, const Int8 rule_id);
     TRS assign_rule(TRS trs, const Triple& triple, const std::string& rule);
+    TRS assign_rule_any_ordering(TRS trs, const Triple& triple, const std::string& rule);
     TRS assign_id_by_index(TRS trs, Int32 index, const Int8 rule_id);
     TRS assign_rule_by_index(TRS trs, Int32 index, const std::string& rule);
     Triple next_unassigned_triple(const TRS& trs);
