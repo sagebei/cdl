@@ -769,7 +769,7 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
 //            std::sort(new_triple.begin(), new_triple.end());
 //            std::string rule = m_rules[tr.rule_id - 1];
 //
-//            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[Int8(rule[0] - '0')-1]]);
+//            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
 //            Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
 //            std::string new_rule = std::to_string(index) + rule[1] + rule[2];
 //
@@ -814,7 +814,7 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
     std::iota(alternatives.begin(), alternatives.end(), 1);
 
     do {
-        TRS new_trs(empty_trs); // sort_trs(init_trs());
+        TRS new_trs(empty_trs);
 
         std::map<Int8, Int8> perm_dict{};
         for (Int8 i = 1; i <= n; i ++)
@@ -832,7 +832,7 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
             std::string new_rule{};
             if (!rule.empty())
             {
-                auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[Int8(rule[0] - '0')-1]]);
+                auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
                 Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
                 new_rule = std::to_string(index) + rule[1] + rule[2];
 

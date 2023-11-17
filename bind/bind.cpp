@@ -79,6 +79,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("sort_trs", &CondorcetDomain::sort_trs, py::arg("trs"))
             .def("init_trs_random", &CondorcetDomain::init_trs_random, py::arg("is_sorted")=false)
             .def("init_trs", &CondorcetDomain::init_trs)
+            .def("trs_to_rz_ordering", &CondorcetDomain::trs_to_rz_ordering, py::arg("trs"))
             .def("init_trs_lex", &CondorcetDomain::init_trs_lex)
             .def("init_trs_colex", &CondorcetDomain::init_trs_colex)
             .def("init_trs_by_scheme", &CondorcetDomain::init_trs_by_scheme, py::arg("scheme_fun"))
