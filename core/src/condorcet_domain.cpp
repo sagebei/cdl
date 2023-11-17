@@ -851,23 +851,22 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
         {
             Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
             std::sort(new_triple.begin(), new_triple.end());
-            std::string new_rule{};
 
             if (tr.rule_id != 0)
             {
                 std::string rule = m_rules[tr.rule_id - 1];
                 auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
                 Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
-                new_rule = std::to_string(index) + rule[1] + rule[2];
+                std::string new_rule = std::to_string(index) + rule[1] + rule[2];
 
                 if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
                 {
                     go_to_next = true;
                     break;
                 }
-            }
 
-            new_trs = assign_rule(new_trs, new_triple, new_rule);
+                new_trs = assign_rule(new_trs, new_triple, new_rule);
+            }
         }
 
         if (go_to_next == false)
