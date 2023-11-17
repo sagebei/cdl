@@ -39,6 +39,7 @@ public:
     TRS sort_trs(TRS trs);
     TRS init_trs_random(bool is_sorted=false);
     TRS init_trs();
+    TRS trs_to_rz_ordering(const TRS& trs);
     TRS init_trs_lex();
     TRS init_trs_colex();
     TRS init_trs_by_scheme(const std::function<std::string(Triple)>& scheme_fun);
@@ -80,7 +81,8 @@ public:
     CDS isomorphic_domains(const CD& cd);
     CD isomorphic_hash(const CD& cd);
     CDS non_isomorphic_domains(CDS cds);
-    bool is_trs_isomorphic(const TRS& trs, const Triple& triple, const std::vector<std::string>& rules);
+//    bool is_trs_isomorphic(const TRS& trs, const Triple& triple, const std::vector<std::string>& rules);
+    bool is_trs_isomorphic(const TRS& trs_rz, const std::vector<std::string>& rules);
 
     TRS domain_to_trs(const CD& cd);
 
