@@ -83,8 +83,7 @@ public:
     CDS isomorphic_domains(const CD& cd);
     CD isomorphic_hash(const CD& cd);
     CDS non_isomorphic_domains(CDS cds);
-//    bool is_trs_isomorphic(const TRS& trs, const Triple& triple, const std::vector<std::string>& rules);
-    bool is_trs_isomorphic(const TRS& trs_rz, const std::vector<std::string>& rules);
+    bool is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules);
 
     TRS domain_to_trs(const CD& cd);
 
