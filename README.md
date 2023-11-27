@@ -99,10 +99,11 @@ for n in range(5, 11):
 
 ## Installation for Python Program
 ### Install CDL for Linux or MacOS
-1. Open a terminal and change working directory to the `cdl` folder
-2. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
+1. Open a terminal and download the CDL repository to your laptop by `git clone https://github.com/sagebei/cdl.git`
+2. Change working directory to the `cdl/bind` folder
+3. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
    and the cmake module by running `module load gcc cmake` if you are using a server machine. 
-3. Run `source install.sh \path\to\your\virtural_environment` to install 
+4. Run `source install.sh \path\to\your\virtural_environment` to install 
    the library to an existing virtual environment in which you will import it.
    (This will download `pybind11` libray that is essential to compile the code,
    and install the `dgl` library to the site-package folder in the virtual environment.
