@@ -111,6 +111,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("subset_trs_list", &CondorcetDomain::subset_trs_list, py::arg("trs"))
             .def("subset_domain_list", &CondorcetDomain::subset_domain_list, py::arg("domain"))
             .def("domain_on_triple", &CondorcetDomain::domain_on_triple, py::arg("cd"), py::arg("triple"))
+            .def("domain_on_alternatives", &CondorcetDomain::domain_on_alternatives, py::arg("cd"), py::arg("alternatives"))
             .def("subset_states", &CondorcetDomain::subset_states, py::arg("trs"))
             .def("subset_states_any_ordering", &CondorcetDomain::subset_states_any_ordering, py::arg("trs"))
             .def("subset_cd_sizes", &CondorcetDomain::subset_cd_sizes, py::arg("trs"))
@@ -121,6 +122,8 @@ PYBIND11_MODULE(cdl, m) {
             .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
             .def("is_trs_isomorphic", &CondorcetDomain::is_trs_isomorphic, py::arg("trs"), py::arg("rules"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
+
+            .def("is_domain_copious", &CondorcetDomain::is_domain_copious, py::arg("domain"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {

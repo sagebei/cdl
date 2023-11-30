@@ -616,37 +616,32 @@ CDS CondorcetDomain::subset_domain_list(const CD& cd)
         subset_cds.push_back(subset_cd);
     }
 
-
     return subset_cds;
 }
 
-CD CondorcetDomain::domain_on_triple(const CD& cd, const Triple& triple)
+CD CondorcetDomain::domain_on_alternatives(const CD& cd, const std::vector<Int8>& alternatives)
 {
     std::set<IntList> subset_domain{};
 
     for (const IntList& permutation : cd)
     {
-        std::map<Int8, Int8> idx_alt{};
-        for (const Int8& t : triple)
+        IntList sub_permutation{};
+        for (const Int8& p : permutation)
         {
-            int idx = get_index(permutation, t);
-            if (idx == -1)
-                break;
-            else
-                idx_alt[idx] = t;
+            if (std::find(alternatives.begin(), alternatives.end(), p) != alternatives.end())
+                sub_permutation.push_back(p);
         }
-
-        if (idx_alt.size() == 3)
-        {
-            IntList sub_perm{};
-            for (const auto &pair: idx_alt)
-                sub_perm.push_back(pair.second);
-            subset_domain.insert(sub_perm);
-        }
+        subset_domain.insert(sub_permutation);
     }
-
     CD subset_cd(subset_domain.begin(), subset_domain.end());
+
     return subset_cd;
+}
+
+CD CondorcetDomain::domain_on_triple(const CD& domain, const Triple& triple)
+{
+    std::vector<Int8> new_triple(triple.begin(), triple.end());
+    return domain_on_alternatives(domain, new_triple);
 }
 
 std::vector<std::vector<Int8>> CondorcetDomain::subset_states(const TRS& trs)
@@ -851,6 +846,17 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd)
 
     TRS result_trs(all_trs.begin(), all_trs.end());
     return result_trs;
+}
+
+bool CondorcetDomain::is_domain_copious(const CD& domain)
+{
+    std::vector<std::vector<Int8>> triples = combinations(m_triple_elems, 3);
+    for (const std::vector<Int8>& triple : triples)
+    {
+        if (domain_on_alternatives(domain, triple).size() < 4)
+            return false;
+    }
+    return true;
 }
 
 void print_trs(const TRS& trs)

@@ -72,12 +72,13 @@ public:
     std::vector<int> subset_weights();
     std::vector<TRS> subset_trs_list(const TRS& trs);
     CDS subset_domain_list(const CD& cd);
+    CD domain_on_alternatives(const CD& domain, const std::vector<Int8>& alternatives);
     CD domain_on_triple(const CD& cd, const Triple& triple);
     std::vector<std::vector<Int8>> subset_states(const TRS& trs);
     std::vector<std::vector<Int8>> subset_states_any_ordering(const TRS& trs);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
-    // cd brothers
+    // cd isomorphism
     CD inverse_domain(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
     CDS isomorphic_domains(const CD& cd);
@@ -86,6 +87,11 @@ public:
     bool is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules);
 
     TRS domain_to_trs(const CD& cd);
+
+    // cd types
+    bool is_domain_copious(const CD& domain);
+//    bool is_domain_rich(const CD& domain, int richness);
+//    bool is_domain_ample(const CD& domain);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
