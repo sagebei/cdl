@@ -66,6 +66,7 @@ public:
     // manipulating CDs
     CD domain(const TRS& trs);  // Width-First
     std::size_t size(const TRS& trs);     // Depth-First
+    CD filter_domain(const CD& domain, const TripleRule& tr);
 
     // subset functions
     void init_subset(Int8 sub_n);

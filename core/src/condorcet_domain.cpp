@@ -528,6 +528,13 @@ std::size_t CondorcetDomain::size(const TRS& trs)
     return cd_size;
 }
 
+CD CondorcetDomain::filter_domain(const CD& domain, const TripleRule& tr)
+{
+    CD resulting_domain = domain;
+    filter_cd(tr, resulting_domain);
+    return resulting_domain;
+}
+
 void CondorcetDomain::init_subset(Int8 sub_n)
 {
     m_sub_n = sub_n;

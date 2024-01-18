@@ -105,6 +105,7 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("domain", &CondorcetDomain::domain, py::arg("trs"))  // manipulating CDs
             .def("size", &CondorcetDomain::size, py::arg("trs"))
+            .def("filter_domain", &CondorcetDomain::filter_domain, py::arg("domain"), py::arg("tr"))
 
             .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)
             .def("subset_weights", &CondorcetDomain::subset_weights)
