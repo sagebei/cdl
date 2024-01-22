@@ -125,6 +125,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
 
             .def("is_domain_copious", &CondorcetDomain::is_domain_copious, py::arg("domain"))
+            .def("is_domain_ample", &CondorcetDomain::is_domain_ample, py::arg("domain"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {

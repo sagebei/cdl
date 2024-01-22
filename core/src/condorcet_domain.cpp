@@ -860,7 +860,18 @@ bool CondorcetDomain::is_domain_copious(const CD& domain)
     std::vector<std::vector<Int8>> triples = combinations(m_triple_elems, 3);
     for (const std::vector<Int8>& triple : triples)
     {
-        if (domain_on_alternatives(domain, triple).size() < 4)
+        if (domain_on_alternatives(domain, triple).size() != 4)
+            return false;
+    }
+    return true;
+}
+
+bool CondorcetDomain::is_domain_ample(const CD& domain)
+{
+    std::vector<std::vector<Int8>> triples = combinations(m_triple_elems, 2);
+    for (const std::vector<Int8>& triple : triples)
+    {
+        if (domain_on_alternatives(domain, triple).size() != 2)
             return false;
     }
     return true;

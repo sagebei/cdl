@@ -92,7 +92,7 @@ public:
     // cd types
     bool is_domain_copious(const CD& domain);
 //    bool is_domain_rich(const CD& domain, int richness);
-//    bool is_domain_ample(const CD& domain);
+    bool is_domain_ample(const CD& domain);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
