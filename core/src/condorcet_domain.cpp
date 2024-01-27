@@ -774,9 +774,7 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
 
 bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules)
 {
-    TRS empty_trs(trs);
-    for (TripleRule& tr : empty_trs)
-        tr.rule_id = 0;
+    TRS empty_trs = clear_trs(trs);
 
     Int8 largest_alternative{};
     for (auto iter=trs.begin(); iter != trs.end(); ++iter)
