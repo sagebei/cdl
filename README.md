@@ -185,6 +185,8 @@ Please cite our paper if you use CDL in a scientific publication.
 1. Zhou, Bei, and Søren Riis. "New Record-Breaking Condorcet Domains on 10 and 11 Alternatives." arXiv preprint arXiv:2303.06524 (2023).
 2. Akello-Egwell, Dolica, Charles Leedham-Green, Alastair Litterick, Klas Markström, and Søren Riis. "Condorcet Domains of Degree at most Seven." arXiv preprint arXiv:2306.15993 (2023).
 3. Karpov, Alexander, Klas Markström, Søren Riis, and Bei Zhou. "Set-alternating schemes: A new class of large Condorcet domains." arXiv preprint arXiv:2308.02817 (2023).
+4. Karpov, Alexander, Klas Markström, Søren Riis, and Bei Zhou. "Local Diversity of Condorcet Domains." arXiv preprint arXiv:2401.11912 (2024).
+5. Markström, Klas, Søren Riis, and Bei Zhou. "Arrow's single peaked domains, richness, and domains for plurality and the Borda count." arXiv preprint arXiv:2401.12547 (2024).
 ## Our Team
 CDL is developed and maintained by Bei Zhou and Soren Riis in the theory group at Queen Mary University of London, and Klas Markstrom
 from University of Umeå.
