@@ -869,13 +869,15 @@ TRS CondorcetDomain::domain_to_trs(const CD &cd)
     return result_trs;
 }
 
-bool CondorcetDomain::is_domain_copious(const CD& domain)
+bool CondorcetDomain::is_domain_copious(const TRS& trs, const CD& domain)
 {
-    std::vector<std::vector<Int8>> triples = combinations(m_triple_elems, 3);
-    for (const std::vector<Int8>& triple : triples)
+    for (const TripleRule& tr : trs)
     {
-        if (domain_on_alternatives(domain, triple).size() != 4)
-            return false;
+        if (tr.rule_id != 0)
+        {
+            if (domain_on_triple(domain, tr.triple).size() != 4)
+                return false;
+        }
     }
     return true;
 }

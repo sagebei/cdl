@@ -90,7 +90,7 @@ public:
     TRS domain_to_trs(const CD& cd);
 
     // cd types
-    bool is_domain_copious(const CD& domain);
+    bool is_domain_copious(const TRS& trs, const CD& domain);
 //    bool is_domain_rich(const CD& domain, int richness);
     bool is_domain_ample(const CD& domain);
 
