@@ -873,11 +873,8 @@ bool CondorcetDomain::is_domain_copious(const TRS& trs, const CD& domain)
 {
     for (const TripleRule& tr : trs)
     {
-        if (tr.rule_id != 0)
-        {
-            if (domain_on_triple(domain, tr.triple).size() != 4)
-                return false;
-        }
+        if (domain_on_triple(domain, tr.triple).size() < 4)
+            return false;
     }
     return true;
 }
