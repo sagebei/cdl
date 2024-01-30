@@ -284,25 +284,10 @@ TRS CondorcetDomain::init_trs_colex()
     return trs;
 }
 
-TRS CondorcetDomain::init_trs_by_scheme(const std::function<std::string(Triple)>& scheme_fun)
+TRS CondorcetDomain::init_trs_by_scheme(TRS trs, const std::function<std::string(Triple)>& scheme_fun)
 {
-    TRS trs;
-    for (Int8 i = 1; i < n+1; i ++)
-    {
-        for (Int8 k = 1; k < n+1; k ++)
-        {
-            for (Int8 j = 1; j < n+1; j ++)
-            {
-                if (i < j && j < k)
-                {
-                    TripleRule tr;
-                    tr.triple = {i, j, k};
-                    tr.rule_id = m_rule_id.at(scheme_fun(tr.triple));
-                    trs.push_back(tr);
-                }
-            }
-        }
-    }
+    for (TripleRule& tr : trs)
+        tr.rule_id = m_rule_id.at(scheme_fun(tr.triple));
 
     build_triple_index(trs);
     return trs;
