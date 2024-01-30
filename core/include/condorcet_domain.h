@@ -60,7 +60,7 @@ public:
     std::vector<std::size_t> evaluate_rules_on_triple(const TRS& trs, const Triple& triple);
     Triple dynamic_triple_ordering(const TRS& trs);
     std::vector<Int8> trs_to_state(const TRS& trs);
-    TRS state_to_trs(const std::vector<Int8>& state);
+    TRS state_to_trs(TRS trs, const std::vector<Int8>& state);
     TRS uplift_trs(const TRS& large, const TRS& small, const std::vector<Int8>& subset);
 
     // manipulating CDs

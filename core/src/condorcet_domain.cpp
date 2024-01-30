@@ -491,9 +491,8 @@ std::vector<Int8> CondorcetDomain::trs_to_state(const TRS& trs)
     return state;
 }
 
-TRS CondorcetDomain::state_to_trs(const std::vector<Int8>& state)
+TRS CondorcetDomain::state_to_trs(TRS trs, const std::vector<Int8>& state)
 {
-    TRS trs = init_trs();
     Int32 i = 0;
     for (TripleRule& tr : trs)
     {
