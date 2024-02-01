@@ -126,6 +126,9 @@ PYBIND11_MODULE(cdl, m) {
 
             .def("is_domain_copious", &CondorcetDomain::is_domain_copious, py::arg("trs"), py::arg("domain"))
             .def("is_domain_ample", &CondorcetDomain::is_domain_ample, py::arg("domain"))
+            .def("domain_include", &CondorcetDomain::domain_include, py::arg("domain"), py::arg("permutation"))
+            .def("is_domain_unitary", &CondorcetDomain::is_domain_unitary, py::arg("domain"))
+            .def("is_domain_maximal_width", &CondorcetDomain::is_domain_maximal_width, py::arg("domain"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {

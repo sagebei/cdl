@@ -874,6 +874,39 @@ bool CondorcetDomain::is_domain_ample(const CD& domain)
     return true;
 }
 
+bool CondorcetDomain::domain_include(const CD& domain, const IntList& permutation)
+{
+    if (std::find(domain.begin(), domain.end(), permutation) == domain.end())
+        return false;
+    else
+        return true;
+}
+
+bool CondorcetDomain::is_domain_unitary(const CD& domain)
+{
+    std::list<Int8> unitary_permutation{};
+    for (Int8 i = 1; i <= n; i ++)
+        unitary_permutation.push_back(i);
+
+    return domain_include(domain, unitary_permutation);
+}
+
+bool CondorcetDomain::is_domain_maximal_width(const CD& domain)
+{
+    std::list<Int8> unitary_permutation{};
+    for (Int8 i = 1; i <= n; i ++)
+        unitary_permutation.push_back(i);
+
+    if (!domain_include(domain, unitary_permutation))
+        return false;
+
+    unitary_permutation.reverse();
+    if (!domain_include(domain, unitary_permutation))
+        return false;
+
+    return true;
+}
+
 void print_trs(const TRS& trs)
 {
     const std::map<Int8, std::string> m_id_rule{{0, ""},

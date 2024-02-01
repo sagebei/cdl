@@ -93,6 +93,9 @@ public:
     bool is_domain_copious(const TRS& trs, const CD& domain);
 //    bool is_domain_rich(const CD& domain, int richness);
     bool is_domain_ample(const CD& domain);
+    bool domain_include(const CD& domain, const IntList& permutation);
+    bool is_domain_unitary(const CD& domain);
+    bool is_domain_maximal_width(const CD& domain);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
