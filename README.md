@@ -107,7 +107,6 @@ for n in range(5, 11):
    the library to an existing virtual environment in which you will import it.
    (This will download `pybind11` libray that is essential to compile the code,
    and install the `dgl` library to the site-package folder in the virtual environment.
-   <br />
    Examples: `source install.sh \opt\anaconda3` to install the library in the anaconda global environment, 
    or `source install.sh ~\PyCharmProjects\venv` to install it in a virtual environment
    created in the PycharmProjects directory.) 
