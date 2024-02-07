@@ -103,7 +103,7 @@ for n in range(5, 11):
 2. Change working directory to the `cdl/bind` folder
 3. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
    and the cmake module by running `module load gcc cmake` if you are using a server machine. 
-4. Run `source install.sh \path\to\your\virtural_environment` to install 
+4. - Installing to an existing Python virtual environment: Run `source install.sh \path\to\your\virtural_environment` to install 
    the library to an existing virtual environment in which you will import it.
    (This will download `pybind11` libray that is essential to compile the code,
    and install the `dgl` library to the site-package folder in the virtual environment.
@@ -111,6 +111,8 @@ for n in range(5, 11):
    Examples: `source install.sh \opt\anaconda3` to install the library in the anaconda global environment, 
    or `source install.sh ~\PyCharmProjects\venv` to install it in a virtual environment
    created in the PycharmProjects directory.) 
+   - Creat a new virtual environment: `python -m venv /path/to/new/virtual/environment`. Then follow the above
+      instructions to install the CDL library in it. 
 
 ### Install CDL for Windows
 1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the `gcc`
