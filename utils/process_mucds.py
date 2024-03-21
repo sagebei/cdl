@@ -1,14 +1,13 @@
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-import re
 import gzip
-import requests
 from io import BytesIO
 import urllib
 from cdl import *
 
+server_address = "http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/"
 
-req = Request("http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/")
+req = Request(server_address)
 html_page = urlopen(req)
 soup = BeautifulSoup(html_page, "html.parser")
 
@@ -17,9 +16,6 @@ for link in soup.findAll('a'):
     link = link.get('href')
     if link.startswith("mucds"):
         links.append(link)
-
-server_address = "http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/"
-
 
 cd = CondorcetDomain(7)
 
