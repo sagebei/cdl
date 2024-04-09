@@ -10,11 +10,11 @@ installed and used globally, enabling users to seamlessly integrate with tools w
 provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation domains, including
 - Ordering k-tuples, and rule initialization and assignment
 - Domain construction and size calculation
-- Subset Functions
+- Subset functions
 - Hashing and identifying non-isomorphic domains
 - Native support for general forbidden permutation domains
 - Calculate the size of any subset domains.
-- Supported 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
+- Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
 - etc.
 
 CDL supports all major operating systems, including Windows, Linux and MacOS. Users can install it as a python module using 
@@ -28,12 +28,6 @@ algorithms, and local search algorithms, etc.
 - python: provide depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
 - tools: 
 
-Brief introduction to the Condorcet Domain.
-
-<p align="center">
-  <img src="https://www.parisschoolofeconomics.eu/local/cache-vignettes/L690xH373/2-5-et-5-pse-mai-2021-xl-f57ef.png"
-        style="width:350px;">
-</p>
 
 ## Get started with Python
 ### Working with Condorcet domains
@@ -189,7 +183,7 @@ Please cite our paper if you use CDL in a scientific publication.
 4. Karpov, Alexander, Klas Markström, Søren Riis, and Bei Zhou. "Local Diversity of Condorcet Domains." arXiv preprint arXiv:2401.11912 (2024).
 5. Markström, Klas, Søren Riis, and Bei Zhou. "Arrow's single peaked domains, richness, and domains for plurality and the Borda count." arXiv preprint arXiv:2401.12547 (2024).
 ## Our Team
-CDL is developed and maintained by Bei Zhou and Soren Riis in the theory group at Queen Mary University of London, and Klas Markstrom
+CDL is developed and maintained by Dr Bei Zhou and Dr Soren Riis in the theory group at Queen Mary University of London, and Professor Klas Markstrom
 from University of Umeå.
 
 
