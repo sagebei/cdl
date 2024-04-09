@@ -79,13 +79,15 @@ public:
     std::vector<std::vector<Int8>> subset_states_any_ordering(const TRS& trs);
     std::tuple<std::vector<TRS>, std::vector<std::size_t>> subset_cd_sizes(const TRS& trs);
 
-    // cd isomorphism
+    // Isomorphism
     CD inverse_domain(const CD& cd, const IntList& permutation);
     CDS domain_brothers(const CD& cd);
     CDS isomorphic_domains(const CD& cd);
     CD isomorphic_hash(const CD& cd);
     CDS non_isomorphic_domains(CDS cds);
+    TRS inverse_trs(const TRS& trs, const IntList& permutation, const std::vector<std::string>& rules);
     bool is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules);
+    std::vector<TRS> isomorphic_trs_list(const TRS& trs, const std::vector<std::string>& rules);
 
     TRS domain_to_trs(const CD& cd);
 

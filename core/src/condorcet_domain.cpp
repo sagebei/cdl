@@ -756,6 +756,57 @@ CDS CondorcetDomain::non_isomorphic_domains(CDS cds)
     return iso_list;
 }
 
+TRS CondorcetDomain::inverse_trs(const TRS& trs, const IntList& permutation, const std::vector<std::string>& rules)
+{
+    TRS new_trs = clear_trs(trs);
+
+    std::map<Int8, Int8> perm_dict{};
+    Int8 i = 1;
+    for (const Int8& p : permutation)
+    {
+        perm_dict[p] = i;
+        i ++;
+    }
+
+    for (const TripleRule& tr : trs)
+    {
+        Triple new_triple{perm_dict[tr.triple[0]], perm_dict[tr.triple[1]], perm_dict[tr.triple[2]]};
+        std::sort(new_triple.begin(), new_triple.end());
+
+        if (tr.rule_id != 0)
+        {
+            std::string rule = m_rules[tr.rule_id - 1];
+            auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
+            Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
+            std::string new_rule = std::to_string(index) + rule[1] + rule[2];
+
+            if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
+            {
+                return TRS();
+            }
+
+            new_trs = assign_rule_any_ordering(new_trs, new_triple, new_rule);
+        }
+        else
+        {
+            for (const std::string& rule : rules)
+            {
+                auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
+                Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
+                std::string new_rule = std::to_string(index) + rule[1] + rule[2];
+
+                if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
+                {
+                    return TRS();
+                }
+            }
+
+        }
+    }
+
+    return new_trs;
+}
+
 bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules)
 {
     TRS empty_trs = clear_trs(trs);
@@ -829,6 +880,21 @@ bool CondorcetDomain::is_trs_isomorphic(const TRS& trs, const std::vector<std::s
     while(std::next_permutation(alternatives.begin(), alternatives.end()));
 
     return false;
+}
+
+std::vector<TRS> CondorcetDomain::isomorphic_trs_list(const TRS& trs, const std::vector<std::string>& rules)
+{
+    std::vector<TRS> trs_list{};
+
+    for (const IntList& permutation : domain(trs))
+    {
+        TRS new_trs = inverse_trs(trs, permutation, rules);
+
+        if (new_trs.size() != 0)
+            trs_list.push_back(new_trs);
+    }
+
+    return trs_list;
 }
 
 TRS CondorcetDomain::domain_to_trs(const CD &cd)

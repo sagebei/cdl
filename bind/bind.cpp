@@ -121,7 +121,9 @@ PYBIND11_MODULE(cdl, m) {
             .def("isomorphic_domains", &CondorcetDomain::isomorphic_domains, py::arg("cd"))
             .def("isomorphic_hash", &CondorcetDomain::isomorphic_hash, py::arg("cd"))
             .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
+            .def("inverse_trs", &CondorcetDomain::inverse_trs, py::arg("trs"), py::arg("permutation"), py::arg("rules"))
             .def("is_trs_isomorphic", &CondorcetDomain::is_trs_isomorphic, py::arg("trs"), py::arg("rules"))
+            .def("isomorphic_trs_list", &CondorcetDomain::isomorphic_trs_list, py::arg("trs"), py::arg("rules"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
 
             .def("is_domain_copious", &CondorcetDomain::is_domain_copious, py::arg("trs"), py::arg("domain"))
