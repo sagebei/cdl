@@ -81,7 +81,6 @@ public:
 
     // Isomorphism
     CD inverse_domain(const CD& cd, const IntList& permutation);
-    CDS domain_brothers(const CD& cd);
     CDS isomorphic_domains(const CD& cd);
     CD isomorphic_hash(const CD& cd);
     CDS non_isomorphic_domains(CDS cds);
