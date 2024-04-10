@@ -781,27 +781,10 @@ TRS CondorcetDomain::inverse_trs(const TRS& trs, const IntList& permutation, con
             std::string new_rule = std::to_string(index) + rule[1] + rule[2];
 
             if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
-            {
                 return TRS();
-            }
 
             new_trs = assign_rule_any_ordering(new_trs, new_triple, new_rule);
         }
-//        else
-//        {
-//            for (const std::string& rule : rules)
-//            {
-//                auto index_pointer = std::find(new_triple.begin(), new_triple.end(), perm_dict[tr.triple[int(rule[0] - '0')-1]]);
-//                Int8 index = std::distance(new_triple.begin(), index_pointer) + 1;
-//                std::string new_rule = std::to_string(index) + rule[1] + rule[2];
-//
-//                if (std::find(rules.begin(), rules.end(), new_rule) == rules.end())
-//                {
-//                    return TRS();
-//                }
-//            }
-//
-//        }
     }
 
     return new_trs;
@@ -889,7 +872,6 @@ std::vector<TRS> CondorcetDomain::isomorphic_trs_list(const TRS& trs, const std:
     for (const IntList& permutation : domain(trs))
     {
         TRS new_trs = inverse_trs(trs, permutation, rules);
-//        print_trs(new_trs);
         if (new_trs.size() != 0)
             trs_list.push_back(new_trs);
     }
