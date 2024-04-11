@@ -1,7 +1,7 @@
 
 if [ -z "$1" ]
   then
-    echo "You need to supply the path to virtual environment in which CDL will be installed, for example, bash windows_install /D/Anaconda3/Lib/site-packages/"
+    echo "You need to supply the path to virtual environment in which CDL will be installed, for example, bash windows_install.sh /D/Anaconda3/Lib/site-packages/"
     exit 1
 fi
 
