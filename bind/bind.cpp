@@ -123,6 +123,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("non_isomorphic_domains", &CondorcetDomain::non_isomorphic_domains, py::arg("cds"))
             .def("inverse_trs", &CondorcetDomain::inverse_trs, py::arg("trs"), py::arg("permutation"), py::arg("rules"))
             .def("is_trs_isomorphic", &CondorcetDomain::is_trs_isomorphic, py::arg("trs"), py::arg("rules"))
+            .def("is_trs_isomorphic_1n33n1", &CondorcetDomain::is_trs_isomorphic, py::arg("trs"))
             .def("isomorphic_trs_list", &CondorcetDomain::isomorphic_trs_list, py::arg("trs"), py::arg("rules"))
             .def("domain_to_trs", &CondorcetDomain::domain_to_trs, py::arg("cd"))
 
