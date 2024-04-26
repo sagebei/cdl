@@ -86,7 +86,7 @@ public:
     CDS non_isomorphic_domains(CDS cds);
     TRS inverse_trs(const TRS& trs, const IntList& permutation, const std::vector<std::string>& rules);
     bool is_trs_isomorphic(const TRS& trs, const std::vector<std::string>& rules);
-    bool is_trs_isomorphic_1n33n1(const TRS& trs, const std::vector<std::string>& rules);
+    bool is_trs_isomorphic_1n33n1(const TRS& trs);
     std::vector<TRS> isomorphic_trs_list(const TRS& trs, const std::vector<std::string>& rules);
 
     TRS domain_to_trs(const CD& cd);
