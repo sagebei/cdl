@@ -5,17 +5,16 @@
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
-[Condorcet Domain Library (CDL)](https://arxiv.org/pdf/2309.06306.pdf) is a flexible header-only library writen in C++ and offers Python Interfaces as a module that can be
-installed and used globally, enabling users to seamlessly integrate with tools writen in Python.  (CDL)
-provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation domains, including
-- Ordering k-tuples, and rule initialization and assignment
-- Domain construction and size calculation
-- Subset functions
-- Hashing and identifying non-isomorphic domains
-- Native support for general forbidden permutation domains
-- Calculate the size of any subset domains.
-- Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`.
-- etc.
+[Condorcet Domain Library (CDL)](https://arxiv.org/pdf/2309.06306.pdf) is a flexible header-only library written in C++ and offers Python Interfaces as a module that can be
+installed and used globally, enabling users to seamlessly integrate with tools written in Python.  (CDL)
+provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation, including
+- Ordering k-tuples, and rule initialization and assignment;
+- Domain construction and size calculation;
+- Subset functions and domain types verification;
+- Hashing, identifying and removing non-isomorphic domains;
+- Native support for general forbidden permutation domains;
+- Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`;
+- and much more.
 
 CDL supports all major operating systems, including Windows, Linux and MacOS. Users can install it as a python module using 
 the provided bash scripts. 
@@ -26,7 +25,7 @@ algorithms, and local search algorithms, etc.
 - bind: export all the C++ classes and functions to a python module and provide the bash script install it. 
 - core: the key functionality for manipulating tuple-rules and performing domain-related operations.
 - python: provide depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
-- tools: 
+- utils: provide functionss  
 
 
 ## Get started with Python
