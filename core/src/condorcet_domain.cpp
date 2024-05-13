@@ -1047,7 +1047,7 @@ float CondorcetDomain::trs_core(const TRS& trs, const CD& domain, const std::vec
     for (const IntList& permutation : domain)
     {
         TRS iso_trs = inverse_trs(trs, permutation, rules);
-        unique_iso_trs_set.insert(trs_to_state(trs));
+        unique_iso_trs_set.insert(trs_to_state(iso_trs));
     }
 
     return domain.size() / unique_iso_trs_set.size();
