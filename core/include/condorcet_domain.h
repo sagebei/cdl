@@ -98,6 +98,8 @@ public:
     bool domain_include(const CD& domain, const IntList& permutation);
     bool is_domain_unitary(const CD& domain);
     bool is_domain_maximal_width(const CD& domain);
+    CD dual_domain(const CD domain);
+    float trs_core(const TRS& trs, const CD& domain, const std::vector<std::string>& rules);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
