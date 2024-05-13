@@ -1040,13 +1040,13 @@ CD CondorcetDomain::dual_domain(CD domain)
     return inverse_domain(domain, domain.front());  // return its unitary form
 }
 
-float CondorcetDomain::trs_core(const TRS& trs, const CD& domain, const std::vector<std::string>& rules)
+float CondorcetDomain::trs_core(const TRS& trs, const CD& domain)
 {
     std::set<std::vector<Int8>> unique_iso_trs_set{};
 
     for (const IntList& permutation : domain)
     {
-        TRS iso_trs = inverse_trs(trs, permutation, rules);
+        TRS iso_trs = inverse_trs(trs, permutation, m_rules);
         unique_iso_trs_set.insert(trs_to_state(iso_trs));
     }
 

@@ -133,7 +133,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("is_domain_unitary", &CondorcetDomain::is_domain_unitary, py::arg("domain"))
             .def("is_domain_maximal_width", &CondorcetDomain::is_domain_maximal_width, py::arg("domain"))
             .def("dual_domain", &CondorcetDomain::dual_domain, py::arg("domain"))
-            .def("trs_core", &CondorcetDomain::trs_core, py::arg("trs"), py::arg("domain"), py::arg("rules"))
+            .def("trs_core", &CondorcetDomain::trs_core, py::arg("trs"), py::arg("domain"))
             .def(py::pickle(
                     [](const CondorcetDomain& cd)
                     {
@@ -158,7 +158,7 @@ PYBIND11_MODULE(cdl, m) {
                             throw std::runtime_error("Invalid state for CondorcetDomain object!");
 
                         CondorcetDomain cd(t[0].cast<Int8>());
-                        cd.m_rules = t[1].cast<std::array<std::string, 6>>();
+                        cd.m_rules = t[1].cast<std::vector<std::string>>();
                         cd.m_rule_id = t[2].cast<std::map<std::string, Int8>>();
                         cd.m_num_triples = t[3].cast<Int32>();
                         cd.m_triple_elems = t[4].cast<std::vector<Int8>>();

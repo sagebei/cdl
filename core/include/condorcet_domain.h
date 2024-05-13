@@ -14,7 +14,7 @@ private:
 
 public:
     Int8 n{};
-    std::array<std::string, 6> m_rules{{"1N3", "3N1", "2N3", "2N1", "1N2", "3N2"}};
+    std::vector<std::string> m_rules{{"1N3", "3N1", "2N3", "2N1", "1N2", "3N2"}};
     std::map<std::string, Int8> m_rule_id{{"", 0},
                                          {m_rules[0], 1},
                                          {m_rules[1], 2},
@@ -99,7 +99,7 @@ public:
     bool is_domain_unitary(const CD& domain);
     bool is_domain_maximal_width(const CD& domain);
     CD dual_domain(const CD domain);
-    float trs_core(const TRS& trs, const CD& domain, const std::vector<std::string>& rules);
+    float trs_core(const TRS& trs, const CD& domain);
 
     // enable default copy construction and copy assignment
     CondorcetDomain(const CondorcetDomain& cd) = default;
