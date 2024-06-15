@@ -122,19 +122,19 @@ bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& t
 
 void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold, bool& reach_threshold)
 {
-    if (reach_threshold) // ensures the recursion stops here and won't go deeper.
-        return;
-
     auto iter = permutation.begin();
     for (Int8 i = 0; i <= permutation.size(); i ++)
     {
+        if (reach_threshold) // ensures the recursion stops here and won't go deeper.
+            return;
+
         iter = permutation.insert(iter, alternative);
         if (check_permutation(permutation, trs))
         {
             if (alternative == n)
             {
                 cd_size++;
-                if (cd_size >= threshold)  // if the size is larger than or equal to the threshold
+                if (cd_size >= threshold)
                 {
                     reach_threshold = true;
                     return;
