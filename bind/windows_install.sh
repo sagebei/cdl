@@ -20,7 +20,6 @@ cmake --build . --target ALL_BUILD --config Release
 #rm /D/Anaconda3/Lib/site-packages/cdl.cp38-win_amd64.pyd
 
 mv -f ./Release/cdl.*.pyd $1
-pwd
 cd ..
 
 rm -r build
