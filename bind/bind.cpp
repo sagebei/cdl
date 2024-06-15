@@ -104,7 +104,7 @@ PYBIND11_MODULE(cdl, m) {
             .def("state_to_trs", &CondorcetDomain::state_to_trs, py::arg("trs"), py::arg("state"))
 
             .def("domain", &CondorcetDomain::domain, py::arg("trs"))  // manipulating CDs
-            .def("size", &CondorcetDomain::size, py::arg("trs"))
+            .def("size", &CondorcetDomain::size, py::arg("trs"), py::arg("threshold")=SIZE_MAX)
             .def("filter_domain", &CondorcetDomain::filter_domain, py::arg("domain"), py::arg("tr"))
 
             .def("init_subset", &CondorcetDomain::init_subset, py::arg("sub_n")=5)

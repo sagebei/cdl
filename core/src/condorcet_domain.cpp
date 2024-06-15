@@ -120,7 +120,7 @@ bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& t
     return true;
 }
 
-void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size)
+bool CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold)
 {
     auto iter = permutation.begin();
     for (Int8 i = 0; i <= permutation.size(); i ++)
@@ -129,13 +129,18 @@ void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, I
         if (check_permutation(permutation, trs))
         {
             if (alternative == n)
-                cd_size ++;
+            {
+                cd_size++;
+                if (cd_size >= threshold)  // if the size is larger than or equal to the threshold
+                    return true;
+            }
             else
-                expand_permutation(permutation, trs, alternative+1, cd_size);
+                expand_permutation(permutation, trs, alternative+1, cd_size, threshold);
         }
         iter = permutation.erase(iter);
         iter ++;
     }
+    return false;
 }
 
 TRS CondorcetDomain::fetch_trs(const TRS& trs, Int8 i)
@@ -501,14 +506,16 @@ CD CondorcetDomain::domain(const TRS& trs)
     return cd;
 }
 
-std::size_t CondorcetDomain::size(const TRS& trs)
+std::size_t CondorcetDomain::size(const TRS& trs, std::size_t threshold)
 {
     CD init_permutations = {{1, 2}, {2, 1}};
     std::size_t cd_size{};
     for (IntList& permutation : init_permutations)
     {
-        expand_permutation(permutation, trs, 3, cd_size);
+        if (expand_permutation(permutation, trs, 3, cd_size, threshold))  // if the threshold has been reached.
+            break;
     }
+
     return cd_size;
 }
 

@@ -8,7 +8,7 @@ private:
     void filter_cd(const TripleRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
     bool check_permutation(const IntList& permutation, const TRS& trs);
-    void expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size);
+    bool expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold);
     void filter_trs_list(std::list<TripleRule>& trs, const IntList& elem);
     TRS fetch_trs(const TRS& trs, Int8 i);
 
@@ -65,7 +65,7 @@ public:
 
     // manipulating CDs
     CD domain(const TRS& trs);  // Width-First
-    std::size_t size(const TRS& trs);     // Depth-First
+    std::size_t size(const TRS& trs, std::size_t threshold=SIZE_MAX);     // Depth-First; SIZE_MAX=18446744073709551615
     CD filter_domain(const CD& domain, const TripleRule& tr);
 
     // subset functions

@@ -21,6 +21,6 @@ cmake --build . --target ALL_BUILD --config Release
 
 mv -f ./Release/cdl.*.pyd $1
 pwd
-#cd ..
-#
-#rm -r build
+cd ..
+
+rm -r build
