@@ -8,7 +8,7 @@ private:
     void filter_cd(const TripleRule& tr, CD& cd);
     void expand_cd(CD& cd, Int8& value);
     bool check_permutation(const IntList& permutation, const TRS& trs);
-    bool expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold);
+    bool expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold, bool& reach_threshold);
     void filter_trs_list(std::list<TripleRule>& trs, const IntList& elem);
     TRS fetch_trs(const TRS& trs, Int8 i);
 
