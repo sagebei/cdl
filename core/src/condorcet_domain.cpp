@@ -120,10 +120,10 @@ bool CondorcetDomain::check_permutation(const IntList& permutation, const TRS& t
     return true;
 }
 
-bool CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold, bool& reach_threshold)
+void CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, Int8 alternative, std::size_t& cd_size, std::size_t& threshold, bool& reach_threshold)
 {
     if (reach_threshold) // ensures the recursion stops here and won't go deeper.
-        return true;
+        return;
 
     auto iter = permutation.begin();
     for (Int8 i = 0; i <= permutation.size(); i ++)
@@ -137,7 +137,7 @@ bool CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, I
                 if (cd_size >= threshold)  // if the size is larger than or equal to the threshold
                 {
                     reach_threshold = true;
-                    return true;
+                    return;
                 }
 
             }
@@ -147,8 +147,6 @@ bool CondorcetDomain::expand_permutation(IntList& permutation, const TRS& trs, I
         iter = permutation.erase(iter);
         iter ++;
     }
-
-    return false;
 }
 
 TRS CondorcetDomain::fetch_trs(const TRS& trs, Int8 i)
@@ -522,8 +520,8 @@ std::size_t CondorcetDomain::size(const TRS& trs, std::size_t threshold)
     bool reach_threshold = false;
     for (IntList& permutation : init_permutations)
     {
-        if (expand_permutation(permutation, trs, 3, cd_size, threshold, reach_threshold))  // if the threshold has been reached.
-            break;
+        if (!reach_threshold)
+            expand_permutation(permutation, trs, 3, cd_size, threshold, reach_threshold);
     }
 
     return cd_size;
