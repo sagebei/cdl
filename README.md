@@ -91,7 +91,11 @@ for n in range(5, 11):
 ```
 
 ## Installation for Python Program
-### Install CDL for Linux or MacOS
+### Pip install CDL 
+Install `gcc` and `cmake`. Then run  `pip install condorcet-domain` in the terminal (command line)
+
+
+### Bash install CDL for Linux or MacOS
 1. Open a terminal and download the CDL repository to your laptop by `git clone https://github.com/sagebei/cdl.git`
 2. Change working directory to the `cdl/bind` folder
 3. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
@@ -106,7 +110,7 @@ for n in range(5, 11):
    - Creat a new virtual environment: `python -m venv /path/to/new/virtual/environment`. Then follow the above
       instructions to install the CDL library in it. 
 
-### Install CDL for Windows
+### Bash install CDL for Windows
 1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the `gcc`
    and the `cmake` module by running `module load gcc cmake` if you are using a server machine.
 2. Open a Git Bash terminal, and change working directory to `cdl/bind`
