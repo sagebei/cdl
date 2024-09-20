@@ -15,7 +15,7 @@ typedef std::map<std::tuple<Int8, Int8, Int8>, Int32> TripleTupleIndex;
 
 PYBIND11_MODULE(cdl, m) {
     m.doc() = "Core objects and functions of the Condorcet Domain Library (CDL)";
-    m.attr("__version__") = "1.3.1";
+    m.attr("__version__") = "1.3.2";
 
     py::class_<TripleRule>(m, "TripleRule")
             .def(py::init<>())
