@@ -16,5 +16,8 @@ target_include_directories(cdl PUBLIC core/include)
 install(TARGETS cdl DESTINATION .)
 
 # export MACOSX_DEPLOYMENT_TARGET=11.0
-# python3 -m cibuildwheel --platform windows --output-dir dist 
+# python3 -m build --sdist 
+# python3 -m cibuildwheel --output-dir dist 
+# python3 -m cibuildwheel --platform linux --output-dir dist 
+# python3 -m cibuildwheel --platform macos --output-dir dist 
 # twine upload dist/*
