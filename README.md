@@ -5,27 +5,28 @@
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
-[Condorcet Domain Library (CDL)](https://arxiv.org/pdf/2309.06306.pdf) is a flexible header-only library written in C++ and offers Python Interfaces as a module that can be
-installed and used globally, enabling users to seamlessly integrate with tools written in Python.  (CDL)
+[Condorcet Domain Library (CDL)](https://arxiv.org/pdf/2309.06306.pdf) is a flexible header-only library written in C++ and offers Python Interfaces as a module that can beinstalled and used globally, enabling users to seamlessly integrate with tools written in Python.  CDL
 provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation, including
 - Ordering k-tuples, and rule initialization and assignment;
 - Domain construction and size calculation;
+- find complete of never conditions that a domain satisfies;
 - Subset functions and domain types verification;
-- Hashing, identifying and removing non-isomorphic domains;
+- Hashing, identifying and generating non-isomorphic domains;
 - Native support for general forbidden permutation domains;
 - Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`;
 - and much more.
 
-CDL supports all major operating systems, including Windows, Linux and MacOS. Users can install it as a python module using 
-the provided bash scripts. 
+CDL supports all major operating systems, including Windows, MacOS and Linux distributions. Users can install it as a python module using 
+`pip install condorcet-domain`. Note that the module name in Python script is `cdl`. See below for examples. 
 
 Directory structure:
 - algorithms: for testing and benchmarking many learning algorithms, like genetic algorithms, reinforcement learning 
 algorithms, and local search algorithms, etc.
 - bind: export all the C++ classes and functions to a python module and provide the bash script install it. 
 - core: the key functionality for manipulating tuple-rules and performing domain-related operations.
-- python: provide depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
-- utils: provide functionss  
+- python: provides depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
+- utils: provides extra functions such processing MUCDs from [Condorcet domains](http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/)
+- hpc: contains example Bash scripts for running Python scripts using CDL on High Performance Computing machines. 
 
 
 ## Get started with Python
@@ -33,8 +34,8 @@ algorithms, and local search algorithms, etc.
 ```python
 from cdl import *
 
-def alternating_scheme(triplet):  # build the alternating scheme 
-   i, j, k = triplet
+def alternating_scheme(triple):  # build the alternating scheme 
+   i, j, k = triple
    if j % 2 == 0:
       return "2N1"
    else:
@@ -42,7 +43,8 @@ def alternating_scheme(triplet):  # build the alternating scheme
 
 cd = CondorcetDomain(n=8)  # initialize the Condorcet domain object
 # initialize the trs with the predefined alternating scheme 
-trs = cd.init_trs_by_scheme(alternating_scheme)
+trs = cd.init_trs()
+trs = cd.init_trs_by_scheme(trs, alternating_scheme)
 domain = cd.domain(trs)  # construct the Condorcet domain
 size = cd.size(trs)  # calculate the size of the resulting Condorcet domain (222)
 assert len(domain) == size  # True
@@ -92,10 +94,10 @@ for n in range(5, 11):
 
 ## Installation for Python Program
 ### Pip install CDL 
-Install `gcc` and `cmake`. Then run  `pip install condorcet-domain` in the terminal (command line)
+Run `pip install condorcet-domain==1.3.2` in the terminal (command line).
 
 
-### Bash install CDL for Linux or MacOS
+### Build CDL from source for Linux or MacOS
 1. Open a terminal and download the CDL repository to your laptop by `git clone https://github.com/sagebei/cdl.git`
 2. Change working directory to the `cdl/bind` folder
 3. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
@@ -110,7 +112,7 @@ Install `gcc` and `cmake`. Then run  `pip install condorcet-domain` in the termi
    - Creat a new virtual environment: `python -m venv /path/to/new/virtual/environment`. Then follow the above
       instructions to install the CDL library in it. 
 
-### Bash install CDL for Windows
+### Build CDL from source for Windows
 1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the `gcc`
    and the `cmake` module by running `module load gcc cmake` if you are using a server machine.
 2. Open a Git Bash terminal, and change working directory to `cdl/bind`
@@ -133,7 +135,7 @@ std::string alternating_scheme(const Triple& triple)
 int main()
 {
     CondorcetDomain cd(6);
-    auto trs = cd.init_trs_by_scheme(alternating_scheme);
+    auto trs = cd.init_trs_by_scheme(cd.init_trs(), alternating_scheme);
     std::cout << (cd.size(trs) == cd.domain(trs).size()) << std::endl;
 
     CD domain = cd.domain(trs);
@@ -186,8 +188,7 @@ Please cite our paper if you use CDL in a scientific publication.
 4. Karpov, Alexander, Klas Markström, Søren Riis, and Bei Zhou. "Local Diversity of Condorcet Domains." arXiv preprint arXiv:2401.11912 (2024).
 5. Markström, Klas, Søren Riis, and Bei Zhou. "Arrow's single peaked domains, richness, and domains for plurality and the Borda count." arXiv preprint arXiv:2401.12547 (2024).
 ## Our Team
-CDL is developed and maintained by Dr Bei Zhou and Dr Soren Riis in the theory group at Queen Mary University of London, and Professor Klas Markstrom
-from University of Umeå.
+CDL is developed and maintained by Dr Bei Zhou and Dr Soren Riis in the theory group at Queen Mary University of London, and Professor Klas Markstrom from University of Umeå.
 
 
 
