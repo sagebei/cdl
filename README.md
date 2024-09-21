@@ -94,7 +94,7 @@ for n in range(5, 11):
 
 ## Installation for Python Program
 ### Pip install CDL 
-Run `pip install condorcet-domain==1.3.2` in the terminal (command line).
+Run `pip install condorcet-domain==1.3.2` in the terminal (command line). See [CDL on PyPI](https://pypi.org/project/condorcet-domain/)
 
 
 ### Build CDL from source for Linux or MacOS
