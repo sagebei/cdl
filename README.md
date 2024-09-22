@@ -25,7 +25,7 @@ algorithms, and local search algorithms, etc.
 - bind: export all the C++ classes and functions to a python module and provide the bash script install it. 
 - core: the key functionality for manipulating tuple-rules and performing domain-related operations.
 - python: provides depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
-- utils: provides extra functions such processing MUCDs from [Condorcet domains](http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/)
+- tools: provide additional functions such as processing MUCDs from [Condorcet domains](http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/), verifying the maximality of domains, as well as functions for running parallel calculations on median graph built from Condorcet domains. 
 - hpc: contains example Bash scripts for running Python scripts using CDL on High Performance Computing machines. 
 
 
