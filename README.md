@@ -16,8 +16,7 @@ provides a wide range of functionalities pertaining to Condorcet Domains (CD) an
 - Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`;
 - and much more.
 
-CDL supports all major operating systems, including Windows, MacOS and Linux distributions. Users can install it as a python module using 
-`pip install condorcet-domain`. Note that the module name in Python script is `cdl`. See below for examples. 
+>CDL supports all major operating systems, including Windows, MacOS and Linux distributions. Users can install it as a python module using `pip install condorcet-domain`. Note that the module name in Python script is `cdl`. See below for examples. 
 
 Directory structure:
 - algorithms: for testing and benchmarking many learning algorithms, like genetic algorithms, reinforcement learning 
