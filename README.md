@@ -175,11 +175,14 @@ int main()
 ## Cite
 Please cite our paper if you use CDL in a scientific publication.
 ```
-@article{zhou2023cdl,
+@article{zhou2024cdl,
   title={CDL: A fast and flexible library for the study of permutation sets with structural restrictions},
-  author={Zhou, Bei and Markstr{\=o}m, Klas and Riis, S{\o}ren},
-  journal={arXiv preprint arXiv:2309.06306},
-  year={2023}
+  author={Zhou, Bei and Markstr{\"o}m, Klas and Riis, S{\o}ren},
+  journal={SoftwareX},
+  volume={28},
+  pages={101951},
+  year={2024},
+  publisher={Elsevier}
 }
 ```
 
