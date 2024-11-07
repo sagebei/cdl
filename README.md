@@ -5,7 +5,7 @@
 [![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
 
-[Condorcet Domain Library (CDL)](https://arxiv.org/pdf/2309.06306.pdf) is a flexible lightweight header-only library written in C++ and offers Python Interfaces as a module that can be installed via `pip`, enabling users to seamlessly integrate with tools written in Python.  CDL
+[Condorcet Domain Library (CDL)](https://www.sciencedirect.com/science/article/pii/S2352711024003212) is a flexible lightweight header-only library written in C++ and offers Python Interfaces as a module that can be installed via `pip`, enabling users to seamlessly integrate with tools written in Python.  CDL
 provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation, including
 - Ordering k-tuples, and rule initialization and assignment;
 - Domain construction and size calculation;
