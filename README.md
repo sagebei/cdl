@@ -66,11 +66,11 @@ non_isomorphic_cds = cd.non_isomorphic_domains(domains)
 def alternating_scheme(triple):  
     i, j, k = triple
     if j % 2 == 0:
-        return ["213", "231"]
+        return [[2, 1, 3], [2, 3, 1]]
     else:
-        return ["132", "312"]
+        return [[1, 3, 2], [3, 1, 2]]
 
-fp = ForbiddenPermutation(n=8)  # initialize the Forbidden Permutation object
+fp = ForbiddenPermutation(n=8, k=3)  # initialize the Forbidden Permutation object
 tls = fp.init_tls_by_scheme(alternating_scheme)
 domain = fp.domain(tls)
 size = fp.size(tls)  # 222
@@ -158,14 +158,14 @@ int main()
 std::vector<std::string> alternating_scheme(const Triple& triple)
 {
     if ((triple[1] % 2) == 0)
-        return {"213", "231"};
+        return {{2, 1, 3}, {2, 3, 1}};
     else
-        return {"132", "312"};
+        return {{1, 3, 2}, {3, 1, 2}};
 }
 
 int main()
 {
-    ForbiddenPermutation fp(8);
+    ForbiddenPermutation fp(8, 3);
     TLS tls = fp.init_tls_by_scheme(alternating_scheme);
     std::cout << (fp.size(tls) == fp.domain(tls).size()) << std::endl;
     return 0;
