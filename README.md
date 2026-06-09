@@ -238,8 +238,8 @@ If you use CDL in a scientific publication, please cite our paper:
 
 CDL is developed and maintained by:
 
-- **Dr Bei Zhou** — Theory Group, Queen Mary University of London
-- **Dr Søren Riis** — Theory Group, Queen Mary University of London
+- **Dr Bei Zhou** — Imperial College London
+- **Dr Søren Riis** — Queen Mary University of London
 - **Prof. Klas Markström** — University of Umeå
 
 ## License
