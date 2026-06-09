@@ -1,39 +1,94 @@
-# Condorcet Domain Library 
+<div align="center">
 
-[![Version](https://img.shields.io/badge/Version-1.1-green.svg)]()
-[![Python 3.8](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![C++](https://img.shields.io/badge/C++-17-blue.svg?style=flat&logo=c%2B%2B)]()
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cdl-logo-dark@2x.png">
+  <img alt="CDL — Condorcet Domain Library" src="assets/cdl-logo@2x.png" width="460">
+</picture>
+
+<br>
+<br>
+
+**A fast and flexible library for the study of permutation sets with structural restrictions**
+
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-4c8bf5.svg?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-380/)
+[![C++](https://img.shields.io/badge/C%2B%2B-17-9b6bdf.svg?logo=c%2B%2B&logoColor=white)]()
+[![Platforms](https://img.shields.io/badge/Platforms-Windows%20%7C%20macOS%20%7C%20Linux-2dd4bf.svg)]()
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](./license)
+[![Paper](https://img.shields.io/badge/Paper-SoftwareX%202024-ff6f3c.svg)](https://www.sciencedirect.com/science/article/pii/S2352711024003212)
 
-[Condorcet Domain Library (CDL)](https://www.sciencedirect.com/science/article/pii/S2352711024003212) is a flexible lightweight header-only library written in C++ and offers Python Interfaces as a module that can be installed via `pip`, enabling users to seamlessly integrate with tools written in Python.  CDL
-provides a wide range of functionalities pertaining to Condorcet Domains (CD) and forbidden permutation, including
-- Ordering k-tuples, and rule initialization and assignment;
-- Domain construction and size calculation;
-- find complete of never conditions that a domain satisfies;
-- Subset functions and domain types verification;
-- Hashing, identifying and generating non-isomorphic domains;
-- Native support for general forbidden permutation domains;
-- Support all 6 rules: `1N3`, `3N1`, `2N3`, `2N1`, `1N2` and `3N2`;
-- and much more.
+[**Installation**](#installation) · [**Quick Start**](#quick-start-python) · [**C++ API**](#c-api) · [**Repository Structure**](#repository-structure) · [**Citation**](#citation)
 
->CDL supports all major operating systems, including Windows, MacOS and Linux distributions. Users can install it as a python module using `pip install condorcet-domain`. Note that the module name in Python script is `cdl`. See below for examples. 
+</div>
 
-Directory structure:
-- algorithms: for testing and benchmarking many learning algorithms, like genetic algorithms, reinforcement learning 
-algorithms, and local search algorithms, etc.
-- bind: export all the C++ classes and functions to a python module and provide the bash script install it. 
-- core: the key functionality for manipulating tuple-rules and performing domain-related operations.
-- python: provides depth-first and breast-first Prioritised Restriction Search (PRS) search algorithms
-- tools: provide additional functions such as processing MUCDs from [Condorcet domains](http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/), verifying the maximality of domains, as well as functions for running parallel calculations on median graph built from Condorcet domains. 
-- hpc: contains example Bash scripts for running Python scripts using CDL on High Performance Computing machines. 
+---
 
+[**Condorcet Domain Library (CDL)**](https://www.sciencedirect.com/science/article/pii/S2352711024003212) is a lightweight, **header-only C++** library — with first-class **Python bindings** installable via `pip` — for studying **Condorcet Domains (CD)** and **forbidden permutations**. It is designed to integrate seamlessly into existing Python toolchains while retaining the performance of native C++.
 
-## Get started with Python
-### Working with Condorcet domains
+## Features
+
+- **Tuple ordering** — k-tuple ordering, with rule initialization and assignment.
+- **Domain construction** — build domains and compute their size directly.
+- **Never conditions** — find the complete set of *never conditions* that a domain satisfies.
+- **Subsets & types** — subset functions and domain-type verification.
+- **Isomorphism** — hash, identify, and generate non-isomorphic domains.
+- **Forbidden permutations** — native support for general forbidden-permutation domains.
+- **All six rules** — `1N3`, `3N1`, `2N3`, `2N1`, `1N2`, and `3N2`.
+- **Cross-platform** — Windows, macOS, and all major Linux distributions.
+
+## Installation
+
+### Install with pip
+
+```bash
+pip install condorcet-domain
+```
+
+> [!NOTE]
+> The PyPI package is named **`condorcet-domain`**, but the module imported in Python is **`cdl`**.
+> See [CDL on PyPI](https://pypi.org/project/condorcet-domain/).
+
+### Build from source — Linux / macOS
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sagebei/cdl.git
+   cd cdl/bind
+   ```
+2. Install `Python 3` (or Anaconda), `gcc`, and `cmake` if they are not already available.
+   On a cluster you may first need to load the toolchain with `module load gcc cmake`.
+3. Install into a Python environment:
+   - **Existing environment** — install into a virtual environment you already use:
+     ```bash
+     source install.sh /path/to/your/virtual_environment
+     ```
+     The script downloads `pybind11` (required to compile the code) and installs the library into the
+     environment's `site-packages`.
+     For example, `source install.sh /opt/anaconda3` installs into the global Anaconda environment, and
+     `source install.sh ~/PycharmProjects/venv` installs into a virtual environment under `PycharmProjects`.
+   - **New environment** — create one first, then run the command above:
+     ```bash
+     python -m venv /path/to/new/virtual_environment
+     ```
+
+### Build from source — Windows
+
+1. Install `git`, `Python 3` (or Anaconda), `gcc`, and `cmake` if they are not already available.
+   On a cluster you may first need to load the toolchain with `module load gcc cmake`.
+2. Open a **Git Bash** terminal and change into the `cdl/bind` directory.
+3. Run the installer with the target environment path:
+   ```bash
+   source windows_install.sh /D/Anaconda3/Lib/site-packages/
+   ```
+
+## Quick Start (Python)
+
+### Working with Condorcet Domains
+
 ```python
 from cdl import *
 
-def alternating_scheme(triple):  # build the alternating scheme 
+def alternating_scheme(triple):  # build the alternating scheme
    i, j, k = triple
    if j % 2 == 0:
       return "2N1"
@@ -41,7 +96,7 @@ def alternating_scheme(triple):  # build the alternating scheme
       return "2N3"
 
 cd = CondorcetDomain(n=8)  # initialize the Condorcet domain object
-# initialize the trs with the predefined alternating scheme 
+# initialize the trs with the predefined alternating scheme
 trs = cd.init_trs()
 trs = cd.init_trs_by_scheme(trs, alternating_scheme)
 domain = cd.domain(trs)  # construct the Condorcet domain
@@ -50,20 +105,22 @@ assert len(domain) == size  # True
 
 # change the rule assigned to the triplet [2, 3, 4] from "2N3" to "3N1"
 trs = cd.assign_rule(trs, [2, 3, 4], "3N1")
-size = cd.size(trs) # the size of the new domain is 210.
+size = cd.size(trs)  # the size of the new domain is 210.
 
 cd.init_subset(sub_n=6)
-substates = cd.subset_states(trs) # get a list of 28 subset states in 6 alternatives
+substates = cd.subset_states(trs)  # get a list of 28 subset states in 6 alternatives
 
 # build a list of domains
 domains = [cd.domain(cd.init_trs_random()) for _ in range(100)]
 # filter out the isomorphic domains
-non_isomorphic_cds = cd.non_isomorphic_domains(domains)  
+non_isomorphic_cds = cd.non_isomorphic_domains(domains)
 ```
+
 ### Working with Forbidden Permutations
+
 ```python
 # recreate the alternating scheme by forbidden permutations
-def alternating_scheme(triple):  
+def alternating_scheme(triple):
     i, j, k = triple
     if j % 2 == 0:
         return [[2, 1, 3], [2, 3, 1]]
@@ -77,13 +134,12 @@ size = fp.size(tls)  # 222
 assert len(domain) == size
 ```
 
-
 ```python
 from cdl import ForbiddenPermutation
 
 for n in range(5, 11):
     # initialize the ForbiddenPermutation object for 5-tuples
-    fp = ForbiddenPermutation(n, 5) 
+    fp = ForbiddenPermutation(n, 5)
     tls = fp.init_tls()
     for tl in tls:
         # assign all the 5-tuples with the law [2, 5, 3, 1, 4]
@@ -91,40 +147,16 @@ for n in range(5, 11):
     print(fp.size(tls))
 ```
 
-## Installation for Python Program
-### Pip install CDL 
-Run 
-```bash
-pip install condorcet-domain
-```
-in the terminal (command line). See [CDL on PyPI](https://pypi.org/project/condorcet-domain/)
+> [!TIP]
+> New to CDL? Start with the notebooks in [`tutorials/`](./tutorials) — `Get Started with CDL.ipynb` walks through the core workflow end to end.
 
+## C++ API
 
-### Build CDL from source for Linux or MacOS
-1. Open a terminal and download the CDL repository to your laptop by `git clone https://github.com/sagebei/cdl.git`
-2. Change working directory to the `cdl/bind` folder
-3. Install `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the gcc
-   and the cmake module by running `module load gcc cmake` if you are using a server machine. 
-4. - Installing to an existing Python virtual environment: Run `source install.sh \path\to\your\virtural_environment` to install 
-   the library to an existing virtual environment in which you will import it.
-   (This will download `pybind11` libray that is essential to compile the code,
-   and install the `dgl` library to the site-package folder in the virtual environment.
-   Examples: `source install.sh \opt\anaconda3` to install the library in the anaconda global environment, 
-   or `source install.sh ~\PyCharmProjects\venv` to install it in a virtual environment
-   created in the PycharmProjects directory.) 
-   - Creat a new virtual environment: `python -m venv /path/to/new/virtual/environment`. Then follow the above
-      instructions to install the CDL library in it. 
+CDL is header-only: include the relevant header and compile against the `core/include` directory.
 
-### Build CDL from source for Windows
-1. Install `git`, `Python3` or `anaconda`, `gcc`, `cmake` if you have not. You might need to load the `gcc`
-   and the `cmake` module by running `module load gcc cmake` if you are using a server machine.
-2. Open a Git Bash terminal, and change working directory to `cdl/bind`
-3. Run `source windows_install.sh \path\to\your\virtural_environment`. For example, 
-   `source windows_install.sh /D/Anaconda3/Lib/site-packages/`
+### Working with Condorcet Domains
 
-## Get started with C++
-### Working with Condorcet domains
-```c++
+```cpp
 #include "condorcet_domain.h"
 
 std::string alternating_scheme(const Triple& triple)
@@ -149,10 +181,11 @@ int main()
     CDS new_cds = cd.non_isomorphic_domains(domains);
     return 0;
 }
-
 ```
-### Working with Forbidden permutations
-```c++
+
+### Working with Forbidden Permutations
+
+```cpp
 #include "forbidden_permutation.h"
 
 std::vector<std::string> alternating_scheme(const Triple& triple)
@@ -172,24 +205,43 @@ int main()
 }
 ```
 
-## Cite
-Please cite our paper if you use CDL in a scientific publication.
-```
+## Repository Structure
+
+| Directory | Description |
+| --- | --- |
+| [`core/`](./core) | The header-only C++ engine: tuple–rule manipulation and all domain-related operations. |
+| [`bind/`](./bind) | Pybind11 bindings that export the C++ classes and functions as a Python module, plus install scripts. |
+| [`python/`](./python) | Depth-first and breadth-first Prioritised Restriction Search (PRS) algorithms. |
+| [`orderly/`](./orderly) | Orderly generation, complete/parallel search, and LaTeX export utilities. |
+| [`algorithms/`](./algorithms) | Learning-based domain search: genetic algorithms, reinforcement learning, local search, and benchmarks. |
+| [`tools/`](./tools) | Utilities for processing [MUCDs](http://abel.math.umu.se/~klasm/Data/CONDORCET/MUCDS/), checking domain maximality, and parallel computation on median graphs. |
+| [`hpc/`](./hpc) | Example Bash scripts for running CDL on High Performance Computing clusters. |
+| [`tutorials/`](./tutorials) | Jupyter notebooks demonstrating the library, including a getting-started guide. |
+
+## Citation
+
+If you use CDL in a scientific publication, please cite our paper:
+
+```bibtex
 @article{zhou2024cdl,
-  title={CDL: A fast and flexible library for the study of permutation sets with structural restrictions},
-  author={Zhou, Bei and Markstr{\"o}m, Klas and Riis, S{\o}ren},
-  journal={SoftwareX},
-  volume={28},
-  pages={101951},
-  year={2024},
-  publisher={Elsevier}
+  title   = {CDL: A fast and flexible library for the study of permutation sets with structural restrictions},
+  author  = {Zhou, Bei and Markstr{\"o}m, Klas and Riis, S{\o}ren},
+  journal = {SoftwareX},
+  volume  = {28},
+  pages   = {101951},
+  year    = {2024},
+  publisher = {Elsevier}
 }
 ```
 
-## Our Team
-CDL is developed and maintained by Dr Bei Zhou and Dr Soren Riis in the theory group at Queen Mary University of London, and Professor Klas Markstrom from University of Umeå.
+## Team
 
+CDL is developed and maintained by:
 
+- **Dr Bei Zhou** — Theory Group, Queen Mary University of London
+- **Dr Søren Riis** — Theory Group, Queen Mary University of London
+- **Prof. Klas Markström** — University of Umeå
 
+## License
 
-
+Distributed under the **Apache License 2.0**. See [`license`](./license) for details.
